@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="../css/login_style.css" media="(max-width: 768px)">
+        <title>스터띵 로그인</title>
+        <script defer src="../js/index.js"></script>
+        <!--jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!--fontawesome-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <!--
+        <header></header>
+        -->
+        <div id="main">
+            <h2>스터띵 로그인</h2>
+            <p>설명</p>
+            <div id="login-form">
+                <form id="login">
+                    <input type="email" id="textbox" placeholder="EMAIL" required/>
+                    <div id="password-box">
+                        <input type="password" id="textbox" placeholder="PW" maxlength="20" required/>
+                        <i class="fa-regular fa-eye"></i>
+                        <!--<i class="fa-regular fa-eye-slash"></i>-->
+                    </div>
+                    <div id="options">
+                        <a href="../register">회원가입</a>
+                        <a href="../findmyacc/">비밀번호 찾기</a>
+                    </div>
+                    <button type="submit" id="login_button">로그인</button>
+                </form> 
+            </div>
+        </div>
+        <footer>
+            <p>Copyright &copy; 2024 TEAM_JOY. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
