@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="../css/register_style.css" media="(max-width: 768px)">
+        <title>스터띵 회원가입</title>
+        <script defer src="../js/index.js"></script>
+        <!--jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!--fontawesome-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <div id="main">
+            <h2>스터띵 회원가입</h2>
+            <div id="register-form">
+                <form id="register" action="">
+                    <div id="acc-info">
+                    <label>
+                        계정정보
+                    </label>
+                    <input type="email" id="textbox-email" placeholder="이메일(mju.ac.kr)" />
+                    <span id="email-validation-error" class="validation-error"></span>
+                    <input type="text" id="textbox-name" placeholder="이름" /> 
+                    <span id="name-validation-error" class="validation-error"></span>
+                    <div id="password-box">
+                        <!--class값 사용금지-->
+                        <input type="password" id="textbox-pw-raw" placeholder="비밀번호" maxlength="20" />
+                        <span id="pw-validation-pattern">8자 이상, 영문, 숫자, 특수문자 포함</span>
+                        <i class="fa-regular fa-eye"></i>
+                        <span id="pw-validation-error" class="validation-error"></span>
+                    </div>
+                    <div id="re-password-box">
+                        <!--class값 사용금지-->
+                        <input type="password" id="textbox-pw-re" placeholder="비밀번호 확인" maxlength="20" />
+                        <i class="fa-regular fa-eye"></i>
+                        <span id="ns-pw-match-error" class="validation-error">비밀번호가 일치하지 않습니다.</span>
+                    </div>
+                    <span id="pw-validation-checked-error" class="validation-error"></span>
+                    </div>
+                    <hr>
+                    <!--
+                    VALIDATION 작업 준비중
+                    #acc-info 작업 먼저
+                    -->
+                    <div id="std-info">
+                    <label>
+                        학생정보
+                    </label>
+                    <input type="text" id="textbox-st-num" pattern= "[0-9]" maxlength="8" placeholder="학번" inputmode="numeric" />
+                    <select id="combobox">
+                        <option value="null">학과를 선택해주세요.</option>
+                        <option value="">경영대학</option>
+                        <option value="">경영학과</option>
+                        <option value="">경영정보학과</option>
+                        <option value="">국제통상학과</option>
+                        <option value="">부동산학과</option>
+                        <option value="">법과대학</option>
+                        <option value="">법학과</option>
+                        <option value="">글로벌법무금융학과</option>
+                        <option value="">법무정책학과</option>
+                    </select>
+                    </div>
+                    <button type="submit" id="register_button">회원가입</button>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <p>Copyright &copy; 2024 TEAM_JOY. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
