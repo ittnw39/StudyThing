@@ -15,6 +15,8 @@ public class UserDTO {
     private String name;
     private String password;
     private String email;
+    private String studentNumber;
+    private String department;
     private String major;
     private int grade;
     private Date registrationDate;
