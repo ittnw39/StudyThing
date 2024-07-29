@@ -1,26 +1,72 @@
-body{
+body {
     margin: 0;
-    width: 100%;
-    height: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-#menubar{
-    position: fixed; /*위치고정*/
-    bottom: -5px; /*하단*/
-    height: 70px; /*높이 지정*/
-    width: calc(100% - 20px); /*width*/
-    left: 50%; /*왼쪽으로부터 50%*/
-    transform: translateX(-50%); /*왼쪽 공간 50%까지 평행이동*/
-    border-radius: 10px 10px 0 0; /*only top radius*/
-    box-shadow: -2px -2px 8px 4px rgba(0, 0, 0, 0.219); /*그림자*/
-    /*아이콘 정렬*/
+#content{
+    
+}
+
+.nav-bar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: space-around;
-    align-items: center;
 }
 
-#menubar a{
+.nav-bar li {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-bar li.active a {
+    color: #af18f0;
+}
+
+.nav-bar a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-decoration: none;
-    color: #000;
+    color: #1f1e1e;
+    transition: color 0.3s ease;
+}
+
+.nav-bar a:hover,
+.nav-bar a:focus {
+    color: #1f1e1ea2;
+}
+
+.nav-bar .icon {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.nav-bar .text {
+    font-size: 15px;
+}
+
+.indicator {
+    position: absolute;
+    left: 0%; /*4등분*/
+    bottom: 0;
+    width: 25%; 
+    height: 4px;
+    background-color: #af18f0;
+    transition: transform 0.3s ease;
 }
