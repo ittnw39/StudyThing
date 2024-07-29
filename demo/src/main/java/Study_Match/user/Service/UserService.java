@@ -46,6 +46,8 @@ public class UserService {
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
+        user.setStudentNumber(userDTO.getStudentNumber());
+        user.setDepartment(userDTO.getDepartment());
         user.setMajor(userDTO.getMajor());
         user.setGrade(userDTO.getGrade());
         user.setRegistrationDate(userDTO.getRegistrationDate());

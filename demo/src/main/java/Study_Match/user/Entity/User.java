@@ -25,6 +25,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "student_number", nullable = false)
+    private String studentNumber;
+
+    @Column(nullable = false)
+    private String department;
+
     private String major;
 
     private int grade;
