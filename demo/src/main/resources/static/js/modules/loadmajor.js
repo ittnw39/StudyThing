@@ -113,11 +113,24 @@ function loadmajor() {
 
     const selectElement = document.getElementById('major-combobox');
 
-    data.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.value;
-        option.textContent = item.text;
-        selectElement.appendChild(option);
+    return new Promise((resolve, reject) => {
+        try {
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.value;
+                option.textContent = item.text;
+                selectElement.appendChild(option);
+            });
+
+            const expectedOptionsCount = data.length + 1;
+            if (selectElement.options.length === expectedOptionsCount) {
+                resolve('성공적으로 로드되었습니다. \n 로드된 학과 수 :' + data.length);
+            } else {
+                reject(new Error('알 수 없는 이유로 로드에 실패하였습니다.'));
+            }
+        } catch (error) {
+            reject(new Error(error.message));
+        }
     });
 }
 
