@@ -1,5 +1,7 @@
 package Study_Match.user.Service;
 
+import Study_Match.course.Entity.UserSchedule;
+import Study_Match.course.Repository.UserScheduleRepository;
 import Study_Match.user.Entity.User;
 import Study_Match.user.Repository.UserRepository;
 import Study_Match.user.dto.UserDTO;
@@ -17,6 +19,13 @@ public class UserService {
 
     @Autowired
     private UserValidationService userValidationService;
+
+    @Autowired
+    private UserScheduleRepository userScheduleRepository;
+
+    public List<UserSchedule> getCoursesByUserId(Long userId) {
+        return userScheduleRepository.findByUserId(userId);
+    }
 
     public User login(String email, String password) {
         Optional<User> optionalUser = userRepository.findByEmail(email);

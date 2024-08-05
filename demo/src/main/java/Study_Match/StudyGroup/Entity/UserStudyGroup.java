@@ -22,5 +22,4 @@ public class UserStudyGroup {
     @ManyToOne
     @JoinColumn(name = "study_group_id", nullable = false)
     private StudyGroup studyGroup;
-
 }
