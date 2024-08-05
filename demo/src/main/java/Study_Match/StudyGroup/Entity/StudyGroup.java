@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,4 +39,7 @@ public class StudyGroup {
     private String recruitmentStatus;
 
     private Date creationDate;
+
+    @OneToMany(mappedBy = "studyGroup")
+    private List<UserStudyGroup> userStudyGroups;
 }

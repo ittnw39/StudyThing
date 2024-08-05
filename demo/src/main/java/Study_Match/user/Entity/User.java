@@ -1,10 +1,13 @@
 package Study_Match.user.Entity;
 
+import Study_Match.StudyGroup.Entity.UserStudyGroup;
+import Study_Match.course.Entity.UserSchedule;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,5 +39,11 @@ public class User {
     private int grade;
 
     private Date registrationDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserStudyGroup> userStudyGroups;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserSchedule> userSchedules;
 
 }
