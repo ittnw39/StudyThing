@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>그룹 생성하기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&display=swap');
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #eeebebdc;
+
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #4d4d4d50;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .creator {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .specification {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            font-size: 22.5px;
+        }
+
+        .search-class{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        input, select {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            width: calc(100% - 10%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            font-size: 20px;
+            margin: 2px 0 5px 0;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 2px 4px;
+            box-shadow: 0 0 0 2px rgba(180, 17, 255, 0.438);
+        }
+
+        textarea{
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            width: calc(100% - 10%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            font-size: 20px;
+            margin: 2px 0 5px 0;
+            Resize: none;
+        }
+
+        .button {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 100;
+        }
+
+        .button button {
+            width: 48%;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.1s, box-shadow 0.1s;
+            display: flex;
+            align-items: center;
+        }
+
+        #return {
+            background-color: rgb(245, 54, 54);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.178);
+        }
+
+
+        #submit {
+            gap: 10px;
+            background-color: #9c27b0;
+            /* 예쁜 보라색 */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.178);
+        }
+
+        #submit:active {
+            background-color: #6a1b9a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.278);
+        }
+    </style>
+    <script defer src="../static/js/create_studygroup.js"></script>
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="main">
+        <div class="creator">
+            <form method="post">
+                <div class="specification">
+                    <div class="search-class">
+                        <span style="font-size: 20px;">생성하려는 스터디의 수업을 정해주세요.</span>
+                        <select id="major-combobox">
+                        </select>
+                        <span style="font-size: 15px;">*현재 시간표의 수업정보에서만 선택가능</span>
+                    </div>
+                    <hr>
+                    <span>그룹명</span>
+                    <input>
+                    <span>인원</span>
+                    <input type="number" min="1" max="50" placeholder="(최대 50명)">
+                    <span>그룹 설명</span>
+                    <textarea placeholder="간단한 소개를 적어주세요!"></textarea>
+                </div>
+                <div class="button">
+                    <button id="return">취소하기</button>
+                    <button id="submit" type="submit">
+                        <i id="submiticon"  class="fa-solid fa-hammer"></i>
+                        <!--로딩 시 class="fa-solid fa-spinner fa-spin-pulse"-->
+                        생성하기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

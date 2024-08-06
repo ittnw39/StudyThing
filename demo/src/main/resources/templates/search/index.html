@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <base href="../">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../static/css/search.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="../static/css/globals.css" media="(max-width: 768px)">
+    <title>스터띵 - 검색</title>
+    <script defer src="../static/js/globals.js"></script>
+    <script defer src="../static/js/search.js"></script>
+    <script defer src="../static/js/studygroup.js"></script>
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="main">
+        <div class="header">
+            <span id="title">그룹 검색하기</span>
+        </div>
+        <div class="search"> <!--헤더 아래 전체-->
+            <div class="search-input"> <!--검색 바-->
+                <div id="search-bar"> <!--검색 input-->
+                    <input type="search" placeholder="Search" />
+                    <button style="background: none; border: none; padding: 0">
+                        <i class="fa-solid fa-magnifying-glass fa-beat"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="search-detail">
+                <button id="search-rule-button">
+                    <i class="fa-solid fa-sliders"></i> 검색 규칙 설정
+                </button>
+            </div>
+            <!--현재 추가된 검색 요소들 표시-->
+            <div class="search-detail-bar">
+
+            </div>
+            <div class="result"> <!--검색 바 아래 전체-->
+                <div class="group-card">
+                    <div class="group-card-header">
+                        <span id="group-title">test</span>
+                    </div>
+                    <div class="group-card-body">
+                        <span id="course-name">수업명 : 성서와 인간이해 ,</span>
+                        <span id="current-member">현재 참여 인원 : 5</span> / <span id="limited-member"> 30,</span>
+                        <span id="group-description">설명 :  성서와 인간이해의 공부...</span>
+                    </div>
+                </div>
+                <div class="group-card">
+                    <div class="group-card-header">
+                        <span id="group-title">test</span>
+                    </div>
+                    <div class="group-card-body">
+                        <span id="course-name">수업명 : 성서와 인간이해 ,</span>
+                        <span id="current-member">현재 참여 인원 : 5</span> / <span id="limited-member"> 30,</span>
+                        <span id="group-description">설명 :  성서와 인간이해의 공부...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--그룹 만들기 아이콘-->
+    <div class="create" id="create-icon-top">
+        <span>그룹 만들기</span>
+        <div class="create-group">
+            <div class="create-icon">
+                <a href="/search/create_group.html">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--UserMenuBar-->
+    <nav-bar></nav-bar>
+    <script src="../static/js/component/nav-bar.js"></script>
+    <!--로딩시 보이지 않는 요소들-->
+    <div id="search-rule-modal">
+        <div class="modal-content">
+            <div class="modal-content-header">
+                <span class="title">검색 규칙 설정</span>
+                <span class="exit">&times;</span>
+            </div>
+            <div class="modal-content-body">
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
