@@ -1,1 +1,0 @@
-//[Globals 전역 script]

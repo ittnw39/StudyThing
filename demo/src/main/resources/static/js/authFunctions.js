@@ -1,18 +1,58 @@
-//REGISTER
+//[LOGIN&REGISTER 구동을 위한 script]
+//모듈 import
 import { pw_eyes_toggle } from "./modules/pw_eyes_toggle.js";
 import { loadmajor } from "./modules/loadmajor.js";
 
-loadmajor()
-    .then(message => {
-        console.log(message);
-    })
-    .catch(error => {
-        console.error('학과 데이터 로드 에러 ->', error);
-    });
-
 pw_eyes_toggle();
 
-//validation
+///login-validation
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('login').addEventListener('submit', function (event) {
+        let validated = true;
+
+        const email = document.getElementById('textbox-email').value;
+        const email_pattern = /^[a-zA-Z0-9._-]+@mju.ac.kr$/;
+        if (email === "") {
+            validated = false;
+            document.getElementById('email-validation-error').textContent = "이메일을 입력해주세요.";
+            document.getElementById('email-validation-error').style.display = 'block';
+        } else if (!email_pattern.test(email)) {
+            validated = false;
+            document.getElementById('email-validation-error').textContent = "유효한 이메일을 입력해주세요.";
+            document.getElementById('email-validation-error').style.display = 'block';
+        } else {
+            document.getElementById('email-validation-error').style.display = 'none';
+        }
+
+        const pw = document.getElementById('textbox-pw').value;
+        const pw_pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (pw === "") {
+            validated = false;
+            document.getElementById('pw-validation-error').textContent = "비밀번호를 입력해주세요.";
+            document.getElementById('pw-validation-error').style.display = 'block';
+        } else if (!pw_pattern.test(pw)) {
+            validated = false;
+            document.getElementById('pw-validation-error').textContent = "형식에 맞지않는 문자열은 사용할 수 없습니다.";
+            document.getElementById('pw-validation-error').style.display = 'block';
+        } else {
+            document.getElementById('pw-validation-error').style.display = 'none';
+        }
+
+        if (!validated) {
+            event.preventDefault();
+            console.log('login submit blocked.');
+        }
+
+        document.getElementById('textbox-email').addEventListener('input', function () {
+            document.getElementById('email-validation-error').style.display = 'none';
+        });
+        document.getElementById('textbox-pw').addEventListener('input', function () {
+            document.getElementById('pw-validation-error').style.display = 'none';
+        });
+    });
+});
+
+///register-validation
 document.addEventListener('DOMContentLoaded', function () {
     loadmajor();
 
@@ -77,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     ///submit event
     document.getElementById('register').addEventListener('submit', function (event) {
-        event.preventDefault();
         let validated = true;
 
         const email = document.getElementById('textbox-email').value;
@@ -134,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const majorValue = document.getElementById('major-combobox').value;
+        console.log(majorValue);
         if (majorValue == 'null') {
             document.getElementById('major-validation-error').textContent = "학과를 입력해주세요.";
             document.getElementById('major-validation-error').style.display = 'block';
@@ -142,43 +182,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!validated) {
-            //이벤트 종료
+            event.preventDefault();
             console.log('submit blocked.');
-            return; 
-        } else{//fetch
-            const userDTO = {
-                email: email,
-                name: name,
-                password: pw,
-                studentNumber: studentID,
-                department: majorValue
-            };
-    
-            fetch('/users/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userDTO)
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return response.text().then(text => { throw new Error(text) });
-                }
-            })
-            .then(data => {
-                // 회원가입 성공 처리
-                alert('회원가입 성공');
-                console.log('새 사용자:', data);
-                // 필요에 따라 리디렉션 또는 UI 업데이트
-                window.location.href = '/login/index.html';
-            })
-            .catch(error => {
-                console.error('오류:', error);
-                alert('오류가 발생했습니다: ' + error.message);
-            });
         }
     });
 

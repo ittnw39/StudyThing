@@ -3,18 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="../static/css/globals.css">
-        <link rel="stylesheet" href="../static/css/style.css" media="(max-width: 768px)">
+        <link rel="stylesheet" href="../static/css/home.css" media="(max-width: 768px)">
+        <link rel="stylesheet" href="../static/css/globals.css" media="(max-width: 768px)">
         <title>스터띵 - 홈</title>
-        <script defer src="../static/globals.js"></script>
-        <script defer src="../static/index.js"></script>
+        <script defer src="../static/js/globals.js"></script>
         <!--fontawesome-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
         <div id="main">
             <div id="header">
-                <h2>스터띵</h2>
+                
             </div>
             <div id="info">
             
@@ -24,42 +23,7 @@
             </div>
         </div>
         <!--UserMenuBar-->
-        <nav class="nav-bar">
-            <ul>
-                <li class="list active">
-                    <a href="" class="nav-link">
-                        <span class="icon">
-                            <i class="fa-solid fa-house"></i>
-                        </span>
-                        <span class="text">홈</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <a href="/timetable/" class="nav-link">
-                        <span class="icon">
-                            <i class="fa-solid fa-table"></i>
-                        </span>
-                        <span class="text">시간표</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <a href="/search/" class="nav-link">
-                        <span class="icon">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </span>
-                        <span class="text">검색</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <a href="/my/" class="nav-link">
-                        <span class="icon">
-                            <i class="fa-solid fa-user"></i>
-                        </span>
-                        <span class="text">마이</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="indicator"></div>
-        </nav>
+        <nav-bar></nav-bar>
+        <script src="../static/js/component/nav-bar.js"></script>
     </body>
 </html>

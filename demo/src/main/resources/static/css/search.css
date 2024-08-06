@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&display=swap');
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/*상단 제목*/
+#main .header{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin: 10px 10px 0 10px;
+    font-size: 30px;
+    text-align: left;
+}
+
+/*검색 디자인*/
+#main .search{
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px 0 10px;
+}
+
+#main #search-bar{
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: calc(100%);
+    height: 50px;
+    border: 1px solid #C1C1C1;
+    border-radius: 30px;
+}
+
+#main #search-bar:focus-within{
+    box-shadow: 0 0 0 3px rgba(180, 17, 255, 0.438);
+}
+
+#main #search-bar input{
+    width: calc(100% - 25%);
+    border: none;
+    font-size: 25px;
+}
+
+#main #search-bar input:focus{
+    outline: none;
+}
+
+#main #search-bar button{
+    --fa-animation-duration: 2s;
+    margin-left: 20px;
+    font-size: 25px;
+}
+
+#main #search-bar:focus-within button{
+    font-size: 28px;
+    --fa-beat-scale: 28px;
+    cursor: pointer;
+}
+
+#main .search-detail{
+    margin: 0;
+    margin-top: 10px;
+}
+
+#main .search-detail span{
+    float: left;
+}
+
+#main .search-detail button{
+    font-size: 15px;
+    float: right;
+    margin-right: 10px;
+    background: none; 
+    border: none; 
+    padding: 0;
+    cursor: pointer;
+}
+
+.result{
+    height: 100vh;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/*group-card*/
+.group-card{
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.group-card-header{
+    font-size: 25px;
+}
+
+.group-card-body{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+/*search-rule-modal*/
+#search-rule-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#search-rule-modal .modal-content{
+    border-radius: 5px;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    animation: borderAnimation 2.5s infinite; /* Apply animation */
+}
+
+#search-rule-modal .modal-content .modal-content-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#search-rule-modal .modal-content .modal-content-header .title{
+    font-size: 25px;
+}
+#search-rule-modal .modal-content .modal-content-header .exit{
+    color: black;
+    font-size: 30px;
+}
+
+#search-rule-modal .modal-content .modal-content-body{
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+@keyframes borderAnimation {
+    0% {
+        box-shadow: 0 0 1px 1px rgba(96, 6, 241, 0.712);
+    }
+    20%{
+        box-shadow: 0 0 1px 1px rgba(205, 32, 248, 0.5);
+    }
+    30%{
+        box-shadow: 0 0 2px 2px rgba(205, 32, 248, 0.5); 
+    }
+    50% {
+        box-shadow: 0 0 3px 3px rgba(255, 0, 85, 0.5);
+    }
+    80%{
+        box-shadow: 0 0 2px 2px rgba(205, 32, 248, 0.5);
+    }
+    90%{
+        box-shadow: 0 0 1px 1px rgba(205, 32, 248, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 1px 1px rgba(96, 6, 241, 0.712); 
+    }
+}
+
+
+/*그룹 생성 아이콘*/
+.create{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 90px;
+    right: 10px;
+}
+
+.create span{
+    font-size: 15px;
+    color: white;
+    padding: 0 10px 0 10px;
+    background-color: #c34ff5;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.create-group {
+    width: 20px; 
+    height: 20px;
+    margin-left: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c34ff5;
+    border-radius: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s box-shadow 0.2s;
+}
+
+.create-group:active{
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-group .create-icon {
+    margin-top: 5px;
+    color: white;
+    font-size: 40px;
+}
+
+.create-group .create-icon a{
+    color: white;
+    text-decoration: none;
+    text-decoration-line: none;
+}
