@@ -90,7 +90,7 @@
 
         overlay.style.position = 'absolute';
         overlay.style.top = `${overlayTop}px`;
-        overlay.style.left = `${left - 1}px`; //오차 1px
+        overlay.style.left = `${left - 0.25}px`; //오차 0.25px
         overlay.style.width = `${width}px`;
         overlay.style.height = `${durationMinutes}px`; //1시간에 60px
         overlay.style.backgroundColor = color;

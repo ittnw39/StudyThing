@@ -110,6 +110,54 @@ body {
     gap: 3px;
 }
 
+/*group-join-modal*/
+#join-alert-box{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#join-alert-box .join-alert-box-content{
+    position: relative;
+    top: 30%;
+    border-radius: 5px;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
+.join-control-button button{
+    padding: 5px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#join {
+    gap: 10px;
+    border-radius: 5px;
+    background-color: #27b045;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.178);
+}
+
+.join-control-button{
+    margin: 15px 0 15px 0;
+    width: 100;
+}
+
+
 /*search-rule-modal*/
 #search-rule-modal {
     display: none;

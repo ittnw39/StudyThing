@@ -11,6 +11,10 @@ body {
     font-style: normal;
 }
 
+#main{
+    height: 800px;
+}
+
 .main-header{
     display: flex;
     align-items: center;
@@ -44,6 +48,7 @@ body {
     min-height: 40px;
 }
 
+/*타임테이블 헤더*/
 .header {
     display: flex;
     justify-content: center;

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8" />
-    <base href="../">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="../static/css/search.css" media="(max-width: 768px)">
-    <link rel="stylesheet" href="../static/css/globals.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="../css/search.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="../css/globals.css" media="(max-width: 768px)">
     <title>스터띵 - 검색</title>
-    <script defer src="../static/js/globals.js"></script>
-    <script defer src="../static/js/search.js"></script>
-    <script defer src="../static/js/studygroup.js"></script>
+    <script defer src="../js/globals.js"></script>
+    <script defer src="../js/search.js"></script>
+    <script defer src="../js/studygroup.js"></script>
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <base href="../">
 </head>
+
 <body>
     <div id="main">
         <div class="header">
@@ -36,7 +38,6 @@
             </div>
             <!--현재 추가된 검색 요소들 표시-->
             <div class="search-detail-bar">
-
             </div>
             <div class="result"> <!--검색 바 아래 전체-->
                 <div class="group-card">
@@ -46,17 +47,17 @@
                     <div class="group-card-body">
                         <span id="course-name">수업명 : 성서와 인간이해 ,</span>
                         <span id="current-member">현재 참여 인원 : 5</span> / <span id="limited-member"> 30,</span>
-                        <span id="group-description">설명 :  성서와 인간이해의 공부...</span>
+                        <span id="group-description">설명 : 성서와 인간이해의 공부...</span>
                     </div>
                 </div>
                 <div class="group-card">
                     <div class="group-card-header">
-                        <span id="group-title">test</span>
+                        <span id="group-title">test2</span>
                     </div>
                     <div class="group-card-body">
                         <span id="course-name">수업명 : 성서와 인간이해 ,</span>
                         <span id="current-member">현재 참여 인원 : 5</span> / <span id="limited-member"> 30,</span>
-                        <span id="group-description">설명 :  성서와 인간이해의 공부...</span>
+                        <span id="group-description">설명 : 성서와 인간이해의 공부...</span>
                     </div>
                 </div>
             </div>
@@ -75,7 +76,7 @@
     </div>
     <!--UserMenuBar-->
     <nav-bar></nav-bar>
-    <script src="../static/js/component/nav-bar.js"></script>
+    <script src="../js/component/nav-bar.js"></script>
     <!--로딩시 보이지 않는 요소들-->
     <div id="search-rule-modal">
         <div class="modal-content">
@@ -84,9 +85,24 @@
                 <span class="exit">&times;</span>
             </div>
             <div class="modal-content-body">
-                
+
             </div>
         </div>
     </div>
+    <!--가입확인 모달-->
+    <div id="join-alert-box">
+        <div class="join-alert-box-content">
+            <span id="join-group-title" style="font-size: 25px;">그룹명</span>
+            <span>에 참여하시겠어요?</span>
+            <div class="join-control-button">
+                <button type="submit" id="join">가입하기</button>
+            </div>
+            <details>
+                <summary>스터디그룹 이용규칙</summary>
+                뭐가 있을까요?
+            </details>
+        </div>
+    </div>
 </body>
+
 </html>

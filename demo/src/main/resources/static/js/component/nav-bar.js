@@ -12,32 +12,32 @@ class NavBar extends HTMLElement {
             </style>
             <nav class="nav-bar">
                 <ul>
-                    <li class="list" target="/templates/">
-                        <a href="/templates/" class="nav-link">
+                    <li class="list" target="/">
+                        <a href="/" class="nav-link">
                             <span class="icon">
                                 <i class="fa-solid fa-house"></i>
                             </span>
                             <span class="text">홈</span>
                         </a>
                     </li>
-                    <li class="list" target="/templates/timetable/">
-                        <a href="/templates/timetable/" class="nav-link">
+                    <li class="list" target="/timetable/">
+                        <a href="/timetable/" class="nav-link">
                             <span class="icon">
                                 <i class="fa-solid fa-table"></i>
                             </span>
                             <span class="text">시간표</span>
                         </a>
                     </li>
-                    <li class="list" target="/templates/search/">
-                        <a href="/templates/search/" class="nav-link">
+                    <li class="list" target="/search/">
+                        <a href="/search/" class="nav-link">
                             <span class="icon">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
                             <span class="text">검색</span>
                         </a>
                     </li>
-                    <li class="list" target="/templates/my/">
-                        <a href="/templates/my/" class="nav-link">
+                    <li class="list" target="/my/">
+                        <a href="/my/" class="nav-link">
                             <span class="icon">
                                 <i class="fa-solid fa-user"></i>
                             </span>
