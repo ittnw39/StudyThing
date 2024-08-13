@@ -11,12 +11,12 @@ public class HomeController {
         return "login/index";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/register/")
     public String showRegisterPage() {
         return "register/index";
     }
 
-    @GetMapping("/findmyacc")
+    @GetMapping("/findmyacc/")
     public String showFindMyAccountPage() {
         // 비밀번호 찾기 페이지 경로를 추가
         return "findmyacc/index";

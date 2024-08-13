@@ -14,16 +14,16 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long courseId;
+    private Long id;
 
     @Column(nullable = false)
-    private String courseName;
+    private String name;
 
     private String classroom;
     private String professorName;
     private Integer credits;
     private String schedule;
-    private String courseDescription;
+    private String description;
 
     @OneToMany(mappedBy = "course")
     private List<UserSchedule> userSchedules;

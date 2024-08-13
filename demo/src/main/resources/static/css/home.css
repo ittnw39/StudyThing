@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&display=swap');
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin: 10px 18px 5px 10px;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.info {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#info-box {
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    background-color: #f8f7f7;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.314);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.content-header {
+    font-size: 29px;
+}
+
+.group-bottom0sheet {
+    position: fixed;
+    z-index: 2000;
+    top: 10%;
+    width: 100%;
+    height: 90%;
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-out;
+    overflow: scroll;
+}
+
+.handler {
+    width: 100px;
+    height: 5px;
+    background-color: #a3a3a3;
+    border-radius: 2px;
+    margin: 10px auto;
+}
+
+/*group-card*/
+.group-card{
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.group-card-header{
+    font-size: 25px;
+}
+
+.group-card-body{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+
+.group-bottom0sheet0content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.group-function {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10%;
+}
+
+.group-function-nav {
+    position: relative;
+    width: calc(100%);
+    height: 80%;
+    border: 2px solid rgba(209, 213, 219, 0.3);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    font-size: 28px;
+}
+
+.group-function-nav ul{
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.group-function-nav li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+#gfn-indicator{
+    position: inherit;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: 3px;
+    background-color: rgb(187, 20, 220);
+    transition: 0.3s ease-in-out;
+}
+
+.function-tab{
+    height: 80%;
+}
+
+/*chat탭*/
+.group-chat {
+    height: 100%;
+}
+
+.msg-box {
+    bottom: 0;
+    margin: 12px 0 0 0;
+    width: 100%;
+    height: 90%;
+    border-radius: 10px;
+    box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.253);
+    overflow: auto;
+    border-bottom: none;
+    background-color: rgb(241, 241, 241);
+}
+
+.msg-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.msg-box::-webkit-scrollbar-thumb {
+    background: rgb(187, 20, 220);
+    border-radius: 5px;
+}
+
+.msg-box::-webkit-scrollbar-track {
+    background: rgba(100, 100, 100, 0.1);
+}
+
+#message {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-top: 5px;
+    width: 100%;
+    height: 50px;
+}
+
+#message-bg {
+    padding: 5px;
+    border-radius: 10px;
+    margin: 2.5px 5px 2.5px 5px;
+    width: 60% auto;
+    max-width: 60%;
+    height: 100% auto;
+    background-color: rgb(187, 77, 238);
+}
+
+.send-box {
+    margin-top: 8px;
+    display: flex;
+    justify-content: left;
+}
+
+.send-box input {
+    width: calc(100% - 25%);
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-bottom: solid 2px rgb(187, 20, 220);
+}
+
+.send-box input:focus {
+    outline: none;
+}
+
+.send-box button {
+    font-size: 15px;
+    width: 25%;
+    margin-left: 5px;
+    border: none;
+    border-radius: 5px;
+    padding: 0 20px 0 20px;
+    color: white;
+    background-color: rgb(187, 20, 220);
+}
+
+/*스터디 탭*/
+.study{
+    height: 100%;
+}
+
+/*클라우드 탭*/
+.cloud-tab{
+    height: 100%;
+}
+
+/*멤버 탭*/
+.memebr-tab{
+    height: 100%;
+}
