@@ -52,9 +52,11 @@
         <div class="handler"></div>
         <div class="group-bottom0sheet0content">
             <div class="groupsheet-header">
-                <span id="group-title" style="font-size: 30px;">그룹명</span><br>
+                <span id="group-title" style="font-size: 30px;">그룹명</span>
+                <i class="fa-solid fa-right-from-bracket" style="font-size:25px; float: right; cursor: pointer;" id="group_exit"></i><br>
                 <span id="group-description" style="font-size: 20px;">그룹 정보 / 설명</span>
             </div>
+            <!--그룹 내 네비바-->
             <div class="group-function">
                 <div class="group-function-nav">
                     <ul>
@@ -78,6 +80,7 @@
                     <div id="gfn-indicator"></div>
                 </div>
             </div>
+            <!--그룹 내 기능탭-->
             <div class="function-tab">
                 <div class="group-chat">
                     <div class="msg-box">
@@ -111,13 +114,68 @@
                     </div>
                 </div>
                 <div class="study">
-                    
+                    <div class="study_progress">
+                        <i class="fa-solid fa-scroll"></i>
+                        <span style="font-size: 20px;">총 진행도</span>
+                        <div id="progressbar-cotainer">
+                            <div id="progress-bar"></div>
+                            <span class="progress-text" id="progress-text"></span>
+                        </div>
+                        <span id="study_progress_status" style="opacity: 50%; position: relative; bottom: 0;">아직 진행중인
+                            목표가 없습니다.</span>
+                    </div>
+                    <div class="study_goals">
+                        <span style="font-size: 20px;">현재 목표</span>
+                        <!--div class="goal">
+                            <div class="goal_content">
+                                <span id="goal_text" style="width: 100%; height: auto;"></span>
+                                <hr>
+                                <span id="goal_due"></span>
+                            </div>
+                            <label class="goal_check">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div-->
+                    </div>
+                    <span style="font-size: 20px; width: 100%; margin-top: 10px;">목표 추가</span>
+                    <div class="add_goals">
+                        <input type="text" id="goals_text_input" />
+                        <button type="submit"><i class="fa-solid fa-plus"></i>추가</button>
+                        <span id="set_due">만료일 : <input type="date" id="goals_due_input" /></span>
+                    </div>
                 </div>
                 <div class="cloud-tab">
-                    
                 </div>
                 <div class="member-tab">
-                    
+                    <div class="memebr-list">
+                        <!--i class="fa-solid fa-star" style="color: gold; position: inherit; margin-left: 10px;"></i-->
+                        <div id="member-president-card">
+                            <span id="president-id" style="font-size: 20px; margin-left: 10px;">
+                                John Doe
+                                <i class="fa-solid fa-star" style="color: gold;"></i>
+                            </span>
+                            <span id="president-major" style="margin-right: 15px;">
+                                OO학과
+                            </span>
+                        </div>
+                        <div id="member-card">
+                            <span id="president-id" style="font-size: 20px; margin-left: 10px;">
+                                Jone Doe
+                            </span>
+                            <span id="president-major" style="margin-right: 15px;">
+                                OO학과
+                            </span>
+                        </div>
+                        <div id="member-card">
+                            <span id="president-id" style="font-size: 20px; margin-left: 10px;">
+                                Jone Doe
+                            </span>
+                            <span id="president-major" style="margin-right: 15px;">
+                                OO학과
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
