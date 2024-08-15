@@ -11,6 +11,10 @@ body {
     font-style: normal;
 }
 
+a{
+    text-decoration: none !important;
+}
+
 .header {
     display: flex;
     align-items: center;
@@ -387,8 +391,80 @@ body {
 
 /*클라우드 탭*/
 .cloud-tab {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 100%;
+}
+
+.upload_button_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.file_upload_input{display: none;}
+.file_upload_button {
+    width: 99%;
+    background-color: #1ac597;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+#file-error-message{
+    font-family: Arial, sans-serif !important;
+    font-size: 13px;
+    color: red; 
+}
+
+.file_directory {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 5px;
+    align-content:baseline;
+}
+
+.file_card {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    flex:auto;
+}
+
+.file_info{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.file-name{
+    overflow-wrap: break-word;
+}
+
+.file-delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 8px;
 }
 
 /*멤버 탭*/
@@ -424,4 +500,4 @@ body {
     box-shadow: inset 0 0 6px 0 rgba(0, 0, 0, 0.253);
     margin-bottom: 5px;
     cursor: pointer;
-}
+} 

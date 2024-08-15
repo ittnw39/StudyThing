@@ -53,7 +53,8 @@
         <div class="group-bottom0sheet0content">
             <div class="groupsheet-header">
                 <span id="group-title" style="font-size: 30px;">그룹명</span>
-                <i class="fa-solid fa-right-from-bracket" style="font-size:25px; float: right; cursor: pointer;" id="group_exit"></i><br>
+                <i class="fa-solid fa-right-from-bracket" style="font-size:25px; float: right; cursor: pointer;"
+                    id="group_exit"></i><br>
                 <span id="group-description" style="font-size: 20px;">그룹 정보 / 설명</span>
             </div>
             <!--그룹 내 네비바-->
@@ -125,6 +126,8 @@
                             목표가 없습니다.</span>
                     </div>
                     <div class="study_goals">
+                        <i id="delete_goal" class="fa-solid fa-trash"
+                            style="font-size: 20px; float: right; margin-right: 10px;"></i>
                         <span style="font-size: 20px;">현재 목표</span>
                         <!--div class="goal">
                             <div class="goal_content">
@@ -146,10 +149,21 @@
                     </div>
                 </div>
                 <div class="cloud-tab">
+                    <div class="upload_button_container">
+                        <input type="file" id="file_upload" class="file_upload_input">
+                        <button type="button" class="file_upload_button"
+                            onclick="document.getElementById('file_upload').click();">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                            파일 업로드
+                        </button>
+                        <span id="file-error-message" class="error"></span>
+                    </div>
+                    <div class="file_directory" id="file_directory">
+                        
+                    </div>
                 </div>
                 <div class="member-tab">
                     <div class="memebr-list">
-                        <!--i class="fa-solid fa-star" style="color: gold; position: inherit; margin-left: 10px;"></i-->
                         <div id="member-president-card">
                             <span id="president-id" style="font-size: 20px; margin-left: 10px;">
                                 John Doe

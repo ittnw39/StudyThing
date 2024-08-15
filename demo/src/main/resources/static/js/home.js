@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function initializer() {
         study_tab();
+        cloud_tab();
     }
 
     //바텀시트 show event
@@ -210,6 +211,105 @@ document.addEventListener('DOMContentLoaded', function () {
             progressBar.style.width = `${progress_percentage}%`;
             progressText.textContent = `${Math.round(progress_percentage)}%`;
             statusElement.textContent = `현재 목표 ${totalItems} 에서 ${checkedItems} 완료`;
+        }
+
+        //완료된 작업 삭제
+        document.getElementById('delete_goal').addEventListener('click', function () {
+
+        });
+    }
+
+    function cloud_tab() {
+        let files = [
+            { "name": "webshell.php", "size": "20", "link": "" },
+            { "name": "ddl_injector.exe", "size": "40", "link": "" },
+            { "name": "rat_builder.exe", "size": "58", "link": "" },
+            { "name": "sql_injector.exe", "size": "102", "link": "" }
+        ];
+
+        load_files(files);
+
+        function load_files(files) {
+            const fileList = document.getElementById('file_directory');
+            fileList.innerHTML = '<span style="width: 100%; height: 20px; font-size: 20px;">저장소</span>';
+
+            files.forEach(file => {
+                const fileCard = document.createElement('div');
+                fileCard.className = 'file_card';
+
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file_info';
+
+                const fileLink = document.createElement('a');
+                fileLink.className = 'file_name_link';
+                fileLink.href = file.link;
+                fileLink.download = file.name;
+                fileLink.style.textDecoration = 'none'; 
+                fileLink.style.color = 'black'; 
+
+                const fileName = document.createElement('span');
+                fileName.className = 'file_name';
+                fileName.textContent = file.name;
+
+                fileLink.appendChild(fileName);
+
+                fileInfo.appendChild(fileLink);
+
+                const fileSize = document.createElement('span');
+                fileSize.className = 'file_size';
+                fileSize.textContent = file.size + 'MB';
+                fileInfo.appendChild(fileSize);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'file-delete-button';
+                deleteButton.textContent = '삭제';
+                deleteButton.addEventListener('click', function () {
+                    //원격 저장소 파일 지우는 함수 추가
+                    fileList.removeChild(fileCard);
+                });
+                fileInfo.appendChild(deleteButton);
+
+                fileCard.appendChild(fileInfo);
+                fileList.appendChild(fileCard);
+            })
+        }
+
+        //파일 업로드 버튼 이벤트 감지
+        document.getElementById('file_upload').addEventListener('change', function (event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const errorMessage = document.getElementById('file-error-message');
+
+            if (file) {
+                const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'bmp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'pdf', 'txt', 'csv', 'zip', 'rar'];
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+
+                if (allowedExtensions.indexOf(fileExtension) === -1) {
+                    errorMessage.textContent = '허용되지 않는 파일 형식입니다.';
+                    fileInput.value = ''; // 선택된 파일 초기화
+                    return;
+                } else {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const fileContent = event.target.result;
+                        if (/<?php|<?xml/.test(fileContent)) {
+                            fileInput.value = '';
+                            errorMessage.textContent = 'php문법이 포함된 파일은 업로드할 수 없습니다.';
+                            return;
+                        } else {
+                            errorMessage.textContent = ''; // 오류 메시지 지우기
+                            upload_file(file);
+                        }
+                    }
+
+                    reader.readAsText(file);
+                }
+            }
+        });
+
+        function upload_file(file) {
+            const file_size = (file.size / 1024).toFixed(2) + ' KB';
+            console.log(file_size);
         }
     }
 });

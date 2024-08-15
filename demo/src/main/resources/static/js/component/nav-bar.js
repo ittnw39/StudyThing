@@ -78,6 +78,16 @@ class NavBar extends HTMLElement {
         return `
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
+        :root {
+            
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                
+            }
+        }
+
         .nav-bar {
             position: fixed;
             display: flex;
