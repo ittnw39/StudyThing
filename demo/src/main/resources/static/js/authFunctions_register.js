@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+
     ['textbox-email', 'textbox-name', 'textbox-st-num', 'major-combobox'].forEach(function (id) {
         document.getElementById(id).addEventListener('input', function () {
             this.nextElementSibling.style.display = 'none';

@@ -62,6 +62,31 @@ group_divs.forEach(group_div => {
         join_modal.style.display = "block";
         join_group_title.textContent = title;
     }
+
+     // 그룹 가입 버튼 클릭 시 처리
+            document.getElementById('join').addEventListener('click', async () => {
+                try {
+                    const userId = localStorage.getItem('userId'); // 실제 로그인한 사용자 ID
+                    const groupId = group_div.dataset.groupId; // 그룹 ID를 데이터 속성에서 가져옴
+
+                    const response = await fetch(`/study/${groupId}/join?userId=${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        }
+                    });
+
+                    if (response.ok) {
+                        alert('그룹 가입 성공!');
+                        join_modal.style.display = 'none';
+                    } else {
+                        alert('그룹 가입 실패');
+                    }
+                } catch (error) {
+                    console.error('네트워크 에러:', error);
+                }
+            });
+        }
     
     window.onclick = (event) => {
         if (event.target == join_modal) {
@@ -69,3 +94,4 @@ group_divs.forEach(group_div => {
         }
     }
 })
+

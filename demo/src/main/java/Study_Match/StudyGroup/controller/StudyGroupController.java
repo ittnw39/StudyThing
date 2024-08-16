@@ -2,7 +2,8 @@ package Study_Match.StudyGroup.controller;
 
 import Study_Match.StudyGroup.Entity.StudyGroup;
 import Study_Match.StudyGroup.service.StudyGroupService;
-import Study_Match.course.Entity.UserSchedule;
+import Study_Match.StudyGroup.service.UserStudyGroupService;
+import Study_Match.user.Entity.User;
 import Study_Match.user.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +16,31 @@ import java.util.List;
 @RequestMapping("/study")
 public class StudyGroupController {
 
-    @Autowired
-    private StudyGroupService studyGroupService;
+    private final StudyGroupService studyGroupService;
+    private final UserService userService;
+    private final UserStudyGroupService userStudyGroupService;
 
     @Autowired
-    private UserService userService;
+    public StudyGroupController(StudyGroupService studyGroupService, UserService userService, UserStudyGroupService userStudyGroupService) {
+        this.studyGroupService = studyGroupService;
+        this.userService = userService;
+        this.userStudyGroupService = userStudyGroupService;
+    }
 
     @PostMapping("/create")
-    public ResponseEntity<StudyGroup> createStudyGroup(@RequestBody StudyGroup studyGroup) {
-        StudyGroup newStudyGroup = studyGroupService.createStudyGroup(studyGroup);
+    public ResponseEntity<StudyGroup> createStudyGroup(@RequestBody StudyGroup studyGroup, @RequestParam Long leaderId) {
+        if (studyGroup == null || leaderId == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        User leader = userService.getUserById(leaderId);
+
+        if (leader == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        StudyGroup newStudyGroup = studyGroupService.createStudyGroupWithLeader(studyGroup, leader);
+
         return ResponseEntity.ok(newStudyGroup);
     }
 
@@ -35,11 +52,9 @@ public class StudyGroupController {
 
     @GetMapping("/{id}")
     public ResponseEntity<StudyGroup> getStudyGroupById(@PathVariable Long id) {
-        StudyGroup studyGroup = studyGroupService.getStudyGroupById(id);
-        if (studyGroup == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(studyGroup);
+        return studyGroupService.getStudyGroupById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/search")
@@ -50,11 +65,9 @@ public class StudyGroupController {
 
     @PutMapping("/{id}")
     public ResponseEntity<StudyGroup> updateStudyGroup(@PathVariable Long id, @RequestBody StudyGroup studyGroupDetails) {
-        StudyGroup updatedStudyGroup = studyGroupService.updateStudyGroup(id, studyGroupDetails);
-        if (updatedStudyGroup == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(updatedStudyGroup);
+        return studyGroupService.updateStudyGroup(id, studyGroupDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
@@ -63,15 +76,13 @@ public class StudyGroupController {
         return ResponseEntity.noContent().build();
     }
 
-    //과목명으로 그룹조회
-    @GetMapping("/{courseId}")
-    public ResponseEntity<List<StudyGroup>> getStudyGroupsByCourseId(@PathVariable Long userId, @PathVariable Long courseId) {
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<StudyGroup>> getStudyGroupsByCourseId(@PathVariable Long courseId) {
         List<StudyGroup> studyGroups = studyGroupService.getStudyGroupsByCourseId(courseId);
         return ResponseEntity.ok(studyGroups);
     }
 
-    //사용자아이디로 그룹찾기
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<StudyGroup>> getStudyGroupsByUserId(@PathVariable Long userId) {
         List<StudyGroup> studyGroups = studyGroupService.getStudyGroupsByUserId(userId);
         return ResponseEntity.ok(studyGroups);
