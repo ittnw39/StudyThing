@@ -80,3 +80,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+group_divs.forEach(group_div => {
+    group_div.onclick = async () => {
+        const groupId = group_div.dataset.groupId; // 그룹 ID를 데이터 속성에서 가져옴
+        try {
+            const response = await fetch(`/api/groups/${groupId}`);
+            if (response.ok) {
+                const groupDetails = await response.json();
+                document.querySelector('.group-title').textContent = groupDetails.name;
+                document.querySelector('.group-description').textContent = groupDetails.description;
+                // 추가로 필요한 데이터를 바텀 시트에 표시
+            } else {
+                console.error('그룹 정보를 불러오는데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('네트워크 에러:', error);
+        }
+
+        bottomsheet.style.transform = `translateY(0)`;
+    }
+});
