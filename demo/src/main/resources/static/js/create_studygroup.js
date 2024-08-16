@@ -1,54 +1,53 @@
-document.getElementById('return').addEventListener('click', function(event) {
+document.getElementById('return').addEventListener('click', function (event) {
     event.preventDefault();
     window.history.back();
 });
 
-document.getElementById('submit').addEventListener('click', function(event) {
+document.getElementById('submit').addEventListener('click', function (event) {
     event.preventDefault();
 
     var icon = document.getElementById('submiticon');
     icon.className = 'fa-solid fa-spinner fa-spin-pulse';
 
-     // Æû µ¥ÀÌÅÍ ¼öÁý
-        const studyGroupName = document.querySelector('input[type="text"]').value;
-        const recruitmentNumber = document.querySelector('input[type="number"]').value;
-        const groupDescription = document.querySelector('textarea').value;
-        const courseId = document.getElementById('major-combobox').value;
-        const leaderId = 1; // ½ÇÁ¦ ·Î±×ÀÎÇÑ »ç¿ëÀÚÀÇ ID¸¦ ¿©±â¿¡ ¼³Á¤ÇØ¾ß ÇÕ´Ï´Ù.
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    const studyGroupName = document.querySelector('input[type="text"]').value;
+    const recruitmentNumber = document.querySelector('input[type="number"]').value;
+    const groupDescription = document.querySelector('textarea').value;
+    const courseId = document.getElementById('major-combobox').value;
+    const leaderId = 1; // ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
 
-        const studyGroupData = {
-            name: studyGroupName,
-            course: { id: courseId },
-            leader: { id: leaderId },
-            recruitmentNumber: recruitmentNumber,
-            currentNumber: 0, // ÃÊ±â °ªÀ¸·Î ¼³Á¤
-            groupDescription: groupDescription,
-            recruitmentStatus: "OPEN", // »óÅÂ´Â ÇÊ¿ä¿¡ µû¶ó ¼³Á¤
-            creationDate: new Date()
-        };
+    const studyGroupData = {
+        name: studyGroupName,
+        course: { id: courseId },
+        leader: { id: leaderId },
+        recruitmentNumber: recruitmentNumber,
+        currentNumber: 0, // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        groupDescription: groupDescription,
+        recruitmentStatus: "OPEN", // ï¿½ï¿½ï¿½Â´ï¿½ ï¿½Ê¿ä¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        creationDate: new Date()
+    };
 
-        try {
-            const response = await fetch('/study/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(studyGroupData)
-            });
+    try {
+        const response = await fetch('/study/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(studyGroupData)
+        });
 
-            if (response.ok) {
-                const newStudyGroup = await response.json();
-                console.log('½ºÅÍµð ±×·ì »ý¼º ¼º°ø:', newStudyGroup);
-                // »ý¼º ¼º°ø ½Ã ÈÄ¼Ó Á¶Ä¡ (¿¹: ±×·ì ÆäÀÌÁö·Î ¸®µð·º¼Ç)
-                window.location.href = `/study/${newStudyGroup.id}`;
-            } else {
-                console.error('½ºÅÍµð ±×·ì »ý¼º ½ÇÆÐ');
-                icon.className = 'fa-solid fa-hammer';
-                // ¿À·ù ¸Þ½ÃÁö¸¦ »ç¿ëÀÚ¿¡°Ô Ç¥½ÃÇÒ ¼ö ÀÖÀ½
-            }
-        } catch (error) {
-            console.error('³×Æ®¿öÅ© ¿¡·¯:', error);
+        if (response.ok) {
+            const newStudyGroup = await response.json();
+            console.log('ï¿½ï¿½ï¿½Íµï¿½ ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½:', newStudyGroup);
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ä¼ï¿½ ï¿½ï¿½Ä¡ (ï¿½ï¿½: ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ð·º¼ï¿½)
+            window.location.href = `/study/${newStudyGroup.id}`;
+        } else {
+            console.error('ï¿½ï¿½ï¿½Íµï¿½ ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½');
             icon.className = 'fa-solid fa-hammer';
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
-    });
+    } catch (error) {
+        console.error('ï¿½ï¿½Æ®ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½:', error);
+        icon.className = 'fa-solid fa-hammer';
+    }
 });

@@ -113,6 +113,10 @@ function loadmajor() {
 
     const selectElement = document.getElementById('major-combobox');
 
+    if (!selectElement) {
+            return Promise.reject(new Error('major-combobox 요소를 찾을 수 없습니다.'));
+        }
+
     return new Promise((resolve, reject) => {
         try {
             data.forEach(item => {
