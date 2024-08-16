@@ -2,13 +2,13 @@
     const modify_icon = document.getElementById('modify-timetable');
     const timetableContainer = document.querySelector('.timetable-container');
 
-    // ÇöÀç ·Î±×ÀÎµÈ »ç¿ëÀÚÀÇ ID¸¦ °¡Á®¿Í¾ß ÇÕ´Ï´Ù. (¿¹: localStorage, cookie, ¶Ç´Â Á÷Á¢ ¼³Á¤)
-    const userId = 1; // ½ÇÁ¦ »ç¿ëÀÚÀÇ ID·Î ´ëÃ¼ÇØ¾ß ÇÕ´Ï´Ù.
+    // í˜„ìž¬ ë¡œê·¸ì¸ëœ ì‚¬ìš©ìžì˜ IDë¥¼ ê°€ì ¸ì˜´
+    const userId = localStorage.getItem('userId'); // ì‹¤ì œ ì‚¬ìš©ìžì˜ IDë¡œ ëŒ€ì²´í•´ì•¼ í•©ë‹ˆë‹¤.
 
-    // ½Ã°£Ç¥ µ¥ÀÌÅÍ¸¦ ¹é¿£µå¿¡¼­ °¡Á®¿À±â
+    // ì‹œê°„í‘œ ë°ì´í„°ë¥¼ ë°±ì—”ë“œì—ì„œ ê°€ì ¸ì˜¤ê¸°
     async function loadTimetable() {
         try {
-            const response = await fetch(`/courses/user/${userId}`);
+            const response = await fetch(`/user-schedule/user/${userId}`);
             if (response.ok) {
                 const userSchedules = await response.json();
                 renderTimetable(userSchedules);
@@ -19,46 +19,69 @@
             console.error('Network error:', error);
         }
     }
-
-    // ½Ã°£Ç¥ µ¥ÀÌÅÍ¸¦ HTML·Î ·»´õ¸µÇÏ´Â ÇÔ¼ö
+    // ì‹œê°„í‘œ ë°ì´í„°ë¥¼ HTMLë¡œ ë Œë”ë§í•˜ëŠ” í•¨ìˆ˜
     function renderTimetable(userSchedules) {
         const timetable = document.getElementById('timetable');
 
-        // ±âÁ¸ ½Ã°£Ç¥ ºñ¿ì±â
+        // ê¸°ì¡´ ì‹œê°„í‘œ ë¹„ìš°ê¸°
         timetable.querySelectorAll('.course-block').forEach(block => block.remove());
 
         userSchedules.forEach(schedule => {
             const block = document.createElement('div');
             block.className = 'course-block';
             block.innerHTML = `
-                <span class="course-name">${schedule.course.name}</span><br>
-                <span class="course-time">${schedule.dayOfWeek} ${schedule.startTime} - ${schedule.endTime}</span><br>
-                <span class="course-classroom">${schedule.course.classroom}</span>
-            `;
+            <span class="course-name">${schedule.course.name}</span><br>
+            <span class="course-time">${schedule.dayOfWeek} ${schedule.startTime} - ${schedule.endTime}</span><br>
+            <span class="course-classroom">${schedule.course.classroom}</span>
+        `;
             block.style.gridColumn = getDayColumn(schedule.dayOfWeek);
             block.style.gridRow = getTimeRow(schedule.startTime, schedule.endTime);
             timetable.appendChild(block);
         });
     }
 
-    // ¿äÀÏÀ» ±×¸®µå ÄÃ·³ ¹øÈ£·Î º¯È¯ÇÏ´Â ÇÔ¼ö
+    // ìš”ì¼ì„ ê·¸ë¦¬ë“œ ì»¬ëŸ¼ ë²ˆí˜¸ë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜
     function getDayColumn(dayOfWeek) {
-        const days = ['¿ù', 'È­', '¼ö', '¸ñ', '±Ý'];
-        return days.indexOf(dayOfWeek) + 2; // '¿ù'ÀÌ 2¹ø ÄÃ·³ºÎÅÍ ½ÃÀÛ
+        const days = ['ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ'];
+        return days.indexOf(dayOfWeek) + 2; // 'ì›”'ì´ 2ë²ˆ ì»¬ëŸ¼ë¶€í„° ì‹œìž‘
     }
 
-    // ½Ã°£À» ±×¸®µå Çà ¹øÈ£·Î º¯È¯ÇÏ´Â ÇÔ¼ö
+    // ì‹œê°„ì„ ê·¸ë¦¬ë“œ í–‰ ë²ˆí˜¸ë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜
     function getTimeRow(startTime, endTime) {
         const startHour = parseInt(startTime.split(':')[0], 10);
         const endHour = parseInt(endTime.split(':')[0], 10);
-        return `${startHour - 8 + 1} / span ${endHour - startHour}`; // 8½ÃºÎÅÍ ½ÃÀÛÇÑ´Ù°í °¡Á¤
+        return `${startHour - 8 + 1} / span ${endHour - startHour}`; // 8ì‹œë¶€í„° ì‹œìž‘í•œë‹¤ê³  ê°€ì •
     }
 
-    // ÆäÀÌÁö ·Îµå ½Ã ½Ã°£Ç¥ ºÒ·¯¿À±â
+    // íŽ˜ì´ì§€ ë¡œë“œ ì‹œ ì‹œê°„í‘œ ë¶ˆëŸ¬ì˜¤ê¸°
     document.addEventListener('DOMContentLoaded', loadTimetable);
 
-    // ½Ã°£Ç¥ ¼öÁ¤ ¾ÆÀÌÄÜ Å¬¸¯ ½Ã ÀÌº¥Æ®
+    // ì‹œê°„í‘œ ìˆ˜ì • ì•„ì´ì½˜ í´ë¦­ ì‹œ ì´ë²¤íŠ¸
     modify_icon.addEventListener("click", () => {
         window.location.href = "/timetable/create_timetable.html";
     });
+
+    // ê³¼ëª© ì¶”ê°€ ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ì˜ˆì‹œ
+    document.getElementById('add-course-btn').addEventListener('click', async () => {
+        const courseId = document.getElementById('course-select').value;
+        const dayOfWeek = document.getElementById('day-of-week').value;
+        const startTime = document.getElementById('start-time').value;
+        const endTime = document.getElementById('end-time').value;
+
+        const scheduleDetails = { dayOfWeek, startTime, endTime };
+        const response = await fetch(`/user-schedule?userId=${userId}&courseId=${courseId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(scheduleDetails),
+        });
+
+        if (response.ok) {
+            loadTimetable(); // ì‹œê°„í‘œ ìƒˆë¡œê³ ì¹¨
+        } else {
+            console.error('Failed to add course to timetable.');
+        }
+    });
+
 })();

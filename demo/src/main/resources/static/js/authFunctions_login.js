@@ -66,7 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 alert('로그인 성공');
                 console.log('유저:', data);
-                window.location.href = '../index.html';
+                // 로그인 성공 시 사용자 정보를 로컬 스토리지에 저장
+                localStorage.setItem('userId', data.id);
+                localStorage.setItem('userName', data.name);
+                window.location.href = '/index.html';
             })
             .catch(error => {
                 console.error('<에러 메세지>:', error);

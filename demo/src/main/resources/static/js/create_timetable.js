@@ -1,72 +1,146 @@
-document.getElementById('return').addEventListener('click', function(event) {
+document.getElementById('return').addEventListener('click', function (event) {
     event.preventDefault();
     window.history.back();
 });
 
-document.getElementById('submit').addEventListener('click', async function(event) {
+// ê²€ìƒ‰ ê¸°ëŠ¥ êµ¬í˜„
+document.getElementById('search-bar button').addEventListener('click', async function(event) {
     event.preventDefault();
-
-    // ¼ö¾÷ Ãß°¡ ¿¹½Ã
-    const courseData = {
-        name: "¼ö¾÷¸í", // ½ÇÁ¦ °ªÀ¸·Î ´ëÃ¼ÇØ¾ß ÇÔ
-        classroom: "°­ÀÇ½Ç",
-        professorName: "±³¼ö¸í",
-        credits: 3,
-        schedule: "¿ù¿äÀÏ 9:00-10:30",
-        description: "¼ö¾÷ ¼³¸í"
-    };
+    const query = document.querySelector('#search-bar input').value;
 
     try {
-        const response = await fetch('/courses', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(courseData)
-        });
-
+        const response = await fetch(`/courses/search?query=${encodeURIComponent(query)}`);
         if (response.ok) {
-            const newCourse = await response.json();
-            console.log('¼ö¾÷ »ı¼º ¼º°ø:', newCourse);
-            // ¼º°ø ½Ã ÈÄ¼Ó Ã³¸®
+            const courses = await response.json();
+            renderSearchResults(courses);
         } else {
-            console.error('¼ö¾÷ »ı¼º ½ÇÆĞ');
+            console.error('Failed to fetch search results');
         }
     } catch (error) {
-        console.error('³×Æ®¿öÅ© ¿¡·¯:', error);
+        console.error('Network error:', error);
     }
 });
 
-// ¼ö¾÷ »èÁ¦ ¿¹½Ã
-async function deleteCourse(courseId) {
+// ê²€ìƒ‰ ê²°ê³¼ ë Œë”ë§ í•¨ìˆ˜
+function renderSearchResults(courses) {
+    const resultsContainer = document.querySelector('.result');
+    resultsContainer.innerHTML = '';
+
+    courses.forEach(course => {
+        const courseCard = document.createElement('div');
+        courseCard.className = 'course-card';
+        courseCard.innerHTML = `
+            <div id="course-card-header">
+                <span id="course-name" style="font-size: 18px;">${course.name}</span>
+                <button id="add" data-course-id="${course.id}">ì¶”ê°€</button>
+            </div>
+            <div id="course-card-body">
+                <span>${course.description}</span>
+            </div>
+        `;
+        resultsContainer.appendChild(courseCard);
+
+        // ê³¼ëª© ì¶”ê°€ ë²„íŠ¼ì— ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
+        courseCard.querySelector('#add').addEventListener('click', async () => {
+            await addCourseToCurrentList(course);
+        });
+    });
+}
+
+
+// í˜„ì¬ ëª©ë¡ì— ê³¼ëª© ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
+async function addCourseToCurrentList(course) {
+    const currentListContainer = document.querySelector('.current-add');
+
+    const courseCard = document.createElement('div');
+    courseCard.className = 'course-card';
+    courseCard.dataset.courseId = course.id;
+    courseCard.innerHTML = `
+        <div id="course-card-header">
+            <span id="course-name" style="font-size: 18px;">${course.name}</span>
+            <button id="delete">ì‚­ì œ</button>
+        </div>
+        <div id="course-card-body">
+            <span>${course.description}</span>
+        </div>
+    `;
+    currentListContainer.appendChild(courseCard);
+
+    // ì‚­ì œ ë²„íŠ¼ì— ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€
+    courseCard.querySelector('#delete').addEventListener('click', () => {
+        courseCard.remove(); // í˜„ì¬ ëª©ë¡ì—ì„œ ê³¼ëª© ì œê±°
+    });
+}
+
+// ì €ì¥ ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ
+document.getElementById('submit').addEventListener('click', async function(event) {
+    event.preventDefault();
+
+    const userId = localStorage.getItem('userId'); // ì‚¬ìš©ìì˜ IDë¥¼ ë¡œì»¬ ìŠ¤í† ë¦¬ì§€ì—ì„œ ê°€ì ¸ì˜´
+    const currentListContainer = document.querySelector('.current-add');
+    const courseCards = currentListContainer.querySelectorAll('.course-card');
+
+    const userScheduleRequests = Array.from(courseCards).map(courseCard => {
+        const courseId = courseCard.dataset.courseId;
+        return addCourseToUserSchedule(userId, courseId);
+    });
+
     try {
-        const response = await fetch(`/courses/${courseId}`, {
+        await Promise.all(userScheduleRequests);
+        console.log('ì‹œê°„í‘œ ì €ì¥ ì„±ê³µ');
+        // ì €ì¥ì´ ì„±ê³µí•˜ë©´ ë‹¤ë¥¸ í˜ì´ì§€ë¡œ ì´ë™í•˜ê±°ë‚˜, ì‚¬ìš©ìì—ê²Œ ì„±ê³µ ë©”ì‹œì§€ë¥¼ í‘œì‹œí•  ìˆ˜ ìˆìŒ
+    } catch (error) {
+        console.error('ì‹œê°„í‘œ ì €ì¥ ì‹¤íŒ¨:', error);
+    }
+});
+
+// ê³¼ëª©ì„ ì‚¬ìš©ì ì‹œê°„í‘œì— ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
+async function addCourseToUserSchedule(userId, courseId) {
+    const response = await fetch(`/user-schedule?userId=${userId}&courseId=${courseId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('ì‚¬ìš©ì ì‹œê°„í‘œì— ê³¼ëª© ì¶”ê°€ ì‹¤íŒ¨');
+    }
+}
+
+
+// ì‹œê°„í‘œì—ì„œ ê³¼ëª©ì„ ì‚­ì œí•˜ëŠ” í•¨ìˆ˜
+async function deleteCourseFromUserSchedule(userScheduleId) {
+    try {
+        const response = await fetch(`/user-schedule/${userScheduleId}`, {
             method: 'DELETE'
         });
 
         if (response.ok) {
-            console.log('¼ö¾÷ »èÁ¦ ¼º°ø');
-            // ¼º°ø ½Ã ÈÄ¼Ó Ã³¸®
+            console.log('ì‹œê°„í‘œì—ì„œ ê³¼ëª© ì‚­ì œ ì„±ê³µ');
+            // ì‹œê°„í‘œì—ì„œ í•´ë‹¹ ê³¼ëª©ì„ ì œê±°
+            document.querySelector(`[data-user-schedule-id="${userScheduleId}"]`).remove();
         } else {
-            console.error('¼ö¾÷ »èÁ¦ ½ÇÆĞ');
+            console.error('ì‹œê°„í‘œì—ì„œ ê³¼ëª© ì‚­ì œ ì‹¤íŒ¨');
         }
     } catch (error) {
-        console.error('³×Æ®¿öÅ© ¿¡·¯:', error);
+        console.error('ë„¤íŠ¸ì›Œí¬ ì˜¤ë¥˜:', error);
     }
 }
 
-// ¼ö¾÷ Ãß°¡ ¹öÆ° Å¬¸¯ ½Ã ÀÌº¥Æ® ÇÚµé·¯
-document.querySelectorAll('#add').forEach(button => {
-    button.addEventListener('click', async () => {
-        const courseId = button.dataset.courseId;
-        await addCourseToUserSchedule(courseId);
+
+// ê³¼ëª© ì‚­ì œ ë²„íŠ¼ í´ë¦­ ì‹œ ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ
+document.querySelectorAll('#delete').forEach(button => {
+    button.addEventListener('click', function() {
+        const courseId = this.closest('.course-card').dataset.courseId;
+        deleteCourseFromCurrentList(courseId);
     });
 });
 
-// ¼ö¾÷ »èÁ¦ ¹öÆ° Å¬¸¯ ½Ã ÀÌº¥Æ® ÇÚµé·¯
-document.querySelectorAll('#delete').forEach(button => {
-    button.addEventListener('click', async () => {
-        const courseId = button.dataset.courseId;
-        await deleteCourse(courseId);
-    });
-});
+// í˜„ì¬ ëª©ë¡ì—ì„œ ê³¼ëª© ì‚­ì œ í•¨ìˆ˜
+function deleteCourseFromCurrentList(courseId) {
+    const courseCard = document.querySelector(`.course-card[data-course-id="${courseId}"]`);
+    if (courseCard) {
+        courseCard.remove(); // í˜„ì¬ ëª©ë¡ì—ì„œ ê³¼ëª© ì œê±°
+    }
+}

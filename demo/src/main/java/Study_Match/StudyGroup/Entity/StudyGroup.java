@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,4 +43,7 @@ public class StudyGroup {
 
     @OneToMany(mappedBy = "studyGroup")
     private List<UserStudyGroup> userStudyGroups;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudyGoal> goals = new ArrayList<>();  // 그룹에 속한 목표 리스트
 }

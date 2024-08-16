@@ -55,4 +55,10 @@ public class CourseService {
     public List<UserSchedule> getCoursesByUserId(Long userId) {
         return userScheduleRepository.findByUserId(userId);
     }
+
+
+    // 강좌 이름을 기준으로 검색
+    public List<Course> searchByName(String name) {
+        return courseRepository.findByNameContainingIgnoreCase(name);
+    }
 }

@@ -21,6 +21,20 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> searchCourses(@RequestParam("query") String query) {
+        try {
+            // query가 숫자인 경우, 강좌 코드로 검색
+            Long id = Long.parseLong(query);
+            Course course = courseService.getCourseById(id);
+            return ResponseEntity.ok(course);
+        } catch (NumberFormatException e) {
+            // 그렇지 않은 경우, 강좌 이름으로 검색
+            List<Course> courses = courseService.searchByName(query);
+            return ResponseEntity.ok(courses);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         Course newCourse = courseService.saveCourse(course);
