@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     throw new Error('알 수 없는 에러가 발생하였습니다. 다시 시도하여 주십시오.');
                 }
             })
+
             .then(data => {
                 alert('로그인 성공');
                 console.log('유저:', data);
