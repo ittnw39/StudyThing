@@ -4,10 +4,13 @@ import Study_Match.StudyGroup.Entity.StudyGroup;
 import Study_Match.StudyGroup.Entity.UserStudyGroup;
 import Study_Match.StudyGroup.Repository.StudyGroupRepository;
 import Study_Match.StudyGroup.Repository.UserStudyGroupRepository;
+import Study_Match.course.Entity.Course;
+import Study_Match.course.Repository.CourseRepository;
 import Study_Match.user.Entity.User;
 import Study_Match.user.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -20,14 +23,14 @@ public class StudyGroupService {
     private final StudyGroupRepository studyGroupRepository;
     private final UserRepository userRepository;
     private final UserStudyGroupRepository userStudyGroupRepository;
-    private final UserStudyGroupService userStudyGroupService;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    public StudyGroupService(StudyGroupRepository studyGroupRepository, UserRepository userRepository, UserStudyGroupRepository userStudyGroupRepository, UserStudyGroupService userStudyGroupService) {
+    public StudyGroupService(StudyGroupRepository studyGroupRepository, UserStudyGroupRepository userStudyGroupRepository, CourseRepository courseRepository, UserRepository userRepository) {
         this.studyGroupRepository = studyGroupRepository;
-        this.userRepository = userRepository;
         this.userStudyGroupRepository = userStudyGroupRepository;
-        this.userStudyGroupService = userStudyGroupService;
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -37,17 +40,24 @@ public class StudyGroupService {
         return studyGroupRepository.save(studyGroup);
     }
 
-    public StudyGroup createStudyGroupWithLeader(StudyGroup studyGroup, User leader) {
-        StudyGroup newStudyGroup = studyGroupRepository.save(studyGroup);
+    @Transactional
+    public StudyGroup createStudyGroupWithLeader(StudyGroup studyGroup, Long courseId, User leader) {
+        // 스터디 그룹에 리더와 코스 설정
+        studyGroup.setLeader(leader);
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+        studyGroup.setCourse(course);
 
-        if (newStudyGroup != null) {
-            UserStudyGroup userStudyGroup = new UserStudyGroup();
-            userStudyGroup.setUser(leader);
-            userStudyGroup.setStudyGroup(newStudyGroup);
-            userStudyGroupService.save(userStudyGroup);
-        }
+        // 스터디 그룹 저장
+        StudyGroup savedStudyGroup = studyGroupRepository.save(studyGroup);
 
-        return newStudyGroup;
+        // UserStudyGroup 엔티티 생성 및 저장
+        UserStudyGroup userStudyGroup = new UserStudyGroup();
+        userStudyGroup.setUser(leader);
+        userStudyGroup.setStudyGroup(savedStudyGroup);
+        userStudyGroupRepository.save(userStudyGroup);
+
+        return savedStudyGroup;
     }
 
     public List<StudyGroup> getAllStudyGroups() {
@@ -66,10 +76,14 @@ public class StudyGroupService {
     }
 
     public List<StudyGroup> getStudyGroupsByUserId(Long userId) {
-        List<UserStudyGroup> userStudyGroups = userStudyGroupRepository.findByUserId(userId);
-        return userStudyGroups.stream()
-                .map(UserStudyGroup::getStudyGroup)
-                .collect(Collectors.toList());
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 유저와 연결된 모든 그룹 ID를 가져옵니다.
+        List<Long> groupIds = userStudyGroupRepository.findGroupIdsByUser(user);
+
+        // 그 그룹 ID들을 사용하여 StudyGroup들을 조회합니다.
+        return studyGroupRepository.findAllById(groupIds);
     }
 
     public List<StudyGroup> getStudyGroupsByLeaderId(Long leaderId) {

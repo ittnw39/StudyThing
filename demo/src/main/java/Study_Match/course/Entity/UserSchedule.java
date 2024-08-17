@@ -1,6 +1,7 @@
 package Study_Match.course.Entity;
 
 import Study_Match.user.Entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +18,12 @@ public class UserSchedule {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference("user-userSchedule")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
+    @JsonBackReference("course-userSchedule")
     private Course course;
 
     @Column(nullable = false)

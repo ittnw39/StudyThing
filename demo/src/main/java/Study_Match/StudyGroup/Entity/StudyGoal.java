@@ -1,5 +1,6 @@
 package Study_Match.StudyGroup.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class StudyGoal {
 
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
+    @JsonBackReference("studyGroup-studyGoal")
     private StudyGroup group;  // 그룹과 다대일 관계
 
     private String task;       // 목표 내용

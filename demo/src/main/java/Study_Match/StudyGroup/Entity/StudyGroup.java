@@ -2,6 +2,8 @@ package Study_Match.StudyGroup.Entity;
 
 import Study_Match.course.Entity.Course;
 import Study_Match.user.Entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,9 +43,11 @@ public class StudyGroup {
 
     private Date creationDate;
 
-    @OneToMany(mappedBy = "studyGroup")
+    @OneToMany(mappedBy = "studyGroup", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference("user-studyGroup") // 순환 참조를 막기 위해 사용
     private List<UserStudyGroup> userStudyGroups;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("studyGroup-studyGoal")
     private List<StudyGoal> goals = new ArrayList<>();  // 그룹에 속한 목표 리스트
 }

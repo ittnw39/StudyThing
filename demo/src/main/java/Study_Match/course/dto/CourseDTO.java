@@ -14,6 +14,7 @@ public class CourseDTO {
     private String classroom;
     private String professorName;
     private Integer credits;
+    private String lectureTime;
     private String schedule;
     private String description;
 

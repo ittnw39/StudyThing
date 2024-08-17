@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/css/home.css" media="(max-width: 768px)">
-    <link rel="stylesheet" href="/css/home_pc.css" media="(min-width: 769px)">
-    <link rel="stylesheet" href="/css/globals.css" media="">
+    <link rel="stylesheet" href="./css/home.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="./css/home_pc.css" media="(min-width: 769px)">
+    <link rel="stylesheet" href="./css/globals.css" media="">
     <title>스터띵 - 홈</title>
-    <script defer src="/js/home.js"></script>
-    <script defer src="/js/globals.js"></script>
+    <script src="./js/home.js"></script>
+    <script src="./js/globals.js"></script>
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -32,31 +32,31 @@
                 <span id="content-title">나의 그룹</span>
             </div>
             <div class="content-body">
-                <div class="group-card">
+                <!-- <div class="group-card">
                     <div class="group-card-header">
-                        <span id="group-title">test2</span>
+                        <span class="group-title">test2</span>
                     </div>
                     <div class="group-card-body">
-                        <span id="course-name">수업명 : 성서와 인간이해 ,</span>
-                        <span id="current-member">현재 참여 인원 : 5</span> / <span id="limited-member"> 30,</span>
-                        <span id="group-description">설명 : 성서와 인간이해의 공부...</span>
+                        <span class="course-name">수업명 : 성서와 인간이해 ,</span>
+                        <span class="current-member">현재 참여 인원 : 5</span> / <span id="limited-member"> 30,</span>
+                        <span class="group-description">설명 : 성서와 인간이해의 공부...</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
     <!--UserMenuBar-->
     <nav-bar></nav-bar>
-    <script src="/js/component/nav-bar.js"></script>
+    <script src="./js/component/nav-bar.js"></script>
     <!--group-modal-->
     <div class="group-bottom0sheet" id="gbt" style="transition: transform 0.3s ease-out; transform: translateY(100%);">
         <div class="handler"></div>
         <div class="group-bottom0sheet0content">
             <div class="groupsheet-header">
-                <span id="group-title" style="font-size: 30px;">그룹명</span>
+                <span class="group-title" style="font-size: 30px;">그룹명</span>
                 <i class="fa-solid fa-right-from-bracket" style="font-size:25px; float: right; cursor: pointer;"
                     id="group_exit"></i><br>
-                <span id="group-description" style="font-size: 20px;">그룹 정보 / 설명</span>
+                <span class="group-description" style="font-size: 20px;">그룹 정보 / 설명</span>
             </div>
             <!--그룹 내 네비바-->
             <div class="group-function">

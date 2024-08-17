@@ -2,6 +2,7 @@ package Study_Match.user.Entity;
 
 import Study_Match.StudyGroup.Entity.UserStudyGroup;
 import Study_Match.course.Entity.UserSchedule;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,9 +42,11 @@ public class User {
     private Date registrationDate;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference("user-studyGroup")
     private List<UserStudyGroup> userStudyGroups;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference("user-userSchedule")
     private List<UserSchedule> userSchedules;
 
 }

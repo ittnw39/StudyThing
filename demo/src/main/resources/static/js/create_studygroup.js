@@ -3,7 +3,7 @@ document.getElementById('return').addEventListener('click', function (event) {
     window.history.back();
 });
 
-document.getElementById('submit').addEventListener('click', function (event) {
+document.getElementById('submit').addEventListener('click', async function (event) {
     event.preventDefault();
 
     var icon = document.getElementById('submiticon');

@@ -28,7 +28,7 @@ public class StudyGroupController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<StudyGroup> createStudyGroup(@RequestBody StudyGroup studyGroup, @RequestParam Long leaderId) {
+    public ResponseEntity<StudyGroup> createStudyGroup(@RequestBody StudyGroup studyGroup, @RequestParam Long leaderId, @RequestParam Long courseId) {
         if (studyGroup == null || leaderId == null) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -39,7 +39,7 @@ public class StudyGroupController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        StudyGroup newStudyGroup = studyGroupService.createStudyGroupWithLeader(studyGroup, leader);
+        StudyGroup newStudyGroup = studyGroupService.createStudyGroupWithLeader(studyGroup, courseId, leader);
 
         return ResponseEntity.ok(newStudyGroup);
     }

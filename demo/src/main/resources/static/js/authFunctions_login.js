@@ -39,12 +39,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!validated) {
             console.log('login submit blocked.');
             return;
-        } else{
+        } else {
             const user = {
                 email: email,
                 password: pw
             };
-    
+
             fetch('/users/login', {
                 method: 'POST',
                 headers: {
@@ -52,28 +52,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify(user)
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else if (response.status === 401) {
-                    alert('유효하지 않은 이메일이나 비밀번호입니다.');
-                    throw new Error('로그인 실패');
-                } else {
-                    throw new Error('알 수 없는 에러가 발생하였습니다. 다시 시도하여 주십시오.');
-                }
-            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else if (response.status === 401) {
+                        alert('유효하지 않은 이메일이나 비밀번호입니다.');
+                        throw new Error('로그인 실패');
+                    } else {
+                        throw new Error('알 수 없는 에러가 발생하였습니다. 다시 시도하여 주십시오.');
+                    }
+                })
 
-            .then(data => {
-                alert('로그인 성공');
-                console.log('유저:', data);
-                // 로그인 성공 시 사용자 정보를 로컬 스토리지에 저장
-                localStorage.setItem('userId', data.id);
-                localStorage.setItem('userName', data.name);
-                window.location.href = '/index.html';
-            })
-            .catch(error => {
-                console.error('<에러 메세지>:', error);
-            });
+                .then(data => {
+                    alert('로그인 성공');
+                    console.log('유저:', data);
+                    // 로그인 성공 시 사용자 정보를 로컬 스토리지에 저장
+                    localStorage.setItem('userId', data.id);
+                    localStorage.setItem('userName', data.name);
+                    window.location.href = '/index.html';
+                })
+                .catch(error => {
+                    console.error('<에러 메세지>:', error);
+                });
         }
 
         document.getElementById('textbox-email').addEventListener('input', function () {
