@@ -1,6 +1,7 @@
-package Study_Match.StudyGroup.Entity;
+package Study_Match.studyGroup.Entity;
 
 import Study_Match.course.Entity.Course;
+import Study_Match.memo.entity.Memo;
 import Study_Match.user.Entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -39,7 +40,8 @@ public class StudyGroup {
 
     private String groupDescription;
 
-    private String recruitmentStatus;
+    @Column(nullable = false)
+    private String recruitmentStatus = "모집 중";
 
     private Date creationDate;
 
@@ -50,4 +52,8 @@ public class StudyGroup {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("studyGroup-studyGoal")
     private List<StudyGoal> goals = new ArrayList<>();  // 그룹에 속한 목표 리스트
+
+    @OneToMany(mappedBy = "studyGroup", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("studyGroup-memo")
+    private List<Memo> memos;
 }

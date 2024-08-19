@@ -1,11 +1,11 @@
-package Study_Match.StudyGroup.controller;
+package Study_Match.studyGroup.controller;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
-import Study_Match.StudyGroup.Entity.UserStudyGroup;
-import Study_Match.StudyGroup.Repository.UserStudyGroupRepository;
+import Study_Match.studyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Entity.UserStudyGroup;
+import Study_Match.studyGroup.Repository.UserStudyGroupRepository;
 import Study_Match.user.dto.MemberDTO;
-import Study_Match.StudyGroup.service.StudyGroupService;
-import Study_Match.StudyGroup.service.UserStudyGroupService;
+import Study_Match.studyGroup.service.StudyGroupService;
+import Study_Match.studyGroup.service.UserStudyGroupService;
 import Study_Match.user.Entity.User;
 import Study_Match.user.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

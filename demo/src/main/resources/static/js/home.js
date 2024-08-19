@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             study_tab(selectedGroupId);
             cloud_tab(selectedGroupId);
             member_tab(selectedGroupId);
+            loadMessages(selectedGroupId);
             isInitialized = true; // 한 번만 초기화되도록 설정
         }
     }
@@ -553,100 +554,247 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         async function handleFileUpload(event) {
-                const fileInput = event.target;
-                const file = fileInput.files[0];
-                const errorMessage = document.querySelector('.file-error-message');
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const errorMessage = document.querySelector('.file-error-message');
 
-                if (file) {
-                    const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'bmp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'pdf', 'txt', 'csv', 'zip', 'rar'];
-                    const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (file) {
+                const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'bmp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'pdf', 'txt', 'csv', 'zip', 'rar'];
+                const fileExtension = file.name.split('.').pop().toLowerCase();
 
-                    if (!allowedExtensions.includes(fileExtension)) {
-                        errorMessage.textContent = '허용되지 않는 파일 형식입니다.';
-                        fileInput.value = ''; // 선택된 파일 초기화
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', file);
-                    formData.append('studyGroupId', selectedGroupId); // 현재 선택된 그룹의 ID 사용
-                    formData.append('userId', userId); // 현재 로그인한 사용자의 ID 추가
-
-                    try {
-                        await fetch('/files/upload', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        errorMessage.textContent = ''; // 오류 메시지 지우기
-                        load_files(await fetchFiles(selectedGroupId)); // 파일 목록 새로 고침
-                    } catch (error) {
-                        console.error('Error uploading file:', error);
-                    }
+                if (!allowedExtensions.includes(fileExtension)) {
+                    errorMessage.textContent = '허용되지 않는 파일 형식입니다.';
+                    fileInput.value = ''; // 선택된 파일 초기화
+                    return;
                 }
-        }
 
-            async function fetchFiles(groupId) {
-                const response = await fetch(`/files/group/${groupId}`);
-                if (response.ok) {
-                    return await response.json();
-                } else {
-                    console.error('Failed to fetch files');
-                    return [];
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('studyGroupId', selectedGroupId); // 현재 선택된 그룹의 ID 사용
+                formData.append('userId', userId); // 현재 로그인한 사용자의 ID 추가
+
+                try {
+                    await fetch('/files/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    errorMessage.textContent = ''; // 오류 메시지 지우기
+                    load_files(await fetchFiles(selectedGroupId)); // 파일 목록 새로 고침
+                } catch (error) {
+                    console.error('Error uploading file:', error);
                 }
             }
         }
 
-        async function member_tab(groupId) {
-            try {
-                const response = await fetch(`/study/members/${groupId}`); // 그룹별 멤버 가져오기
-                if (!response.ok) {
-                    throw new Error('Failed to fetch members');
-                }
-                const members = await response.json();
-                load_members(members);
-            } catch (error) {
-                console.error('Error fetching members:', error);
+        async function fetchFiles(groupId) {
+            const response = await fetch(`/files/group/${groupId}`);
+            if (response.ok) {
+                return await response.json();
+            } else {
+                console.error('Failed to fetch files');
+                return [];
             }
-        
-            function load_members(members) {
-                const memberListDiv = document.querySelector('.member-list');
-                
+        }
+    }
 
-                if (!memberListDiv) {
-                    console.error("member-list 요소를 찾을 수 없습니다.");
-                    return; // 요소가 존재하지 않으면 함수를 종료합니다.
-                }
-                
-                memberListDiv.innerHTML = ''; // 기존 멤버 목록 초기화
-        
-                members.forEach(member => {
-                    const memberCard = document.createElement('div');
-                    memberCard.className = 'member-card';
-        
-                    const memberName = document.createElement('span');
-                    memberName.className = 'member-id';
-                    memberName.style.fontSize = '20px';
-                    memberName.style.marginLeft = '10px';
-                    memberName.textContent = member.name;
-        
-                    // 리더인 경우 별표 아이콘 추가
-                    if (member.leader) {
-                        const starIcon = document.createElement('i');
-                        starIcon.className = 'fa-solid fa-star';
-                        starIcon.style.color = 'gold';
-                        memberName.appendChild(starIcon);
-                    }
-        
-                    const memberMajor = document.createElement('span');
-                    memberMajor.className = 'member-major';
-                    memberMajor.style.marginRight = '15px';
-                    memberMajor.textContent = member.major ? member.major : "전공 미정"; // major가 null이면 기본값을 표시
-
-                    memberCard.appendChild(memberName);
-                    memberCard.appendChild(memberMajor);
-        
-                    memberListDiv.appendChild(memberCard);
-                });
+    async function member_tab(groupId) {
+        try {
+            const response = await fetch(`/study/members/${groupId}`); // 그룹별 멤버 가져오기
+            if (!response.ok) {
+                throw new Error('Failed to fetch members');
             }
+            const members = await response.json();
+            load_members(members);
+        } catch (error) {
+            console.error('Error fetching members:', error);
+        }
+
+        function load_members(members) {
+            const memberListDiv = document.querySelector('.member-list');
+
+
+            if (!memberListDiv) {
+                console.error("member-list 요소를 찾을 수 없습니다.");
+                return; // 요소가 존재하지 않으면 함수를 종료합니다.
+            }
+
+            memberListDiv.innerHTML = ''; // 기존 멤버 목록 초기화
+
+            members.forEach(member => {
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card';
+
+                const memberName = document.createElement('span');
+                memberName.className = 'member-id';
+                memberName.style.fontSize = '20px';
+                memberName.style.marginLeft = '10px';
+                memberName.textContent = member.name;
+
+                // 리더인 경우 별표 아이콘 추가
+                if (member.leader) {
+                    const starIcon = document.createElement('i');
+                    starIcon.className = 'fa-solid fa-star';
+                    starIcon.style.color = 'gold';
+                    memberName.appendChild(starIcon);
+                }
+
+                const memberMajor = document.createElement('span');
+                memberMajor.className = 'member-major';
+                memberMajor.style.marginRight = '15px';
+                memberMajor.textContent = member.major ? member.major : "전공 미정"; // major가 null이면 기본값을 표시
+
+                memberCard.appendChild(memberName);
+                memberCard.appendChild(memberMajor);
+
+                memberListDiv.appendChild(memberCard);
+            });
+        }
+    }
+
+    // 메시지 전송
+    document.getElementById('send-btn').addEventListener('click', async function () {
+        const messageContent = document.getElementById('msg-input').value.trim();
+        if (messageContent) {
+            await sendMessage(messageContent);
+            document.getElementById('msg-input').value = ''; // 입력 필드 초기화
         }
     });
+
+    async function sendMessage(content) {
+        try {
+            const response = await fetch(`/memos/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    userId: userId,
+                    studyGroupId: selectedGroupId,
+                    content: content
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            loadMessages(selectedGroupId);
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    }
+
+
+    // 메시지 로드 및 UI 업데이트
+    async function loadMessages(groupId) {
+        const messagesDiv = document.querySelector('.message');
+        if (!messagesDiv) {
+            console.error('message 요소를 찾을 수 없습니다.');
+            return;
+        }
+        try {
+            const response = await fetch(`/memos/group/${groupId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch messages');
+            }
+            const messages = await response.json();
+            messagesDiv.innerHTML = '';
+
+            messages.forEach(message => {
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = 'message-wrapper';
+
+                const messageBg = document.createElement('div');
+                messageBg.className = 'message-bg';
+                messageBg.style.backgroundColor = '#f1f0f0';  // 기본 배경색
+                messageBg.style.borderRadius = '10px';
+                messageBg.style.padding = '10px';
+                messageBg.style.maxWidth = '60%';
+                messageBg.style.wordWrap = 'break-word';
+
+                const userIdSpan = document.createElement('span');
+                userIdSpan.className = 'user-id';
+                userIdSpan.textContent = message.userName;
+
+                const messageSpan = document.createElement('span');
+                messageSpan.className = 'msg';
+                messageSpan.textContent = message.content;
+
+                if (message.userId === userId) {
+                    // 내 메시지 (오른쪽 정렬)
+                    messageWrapper.style.display = 'flex';
+                    messageWrapper.style.justifyContent = 'flex-end';
+                    messageBg.style.backgroundColor = '#dcf8c6';  // 내 메시지 배경색
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = '수정';
+                    editButton.style.marginLeft = '5px';
+                    editButton.onclick = () => {
+                        const newContent = prompt('메시지를 수정하세요', message.content);
+                        if (newContent) {
+                            updateMemo(message.id, newContent);
+                        }
+                    };
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = '삭제';
+                    deleteButton.style.marginLeft = '5px';
+                    deleteButton.onclick = () => {
+                        if (confirm('정말로 삭제하시겠습니까?')) {
+                            deleteMemo(message.id);
+                        }
+                    };
+
+                    messageBg.appendChild(editButton);
+                    messageBg.appendChild(deleteButton);
+                } else {
+                    // 상대방 메시지 (왼쪽 정렬)
+                    messageWrapper.style.display = 'flex';
+                    messageWrapper.style.justifyContent = 'flex-start';
+                }
+
+                messageBg.appendChild(userIdSpan);
+                messageBg.appendChild(document.createElement('br'));
+                messageBg.appendChild(messageSpan);
+                messageWrapper.appendChild(messageBg);
+                messagesDiv.appendChild(messageWrapper);
+            });
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    }
+    async function updateMemo(memoId, content) {
+        try {
+            const response = await fetch(`/memos/update/${memoId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    userId: userId,
+                    content: content
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update message');
+            }
+
+            loadMessages(selectedGroupId);
+        } catch (error) {
+            console.error('Error updating message:', error);
+        }
+    }
+
+    async function deleteMemo(memoId) {
+        try {
+            const response = await fetch(`/memos/delete/${memoId}?userId=${userId}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete message');
+            }
+
+            loadMessages(selectedGroupId);
+        } catch (error) {
+            console.error('Error deleting message:', error);
+        }
+    }
+});

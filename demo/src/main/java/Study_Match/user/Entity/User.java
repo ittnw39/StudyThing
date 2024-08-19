@@ -1,6 +1,7 @@
 package Study_Match.user.Entity;
 
-import Study_Match.StudyGroup.Entity.UserStudyGroup;
+import Study_Match.memo.entity.Memo;
+import Study_Match.studyGroup.Entity.UserStudyGroup;
 import Study_Match.course.Entity.UserSchedule;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -41,11 +42,15 @@ public class User {
 
     private Date registrationDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("user-studyGroup")
     private List<UserStudyGroup> userStudyGroups;
 
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("user-memo")
+    private List<Memo> memos;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("user-userSchedule")
     private UserSchedule userSchedule;
 

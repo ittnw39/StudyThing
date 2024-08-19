@@ -1,6 +1,6 @@
-package Study_Match.StudyGroup.Repository;
+package Study_Match.studyGroup.Repository;
 
-import Study_Match.StudyGroup.Entity.StudyGoal;
+import Study_Match.studyGroup.Entity.StudyGoal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

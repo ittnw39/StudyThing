@@ -1,4 +1,4 @@
-package Study_Match.StudyGroup.Entity;
+package Study_Match.studyGroup.Entity;
 
 import Study_Match.user.Entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;

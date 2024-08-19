@@ -1,10 +1,10 @@
-package Study_Match.StudyGroup.service;
+package Study_Match.studyGroup.service;
 
-import Study_Match.StudyGroup.Entity.StudyGoal;
-import Study_Match.StudyGroup.Entity.StudyGroup;
-import Study_Match.StudyGroup.Repository.StudyGoalRepository;
-import Study_Match.StudyGroup.Repository.StudyGroupRepository;
-import Study_Match.StudyGroup.dto.StudyGoalDTO;
+import Study_Match.studyGroup.Entity.StudyGoal;
+import Study_Match.studyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Repository.StudyGoalRepository;
+import Study_Match.studyGroup.Repository.StudyGroupRepository;
+import Study_Match.studyGroup.dto.StudyGoalDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

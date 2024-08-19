@@ -1,8 +1,8 @@
-package Study_Match.StudyGroup.controller;
+package Study_Match.studyGroup.controller;
 
-import Study_Match.StudyGroup.Entity.StudyGoal;
-import Study_Match.StudyGroup.dto.StudyGoalDTO;
-import Study_Match.StudyGroup.service.StudyGoalService;
+import Study_Match.studyGroup.Entity.StudyGoal;
+import Study_Match.studyGroup.dto.StudyGoalDTO;
+import Study_Match.studyGroup.service.StudyGoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

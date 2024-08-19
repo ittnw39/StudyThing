@@ -1,6 +1,6 @@
 package Study_Match.file.repository;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Entity.StudyGroup;
 import Study_Match.file.entity.File;
 import Study_Match.user.Entity.User;
 import jakarta.transaction.Transactional;

@@ -1,4 +1,4 @@
-package Study_Match.StudyGroup.Entity;
+package Study_Match.studyGroup.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

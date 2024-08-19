@@ -1,9 +1,9 @@
-package Study_Match.StudyGroup.service;
+package Study_Match.studyGroup.service;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
-import Study_Match.StudyGroup.Entity.UserStudyGroup;
-import Study_Match.StudyGroup.Repository.StudyGroupRepository;
-import Study_Match.StudyGroup.Repository.UserStudyGroupRepository;
+import Study_Match.studyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Entity.UserStudyGroup;
+import Study_Match.studyGroup.Repository.StudyGroupRepository;
+import Study_Match.studyGroup.Repository.UserStudyGroupRepository;
 import Study_Match.course.Entity.Course;
 import Study_Match.course.Repository.CourseRepository;
 import Study_Match.user.Entity.User;
@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class StudyGroupService {
@@ -107,6 +105,9 @@ public class StudyGroupService {
             studyGroup.setCurrentNumber(studyGroupDetails.getCurrentNumber());
             studyGroup.setGroupDescription(studyGroupDetails.getGroupDescription());
             studyGroup.setRecruitmentStatus(studyGroupDetails.getRecruitmentStatus());
+
+            updateGroupMemberCount(studyGroup);
+
             return studyGroupRepository.save(studyGroup);
         });
     }
@@ -114,9 +115,19 @@ public class StudyGroupService {
         studyGroupRepository.deleteById(id);
     }
 
+
+
     private void updateGroupMemberCount(StudyGroup studyGroup) {
         long memberCount = userStudyGroupRepository.countByStudyGroup(studyGroup);
         studyGroup.setCurrentNumber((int) memberCount);
+
+        if (memberCount >= studyGroup.getRecruitmentNumber()) {
+            studyGroup.setRecruitmentStatus("모집 마감");
+        } else {
+            studyGroup.setRecruitmentStatus("모집 중");
+        }
+
+        studyGroupRepository.save(studyGroup);
     }
 
     private void updateGroupMemberCounts(List<StudyGroup> studyGroups) {

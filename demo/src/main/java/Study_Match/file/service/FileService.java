@@ -1,7 +1,7 @@
 package Study_Match.file.service;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
-import Study_Match.StudyGroup.Repository.StudyGroupRepository;
+import Study_Match.studyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Repository.StudyGroupRepository;
 import Study_Match.user.Repository.UserRepository;
 import Study_Match.file.repository.FileRepository;
 import Study_Match.file.dto.FileRequestDto;

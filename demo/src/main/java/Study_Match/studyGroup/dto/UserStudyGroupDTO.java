@@ -1,4 +1,4 @@
-package Study_Match.StudyGroup.dto;
+package Study_Match.studyGroup.dto;
 
 import lombok.*;
 

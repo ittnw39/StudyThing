@@ -1,7 +1,7 @@
-package Study_Match.StudyGroup.Repository;
+package Study_Match.studyGroup.Repository;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
-import Study_Match.StudyGroup.Entity.UserStudyGroup;
+import Study_Match.studyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Entity.UserStudyGroup;
 import Study_Match.user.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

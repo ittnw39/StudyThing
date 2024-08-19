@@ -1,8 +1,8 @@
-package Study_Match.StudyGroup.service;
+package Study_Match.studyGroup.service;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
-import Study_Match.StudyGroup.Entity.UserStudyGroup;
-import Study_Match.StudyGroup.Repository.UserStudyGroupRepository;
+import Study_Match.studyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Entity.UserStudyGroup;
+import Study_Match.studyGroup.Repository.UserStudyGroupRepository;
 import Study_Match.user.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

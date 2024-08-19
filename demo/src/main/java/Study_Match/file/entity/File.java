@@ -1,6 +1,6 @@
 package Study_Match.file.entity;
 
-import Study_Match.StudyGroup.Entity.StudyGroup;
+import Study_Match.studyGroup.Entity.StudyGroup;
 import Study_Match.user.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
