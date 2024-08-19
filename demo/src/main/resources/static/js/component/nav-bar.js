@@ -12,7 +12,7 @@ class NavBar extends HTMLElement {
             </style>
             <nav class="nav-bar">
                 <ul>
-                    <li class="list" target="/">
+                    <li class="list" target="/index.html">
                         <a href="/index.html" class="nav-link">
                             <span class="icon">
                                 <i class="fa-solid fa-house"></i>

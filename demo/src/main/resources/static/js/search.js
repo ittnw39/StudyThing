@@ -53,10 +53,6 @@ document.querySelector('#search-bar button').addEventListener('click', async () 
 
                 resultContainer.appendChild(groupCard);
 
-                groupCard.addEventListener('click', () => {
-                    showJoinModal(group);
-                });
-
             });
         } else {
             console.error('검색 실패');
@@ -118,10 +114,6 @@ async function loadAllStudyGroups() {
                 groupCard.appendChild(groupCardBody);
 
                 resultContainer.appendChild(groupCard);
-
-                groupCard.addEventListener('click', () => {
-                    showJoinModal(group);
-                });
             });
         } else {
             console.error('그룹 목록 가져오기 실패');

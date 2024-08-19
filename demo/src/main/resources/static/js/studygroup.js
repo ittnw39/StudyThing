@@ -52,44 +52,45 @@ window.onclick = (event) => {
 }
 
 //그룹 가입여부 모달창
-const group_divs = document.querySelectorAll('.group-card')
 const join_modal = document.getElementById("join-alert-box");
 const join_group_title = join_modal.querySelector("#join-group-title");
 
-group_divs.forEach(group_div => {
-    group_div.onclick = () => {
+document.body.addEventListener('click', (event) => {
+    const group_div = event.target.closet('.group-card');
+
+    if (group_div) {
         const title = group_div.querySelector("#group-title").textContent;
         join_modal.style.display = "block";
         join_group_title.textContent = title;
-    }
 
-    // 그룹 가입 버튼 클릭 시 처리
-    document.getElementById('join').addEventListener('click', async () => {
-        try {
-            const userId = localStorage.getItem('userId'); // 실제 로그인한 사용자 ID
-            const groupId = group_div.dataset.groupId; // 그룹 ID를 데이터 속성에서 가져옴
+        // 그룹 가입 버튼 클릭 시 처리
+        document.getElementById('join').addEventListener('click', async () => {
+            try {
+                const userId = localStorage.getItem('userId'); // 실제 로그인한 사용자 ID
+                const groupId = group_div.dataset.groupId; // 그룹 ID를 데이터 속성에서 가져옴
 
-            const response = await fetch(`/study/${groupId}/join?userId=${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                const response = await fetch(`/study/${groupId}/join?userId=${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                });
+
+                if (response.ok) {
+                    alert('그룹 가입 성공!');
+                    join_modal.style.display = 'none';
+                } else {
+                    alert('그룹 가입 실패');
                 }
-            });
-
-            if (response.ok) {
-                alert('그룹 가입 성공!');
-                join_modal.style.display = 'none';
-            } else {
-                alert('그룹 가입 실패');
+            } catch (error) {
+                console.error('네트워크 에러:', error);
             }
-        } catch (error) {
-            console.error('네트워크 에러:', error);
-        }
-    });
-    
-    window.onclick = (event) => {
-        if (event.target == join_modal) {
-            join_modal.style.display = "none";
+        });
+
+        window.onclick = (event) => {
+            if (event.target == join_modal) {
+                join_modal.style.display = "none";
+            }
         }
     }
 })
