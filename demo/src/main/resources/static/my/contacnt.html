@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스터띵 - 문의하기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .contact-body {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .contact-body span {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        .contact-body input[type="text"], 
+        .contact-body textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        .contact-body input[type="text"]:focus, 
+        .contact-body textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .contact-body textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        .contact-body button {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-body">
+        <h2>스터띵 문의하기</h2>
+        <span>제목</span>
+        <input type="text" placeholder="제목을 입력하세요">
+        <span>문의사항</span>
+        <textarea placeholder="문의사항을 입력하세요"></textarea>
+        <button type="submit">제출하기</button>
+    </div>
+</body>
+</html>

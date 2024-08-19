@@ -1,6 +1,7 @@
 package Study_Match.file.controller;
 
 import Study_Match.file.dto.FileRequestDto;
+import Study_Match.file.dto.FileResponseDto;
 import Study_Match.file.entity.File;
 import Study_Match.file.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/files")
@@ -33,11 +35,14 @@ public class FileUploadController {
         return ResponseEntity.ok("Test successful");
     }
 
-    @GetMapping("/channel/{channelId}")
-    public ResponseEntity<List<File>> ListFilesByChannelId(@PathVariable Long channelId) {
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<List<FileResponseDto>> ListFilesByGroupId(@PathVariable Long groupId) {
         // 채널 ID에 해당하는 파일 목록 가져오기
-        List<File> fileList = fileService.listFilesByStudyGroupId(channelId);
-        return ResponseEntity.ok(fileList);
+        List<File> fileList = fileService.listFilesByStudyGroupId(groupId);
+        List<FileResponseDto> responseDtos = fileList.stream()
+                .map(FileResponseDto::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDtos);
     }
 
 

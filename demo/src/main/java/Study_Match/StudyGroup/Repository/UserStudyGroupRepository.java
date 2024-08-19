@@ -21,4 +21,8 @@ public interface UserStudyGroupRepository extends JpaRepository<UserStudyGroup, 
     List<Long> findGroupIdsByUser(@Param("user") User user);
 
     boolean existsByUserAndStudyGroup(User user, StudyGroup studyGroup);
+
+    long countByStudyGroup(StudyGroup studyGroup);
+
+    List<User> findUsersByStudyGroup(StudyGroup studyGroup);
 }

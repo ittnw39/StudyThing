@@ -1,6 +1,9 @@
 package Study_Match.StudyGroup.controller;
 
 import Study_Match.StudyGroup.Entity.StudyGroup;
+import Study_Match.StudyGroup.Entity.UserStudyGroup;
+import Study_Match.StudyGroup.Repository.UserStudyGroupRepository;
+import Study_Match.user.dto.MemberDTO;
 import Study_Match.StudyGroup.service.StudyGroupService;
 import Study_Match.StudyGroup.service.UserStudyGroupService;
 import Study_Match.user.Entity.User;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/study")
@@ -19,12 +23,14 @@ public class StudyGroupController {
     private final StudyGroupService studyGroupService;
     private final UserService userService;
     private final UserStudyGroupService userStudyGroupService;
+    private final UserStudyGroupRepository userStudyGroupRepository;
 
     @Autowired
-    public StudyGroupController(StudyGroupService studyGroupService, UserService userService, UserStudyGroupService userStudyGroupService) {
+    public StudyGroupController(StudyGroupService studyGroupService, UserService userService, UserStudyGroupService userStudyGroupService, UserStudyGroupRepository userStudyGroupRepository) {
         this.studyGroupService = studyGroupService;
         this.userService = userService;
         this.userStudyGroupService = userStudyGroupService;
+        this.userStudyGroupRepository = userStudyGroupRepository;
     }
 
     @PostMapping("/create")
@@ -103,4 +109,14 @@ public class StudyGroupController {
         List<StudyGroup> studyGroups = studyGroupService.getStudyGroupsByUserId(userId);
         return ResponseEntity.ok(studyGroups);
     }
+
+    @GetMapping("/members/{groupId}")
+    public ResponseEntity<List<MemberDTO>> getGroupMembers(@PathVariable Long groupId) {
+        List<UserStudyGroup> members = userStudyGroupRepository.findByStudyGroupId(groupId);
+        List<MemberDTO> memberDTOs = members.stream()
+                .map(usg -> new MemberDTO(usg.getUser().getName(), usg.getUser().getMajor(), usg.isLeader()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(memberDTOs);
+    }
+
 }

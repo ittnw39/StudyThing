@@ -49,4 +49,6 @@ public class User {
     @JsonManagedReference("user-userSchedule")
     private UserSchedule userSchedule;
 
+    private boolean isLeader;
+
 }

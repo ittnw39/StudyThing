@@ -34,10 +34,7 @@ public class StudyGoalController {
     @GetMapping("/{groupId}")
     public ResponseEntity<List<StudyGoal>> getStudyGoalsByGroupId(@PathVariable Long groupId) {
         List<StudyGoal> goals = studyGoalService.getGoalsByGroupId(groupId);
-        if (goals.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(goals);
+        return ResponseEntity.ok(goals); // 목표가 없으면 빈 리스트 반환
     }
 
     @PutMapping("/{goalId}/completion")

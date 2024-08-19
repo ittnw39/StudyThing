@@ -398,6 +398,14 @@ body {
     cursor: pointer;
 }
 
+.delete_goal_button{
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ff4d4d;
+}
+
 /*클라우드 탭*/
 .cloud-tab {
     display: flex;

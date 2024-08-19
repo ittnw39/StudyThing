@@ -20,5 +20,6 @@ public class UserDTO {
     private String major;
     private int grade;
     private Date registrationDate;
+    private boolean isLeader;
 
 }

@@ -25,4 +25,6 @@ public class UserStudyGroup {
     @JoinColumn(name = "study_group_id", nullable = false)
     @JsonBackReference("studyGroup-userStudyGroup")
     private StudyGroup studyGroup;
+
+    private boolean isLeader;
 }

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/css/globals.css" media="">
     <title>스터띵 - 홈</title>
     <script src="/js/home.js"></script>
-    <script src="/js/globals.js"></script>
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -89,7 +88,7 @@
                                 <div id="message-bg" style="float: right;">
                                     <span id="user-id" style="font-size: 18px;">ME</span><br>
                                     <span id="msg">룰루</span>
-                                </div>
+                                </div> 
                             </div>
                             <div style="width: 100%;">
                                 <div id="message-bg">
@@ -109,15 +108,15 @@
                     <div class="study_progress">
                         <i class="fa-solid fa-scroll"></i>
                         <span style="font-size: 20px;">총 진행도</span>
-                        <div id="progressbar-cotainer">
-                            <div id="progress-bar"></div>
-                            <span class="progress-text" id="progress-text"></span>
+                        <div class="progressbar-cotainer">
+                            <div class="progress-bar"></div>
+                            <span class="progress-text"></span>
                         </div>
-                        <span id="study_progress_status" style="opacity: 50%; position: relative; bottom: 0;">아직 진행중인
+                        <span class="study-progress-status" style="opacity: 50%; position: relative; bottom: 0;">아직 진행중인
                             목표가 없습니다.</span>
                     </div>
                     <div class="study_goals">
-                        <i id="delete_goal" class="fa-solid fa-trash"
+                        <i class="delete_goal fa-solid fa-trash"
                             style="font-size: 20px; float: right; margin-right: 10px;"></i>
                         <span style="font-size: 20px;">현재 목표</span>
                         <!--div class="goal">
@@ -134,9 +133,9 @@
                     </div>
                     <span style="font-size: 20px; width: 100%; margin-top: 10px;">목표 추가</span>
                     <div class="add_goals">
-                        <input type="text" id="goals_text_input" />
+                        <input type="text" class="goals_text_input" />
                         <button type="submit"><i class="fa-solid fa-plus"></i>추가</button>
-                        <span id="set_due">만료일 : <input type="date" id="goals_due_input" /></span>
+                        <span class="set_due">만료일 : <input type="date" class="goals_due_input" /></span>
                     </div>
                 </div>
                 <div class="cloud-tab">
@@ -147,39 +146,23 @@
                             <i class="fa-solid fa-file-arrow-up"></i>
                             파일 업로드
                         </button>
-                        <span id="file-error-message" class="error"></span>
+                        <span class="file-error-message error"></span>
                     </div>
-                    <div class="file_directory" id="file_directory">
+                    <div class="file_directory">
 
                     </div>
                 </div>
                 <div class="member-tab">
-                    <div class="memebr-list">
-                        <div id="member-president-card">
-                            <span id="president-id" style="font-size: 20px; margin-left: 10px;">
+                    <div class="member-list">
+                        <!-- <div class="member-president-card">
+                            <span class="president-id" style="font-size: 20px; margin-left: 10px;">
                                 John Doe
                                 <i class="fa-solid fa-star" style="color: gold;"></i>
                             </span>
-                            <span id="president-major" style="margin-right: 15px;">
+                            <span class="president-major" style="margin-right: 15px;">
                                 OO학과
                             </span>
-                        </div>
-                        <div id="member-card">
-                            <span id="president-id" style="font-size: 20px; margin-left: 10px;">
-                                Jone Doe
-                            </span>
-                            <span id="president-major" style="margin-right: 15px;">
-                                OO학과
-                            </span>
-                        </div>
-                        <div id="member-card">
-                            <span id="president-id" style="font-size: 20px; margin-left: 10px;">
-                                Jone Doe
-                            </span>
-                            <span id="president-major" style="margin-right: 15px;">
-                                OO학과
-                            </span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

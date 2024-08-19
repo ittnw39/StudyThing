@@ -30,8 +30,12 @@ public class File {
 
     private String fileName;
     private String fileKey;
+
+    @Column(name = "storage_url", nullable = false, length = 1024)
     private String storageUrl;
 
     @Column(updatable = false)
     private LocalDateTime uploadedAt = LocalDateTime.now();
+
+    private long fileSize; // 파일 크기 필드 추가
 }

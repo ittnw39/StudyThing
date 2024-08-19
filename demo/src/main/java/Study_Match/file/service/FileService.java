@@ -92,8 +92,9 @@ public class FileService {
             fileEntity.setFileName(file.getOriginalFilename());
             fileEntity.setFileKey(key);
             fileEntity.setUser(user);
-            fileEntity.setStudyGroup(studyGroup);  // ChatChannel 엔티티를 설정
+            fileEntity.setStudyGroup(studyGroup);  // 그룹 엔티티를 설정
             fileEntity.setStorageUrl(s3Client.getUrl(bucketName, key).toString());
+            fileEntity.setFileSize(file.getSize()); // 파일 크기 저장
             fileRepository.save(fileEntity);
 
             return key;

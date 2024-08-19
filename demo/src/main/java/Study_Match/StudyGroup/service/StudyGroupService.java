@@ -33,15 +33,9 @@ public class StudyGroupService {
         this.userRepository = userRepository;
     }
 
-
-    public StudyGroup createStudyGroup(StudyGroup studyGroup) {
-        studyGroup.setCreationDate(new Date());
-        studyGroup.setCurrentNumber(0);
-        return studyGroupRepository.save(studyGroup);
-    }
-
     @Transactional
     public StudyGroup createStudyGroupWithLeader(StudyGroup studyGroup, Long courseId, User leader) {
+
         // 스터디 그룹에 리더와 코스 설정
         studyGroup.setLeader(leader);
         Course course = courseRepository.findById(courseId)
@@ -55,39 +49,53 @@ public class StudyGroupService {
         UserStudyGroup userStudyGroup = new UserStudyGroup();
         userStudyGroup.setUser(leader);
         userStudyGroup.setStudyGroup(savedStudyGroup);
+        userStudyGroup.setLeader(true); // 리더 플래그 설정
         userStudyGroupRepository.save(userStudyGroup);
 
         return savedStudyGroup;
     }
 
     public List<StudyGroup> getAllStudyGroups() {
-        return studyGroupRepository.findAll();
+        List<StudyGroup> studyGroups = studyGroupRepository.findAll();
+        updateGroupMemberCounts(studyGroups);
+        return studyGroups;
     }
 
     public Optional<StudyGroup> getStudyGroupById(Long id) {
-        return studyGroupRepository.findById(id);
+        Optional<StudyGroup> studyGroup = studyGroupRepository.findById(id);
+        studyGroup.ifPresent(this::updateGroupMemberCount);
+        return studyGroup;
     }
+
     public List<StudyGroup> searchStudyGroups(String name) {
-        return studyGroupRepository.findByNameContaining(name);
+        List<StudyGroup> studyGroups = studyGroupRepository.findByNameContaining(name);
+        updateGroupMemberCounts(studyGroups);
+        return studyGroups;
     }
 
     public List<StudyGroup> getStudyGroupsByCourseId(Long courseId) {
-        return studyGroupRepository.findByCourseId(courseId);
+        List<StudyGroup> studyGroups = studyGroupRepository.findByCourseId(courseId);
+        updateGroupMemberCounts(studyGroups);
+        return studyGroups;
     }
 
     public List<StudyGroup> getStudyGroupsByUserId(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 유저와 연결된 모든 그룹 ID를 가져옵니다.
+        // 유저와 연결된 모든 그룹 ID를 가져옴
         List<Long> groupIds = userStudyGroupRepository.findGroupIdsByUser(user);
 
-        // 그 그룹 ID들을 사용하여 StudyGroup들을 조회합니다.
-        return studyGroupRepository.findAllById(groupIds);
+        // 그 그룹 ID들을 사용하여 StudyGroup들을 조회
+        List<StudyGroup> studyGroups = studyGroupRepository.findAllById(groupIds);
+        updateGroupMemberCounts(studyGroups);
+        return studyGroups;
     }
 
     public List<StudyGroup> getStudyGroupsByLeaderId(Long leaderId) {
-        return studyGroupRepository.findByLeaderId(leaderId);
+        List<StudyGroup> studyGroups = studyGroupRepository.findByLeaderId(leaderId);
+        updateGroupMemberCounts(studyGroups);
+        return studyGroups;
     }
 
     public Optional<StudyGroup> updateStudyGroup(Long id, StudyGroup studyGroupDetails) {
@@ -104,5 +112,22 @@ public class StudyGroupService {
     }
     public void deleteStudyGroup(Long id) {
         studyGroupRepository.deleteById(id);
+    }
+
+    private void updateGroupMemberCount(StudyGroup studyGroup) {
+        long memberCount = userStudyGroupRepository.countByStudyGroup(studyGroup);
+        studyGroup.setCurrentNumber((int) memberCount);
+    }
+
+    private void updateGroupMemberCounts(List<StudyGroup> studyGroups) {
+        for (StudyGroup studyGroup : studyGroups) {
+            updateGroupMemberCount(studyGroup);
+        }
+    }
+
+    public List<User> getMembersByGroupId(Long groupId) {
+        StudyGroup studyGroup = studyGroupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+        return userStudyGroupRepository.findUsersByStudyGroup(studyGroup);
     }
 }
