@@ -2,10 +2,14 @@ package Study_Match.course.Entity;
 
 import Study_Match.user.Entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,13 +21,12 @@ public class UserSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference("user-userSchedule")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    @JsonManagedReference("course-userSchedule")
-    private Course course;
+    @OneToMany(mappedBy = "userSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("userSchedule-courses")
+    private List<UserScheduleCourse> userScheduleCourses = new ArrayList<>();
 }

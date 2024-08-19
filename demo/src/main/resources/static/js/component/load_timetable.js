@@ -119,7 +119,7 @@
 
     // 수업 스케줄 데이터를 기반으로 셀을 찾고 오버레이를 생성하는 함수
     function applyScheduleOverlay(course) {
-        const { schedule, name: course_name, classroom} = course;
+        const { schedule, course_name, classroom} = course;
         const color = getColorForCourse(course_name);
 
         // 스케줄을 요일과 시간으로 나누기
@@ -165,10 +165,10 @@
 
 
 
-    //현재시간 선 그리기
-    courses.forEach(course => {
-        applyScheduleOverlay(course);
-    });
+    // //현재시간 선 그리기
+    // courses.forEach(course => {
+    //     applyScheduleOverlay(course);
+    // });
 
     function drawCurrentTimeLine() {
         const existingLine = document.querySelector('.current-time-line');
@@ -220,7 +220,7 @@
         drawCurrentTimeLine();
         setInterval(drawCurrentTimeLine, 30000);
     });
-})();
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('userId'); // 로컬 스토리지에서 사용자 ID를 가져옴
@@ -237,13 +237,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!response.ok) {
             throw new Error('Failed to fetch user schedule');
         }
-        const courses = await response.json();
+        const userSchedules = await response.json();
         
-        // 가져온 데이터로 시간표에 과목 추가
+        // 모든 과목들을 담을 리스트
+        const courses = [];
+
+        // 각 UserScheduleDTO에서 courses 리스트를 꺼내와 변환 후 courses 리스트에 추가
+        userSchedules.forEach(userSchedule => {
+            userSchedule.courses.forEach(course => {
+                courses.push({
+                    course_id: course.id,
+                    course_name: course.name,
+                    credits: course.credits,
+                    lecture_time: course.lectureTime,
+                    professor_name: course.professorName,
+                    course_description: course.description,
+                    schedule: course.schedule,
+                    classroom: course.classroom
+                });
+            });
+        });
+
+        // 변환된 courses 리스트로 시간표에 과목 추가
         courses.forEach(course => {
             applyScheduleOverlay(course);
         });
-
         drawCurrentTimeLine(); // 현재 시간 라인 그리기
         setInterval(drawCurrentTimeLine, 30000); // 30초마다 현재 시간 라인 갱신
 
@@ -251,3 +269,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error loading timetable:', error);
     }
 });
+
+})();

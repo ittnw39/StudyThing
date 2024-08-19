@@ -1,11 +1,13 @@
 package Study_Match.course.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,8 +39,8 @@ public class Course {
     @Column(nullable = false, name="course_description")
     private String description;
 
-    @OneToMany(mappedBy = "course")
-    @JsonBackReference("course-userSchedule")
-    private List<UserSchedule> userSchedules;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference("course-userScheduleCourses")
+    private List<UserScheduleCourse> userScheduleCourses = new ArrayList<>();
 
 }

@@ -45,8 +45,8 @@ public class User {
     @JsonManagedReference("user-studyGroup")
     private List<UserStudyGroup> userStudyGroups;
 
-    @OneToMany(mappedBy = "user")
+    @OneToOne(mappedBy = "user")
     @JsonManagedReference("user-userSchedule")
-    private List<UserSchedule> userSchedules;
+    private UserSchedule userSchedule;
 
 }

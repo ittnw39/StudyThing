@@ -2,6 +2,8 @@ package Study_Match.course.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
@@ -10,5 +12,5 @@ import lombok.*;
 public class UserScheduleDTO {
     private Long id;
     private Long userId;
-    private Long courseId;
+    private List<CourseDTO> courses; // 이 부분 추가
 }

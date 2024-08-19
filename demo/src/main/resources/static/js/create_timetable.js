@@ -114,23 +114,36 @@ document.getElementById('submit').addEventListener('click', async function (even
     }
     const currentListContainer = document.querySelector('.current-add');
     const courseCards = currentListContainer.querySelectorAll('.course-card');
+    // 과목 ID들을 배열로 수집
+    // 과목 ID들을 배열로 수집하고 null 값 필터링
+    const courseIds = Array.from(courseCards)
+                           .map(courseCard => courseCard.dataset.courseId)
+                           .filter(id => id !== null && id !== undefined);
 
-    const userScheduleRequests = Array.from(courseCards).map(courseCard => {
-        const courseId = courseCard.dataset.courseId;
-        if (!courseId) {
-            console.error('Course ID is missing or undefined');
-            return;
-        }
-        console.log(`Adding course with ID: ${courseId} for user ID: ${userId}`);
-        return addCourseToUserSchedule(userId, courseId);
-    });
+
+    if (courseIds.length === 0) {
+        alert("추가할 과목이 없습니다.");
+        return;
+    }
 
     try {
-        await Promise.all(userScheduleRequests);
+        // 여러 개의 과목 ID를 JSON 본문으로 서버에 전송
+        const response = await fetch('/user-schedule', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId, courseIds })  // JSON 형태로 userId와 courseIds를 전송
+        });
+
+        if (!response.ok) {
+            throw new Error('사용자 시간표에 과목 추가 실패');
+        }
+
         console.log('시간표 저장 성공');
-        // 저장이 성공하면 다른 페이지로 이동하거나, 사용자에게 성공 메시지를 표시할 수 있음
         alert('시간표가 성공적으로 저장되었습니다.');
         window.location.href = '/timetable/index.html'; // 저장 후 이동할 페이지로 리디렉션
+
     } catch (error) {
         console.error('시간표 저장 실패:', error);
     }
