@@ -51,25 +51,38 @@ window.onclick = (event) => {
     }
 }
 
-//그룹 가입여부 모달창
+//가입 모달창 이벤트
 const join_modal = document.getElementById("join-alert-box");
 const join_group_title = join_modal.querySelector("#join-group-title");
+const joinButton = document.getElementById('join');
+
+let handleJoinClick = null;
 
 document.body.addEventListener('click', (event) => {
     const group_div = event.target.closest('.group-card');
 
     if (group_div) {
         const title = group_div.querySelector("#group-title").textContent;
+        /*모달에 정보이전*/
         join_modal.style.display = "block";
         join_group_title.textContent = title;
+        join_modal.dataset.groupId = group_div.dataset.groupId;
 
-        // 그룹 가입 버튼 클릭 시 처리
-        document.getElementById('join').addEventListener('click', async () => {
+        /*이벤트 리스너 중첩 에러 방지*/
+
+        if (handleJoinClick) {
+            joinButton.removeEventListener('click', handleJoinClick);
+        }
+
+        handleJoinClick = async (event) => {
+            const button = event.target;
+            button.disabled = true; 
+
             try {
-                const userId = localStorage.getItem('userId'); // 실제 로그인한 사용자 ID
-                const groupId = group_div.dataset.groupId; // 그룹 ID를 데이터 속성에서 가져옴
+                const userId = localStorage.getItem('userId');
+                const groupId = join_modal.dataset.groupId;
 
-                const response = await fetch(`/study/${groupId}/join?userId=${userId}`, {
+                const response = await fetch(`/study/join?userId=${userId}&studyGroupId=${groupId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -84,13 +97,17 @@ document.body.addEventListener('click', (event) => {
                 }
             } catch (error) {
                 console.error('네트워크 에러:', error);
+            } finally {
+                button.disabled = false; // 버튼 활성화
             }
-        });
+        };
+
+        joinButton.addEventListener('click', handleJoinClick);
 
         window.onclick = (event) => {
             if (event.target == join_modal) {
                 join_modal.style.display = "none";
             }
-        }
+        };
     }
-})
+});
