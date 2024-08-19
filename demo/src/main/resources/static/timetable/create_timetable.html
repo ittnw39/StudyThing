@@ -188,7 +188,13 @@
             <div class="search-input"> <!--검색 바-->
                 <span style="font-size: 20px;">수업찾기</span>
                 <div id="search-bar"> <!--검색 input-->
-                    <input type="search" placeholder="강좌명/강좌코드" />
+                    <!-- 검색 기준 선택 -->
+                    <select id="search-type">
+                        <option value="id">강좌코드</option>
+                        <option value="name">강좌명</option>
+                        <option value="professor">교수명</option>
+                    </select>
+                    <input type="search" placeholder="강좌명/강좌코드/교수명으로 검색" />
                     <button style="background: none; border: none; padding: 0">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -201,35 +207,21 @@
                 <option>교수 이름순</option>
             </select>
             <div class="result">
-                <div id="course-card">
-                    <div id="course-card-header">
-                        <span id="course-name" style="font-size: 18px;">수업명</span>
-                        <button id="add">추가</button>
+                <div class="course-card"> <!-- id 대신 class 사용 -->
+                    <div class="course-card-header">
+                        <span class="course-name" style="font-size: 18px;">수업명</span> <!-- id 대신 class 사용 -->
+                        <button class="add">추가</button> <!-- id 대신 class 사용 -->
                     </div>
-                    <div id="course-card-body">
-                        <span>description</span>
+                    <div class="course-card-body">
+                        <span>description</span> <!-- id 제거 -->
                     </div>
                 </div>
             </div>
             <hr>
             <span style="font-size: 20px;">현재 목록</span>
             <div class="current-add">
-                <div id="course-card">
-                    <div id="course-card-header">
-                        <span id="course-name" style="font-size: 18px;">수업명</span>
-                        <button id="delete">삭제</button>
-                    </div>
-                    <div id="course-card-body">
-                        <span>description</span>
-                    </div>
-                </div>
-                <div id="course-card">
-                    <div id="course-card-header">
-                        <span id="course-name" style="font-size: 18px;">수업명</span>
-                        <button id="delete">삭제</button>
-                    </div>
-                    <div id="course-card-body">
-                        <span>description</span>
+                <div class="course-card"> <!-- id 대신 class 사용 -->
+                    <div class="course-card-header">
                     </div>
                 </div>
             </div>

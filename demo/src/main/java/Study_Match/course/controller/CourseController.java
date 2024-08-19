@@ -22,16 +22,21 @@ public class CourseController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchCourses(@RequestParam("query") String query) {
+    public ResponseEntity<?> searchCourses(@RequestParam("query") String query, @RequestParam(value = "type", defaultValue = "name") String type) {
         try {
-            // query가 숫자인 경우, 강좌 코드로 검색
-            Long id = Long.parseLong(query);
-            Course course = courseService.getCourseById(id);
-            return ResponseEntity.ok(course);
+            if ("id".equals(type)) {
+                Long id = Long.parseLong(query);
+                Course course = courseService.getCourseById(id);
+                return ResponseEntity.ok(course);
+            } else if ("professor".equals(type)) {
+                List<Course> courses = courseService.searchByProfessorName(query);
+                return ResponseEntity.ok(courses);
+            } else {
+                List<Course> courses = courseService.searchByName(query);
+                return ResponseEntity.ok(courses);
+            }
         } catch (NumberFormatException e) {
-            // 그렇지 않은 경우, 강좌 이름으로 검색
-            List<Course> courses = courseService.searchByName(query);
-            return ResponseEntity.ok(courses);
+            return ResponseEntity.badRequest().body("Invalid course ID format");
         }
     }
 

@@ -44,6 +44,22 @@ public class StudyGroupController {
         return ResponseEntity.ok(newStudyGroup);
     }
 
+    @PostMapping("/join")
+    public ResponseEntity<String> joinStudyGroup(@RequestParam Long userId, @RequestParam Long studyGroupId) {
+        // 유저와 스터디 그룹을 조회합니다.
+        User user = userService.getUserById(userId);
+        StudyGroup studyGroup = studyGroupService.getStudyGroupById(studyGroupId).orElse(null);
+
+        if (user == null || studyGroup == null) {
+            return ResponseEntity.badRequest().body("Invalid user ID or study group ID.");
+        }
+
+        // 유저를 스터디 그룹에 가입시킵니다.
+        userStudyGroupService.addUserToStudyGroup(user, studyGroup);
+
+        return ResponseEntity.ok("User successfully joined the study group.");
+    }
+
     @GetMapping
     public ResponseEntity<List<StudyGroup>> getAllStudyGroups() {
         List<StudyGroup> studyGroups = studyGroupService.getAllStudyGroups();

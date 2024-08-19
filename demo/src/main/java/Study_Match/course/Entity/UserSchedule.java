@@ -25,14 +25,4 @@ public class UserSchedule {
     @JoinColumn(name = "course_id", nullable = false)
     @JsonBackReference("course-userSchedule")
     private Course course;
-
-    @Column(nullable = false)
-    private String dayOfWeek;
-
-    @Column(nullable = false)
-    private String startTime;
-
-    @Column(nullable = false)
-    private String endTime;
-
 }

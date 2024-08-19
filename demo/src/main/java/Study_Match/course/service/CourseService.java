@@ -29,6 +29,15 @@ public class CourseService {
         return courseRepository.findById(id).orElse(null);
     }
 
+    // 강좌 이름을 기준으로 검색
+    public List<Course> searchByName(String name) {
+        return courseRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<Course> searchByProfessorName(String professorName) {
+        return courseRepository.findByProfessorNameContainingIgnoreCase(professorName);
+    }
+
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
@@ -40,25 +49,23 @@ public class CourseService {
             course.setProfessorName(courseDetails.getProfessorName());
             course.setCredits(courseDetails.getCredits());
             course.setSchedule(courseDetails.getSchedule());
+            course.setLectureTime(courseDetails.getLectureTime());
             course.setDescription(courseDetails.getDescription());
             return courseRepository.save(course);
         }).orElse(null);
     }
 
     public boolean deleteCourse(Long id) {
-        return courseRepository.findById(id).map(course -> {
-            courseRepository.delete(course);
+        if (courseRepository.existsById(id)) {
+            courseRepository.deleteById(id);
             return true;
-        }).orElse(false);
+        } else {
+            return false;
+        }
     }
 
     public List<UserSchedule> getCoursesByUserId(Long userId) {
         return userScheduleRepository.findByUserId(userId);
     }
 
-
-    // 강좌 이름을 기준으로 검색
-    public List<Course> searchByName(String name) {
-        return courseRepository.findByNameContainingIgnoreCase(name);
-    }
 }

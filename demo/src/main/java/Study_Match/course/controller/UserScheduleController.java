@@ -17,48 +17,21 @@ import java.util.List;
 public class UserScheduleController {
 
     private final UserScheduleService userScheduleService;
-    private final CourseService courseService;
-    private final UserService userService;
 
     @Autowired
-    public UserScheduleController(UserScheduleService userScheduleService, CourseService courseService, UserService userService) {
+    public UserScheduleController(UserScheduleService userScheduleService) {
         this.userScheduleService = userScheduleService;
-        this.courseService = courseService;
-        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<UserSchedule> addCourseToSchedule(@RequestParam Long userId, @RequestParam Long courseId, @RequestBody UserSchedule scheduleDetails) {
-        User user = userService.getUserById(userId);
-        Course course = courseService.getCourseById(courseId);
-
-        if (user == null || course == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        scheduleDetails.setUser(user);
-        scheduleDetails.setCourse(course);
-
-        UserSchedule newSchedule = userScheduleService.addUserSchedule(scheduleDetails);
+    public ResponseEntity<UserSchedule> addCourseToUserSchedule(@RequestParam Long userId, @RequestParam Long courseId) {
+        UserSchedule newSchedule = userScheduleService.addCourseToUserSchedule(userId, courseId);
         return ResponseEntity.ok(newSchedule);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeCourseFromSchedule(@PathVariable Long id) {
-        boolean deleted = userScheduleService.deleteUserSchedule(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<UserSchedule>> getUserSchedule(@PathVariable Long userId) {
-        List<UserSchedule> userSchedules = userScheduleService.getSchedulesByUserId(userId);
-        if (userSchedules == null) {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<UserSchedule>> getUserScheduleByUserId(@PathVariable Long userId) {
+        List<UserSchedule> userSchedules = userScheduleService.getUserScheduleByUserId(userId);
         return ResponseEntity.ok(userSchedules);
     }
 }

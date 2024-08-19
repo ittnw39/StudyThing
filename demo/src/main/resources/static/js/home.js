@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         groups.forEach(group => {
             const groupCard = document.createElement('div');
             groupCard.className = 'group-card';
+            groupCard.dataset.groupId = group.id; // 그룹 아이디를 데이터 속성으로 추가
 
             const groupCardHeader = document.createElement('div');
             groupCardHeader.className = 'group-card-header';
@@ -99,21 +100,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const bottomsheet_header = document.querySelector('.groupsheet-header');
     const bottomsheet_title = bottomsheet_header.querySelector('.group-title');
     const bottomsheet_desc = bottomsheet_header.querySelector('.group-description');
-    const group_divs = document.querySelectorAll('.group-card');
 
-    group_divs.forEach(group_div => {
-        group_div.onclick = () => {
-            const title = group_div.querySelector("#group-title").textContent;
-            const description = group_div.querySelector("#group-description").textContent;
-            bottomsheet_title.textContent = title;
-            bottomsheet_desc.textContent = description;
-            bottomsheet.style.transform = `translateY(0)`;
-            initializer();
-        }
-    })
+    //const group_divs = document.querySelectorAll('.group-card');
+
+    //group_divs.forEach(group_div => {
+    //    group_div.onclick = () => {
+    //        const title = group_div.querySelector("#group-title").textContent;
+    //        const description = group_div.querySelector("#group-description").textContent;
+    //       bottomsheet_title.textContent = title;
+    //        bottomsheet_desc.textContent = description;
+    //        bottomsheet.style.transform = `translateY(0)`;
+    //        initializer();
+    //    }
+    //})
 
     document.body.addEventListener('click', (event) => {
-        
+        const group_div = event.target.closest('.group-card');
+        const title = group_div.querySelector(".group-title").textContent;
+        const description = group_div.querySelector(".group-description").textContent;
+
+        if (group_div) {
+            const title = group_div.querySelector(".group-title").textContent;
+            const description = group_div.querySelector(".group-description").textContent;
+
+            bottomsheet_title.textContent = title;
+            bottomsheet_desc.textContent = description;
+
+            bottomsheet.style.transform = `translateY(0)`;
+
+            initializer();
+        }
     })
 
 

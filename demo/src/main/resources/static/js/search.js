@@ -11,6 +11,7 @@ document.querySelector('#search-bar button').addEventListener('click', async () 
             studyGroups.forEach(group => {
                 const groupCard = document.createElement('div');
                 groupCard.className = 'group-card';
+                groupCard.dataset.groupId = group.id;
 
                 const groupCardHeader = document.createElement('div');
                 groupCardHeader.className = 'group-card-header';
@@ -76,6 +77,7 @@ async function loadAllStudyGroups() {
             studyGroups.forEach(group => {
                 const groupCard = document.createElement('div');
                 groupCard.className = 'group-card';
+                groupCard.dataset.groupId = group.id;
 
                 const groupCardHeader = document.createElement('div');
                 groupCardHeader.className = 'group-card-header';
