@@ -11,7 +11,4 @@ public class UserScheduleDTO {
     private Long id;
     private Long userId;
     private Long courseId;
-    private String dayOfWeek;
-    private String startTime;
-    private String endTime;
 }

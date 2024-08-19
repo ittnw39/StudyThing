@@ -56,7 +56,7 @@ const join_modal = document.getElementById("join-alert-box");
 const join_group_title = join_modal.querySelector("#join-group-title");
 
 document.body.addEventListener('click', (event) => {
-    const group_div = event.target.closet('.group-card');
+    const group_div = event.target.closest('.group-card');
 
     if (group_div) {
         const title = group_div.querySelector("#group-title").textContent;

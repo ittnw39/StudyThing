@@ -50,7 +50,6 @@ public class UserScheduleService {
     }
 
     public List<UserSchedule> getUserScheduleByUserId(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return userScheduleRepository.findByUser(user);
+        return userScheduleRepository.findByUserId(userId);
     }
 }

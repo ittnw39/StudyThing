@@ -2,10 +2,6 @@ package Study_Match.course.controller;
 
 import Study_Match.course.Entity.UserSchedule;
 import Study_Match.course.service.UserScheduleService;
-import Study_Match.course.Entity.Course;
-import Study_Match.user.Entity.User;
-import Study_Match.user.Service.UserService;
-import Study_Match.course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

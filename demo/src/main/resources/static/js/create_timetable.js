@@ -3,6 +3,7 @@ document.getElementById('return').addEventListener('click', function (event) {
     window.history.back();
 });
 
+
 // 검색 기능 구현
 document.querySelector('#search-bar button').addEventListener('click', async function (event) {
     event.preventDefault();
@@ -53,11 +54,12 @@ function renderSearchResults(courses) {
 
         const courseDescription = document.createElement('span');
         courseDescription.innerHTML = `
+            ${course.id || '미정'} |
             ${course.classroom || '미정'} | 
             ${course.professorName || '미정'} | 
             ${course.credits || '미정'}학점 | 
             ${course.schedule || '미정'} | 
-            ${course.lectureTime || '미정'}시간 /br
+            ${course.lectureTime || '미정'}시간 <br>
             ${course.courseDescription || ' '}
         `;
 
@@ -85,17 +87,18 @@ async function addCourseToCurrentList(course) {
     courseCard.dataset.courseId = course.id;
     courseCard.innerHTML = `
         <div id="course-card-header">
-            <span id="course-name" style="font-size: 18px;">${course.name}</span>
-            <button id="delete">삭제</button>
+            <span class="course-name" style="font-size: 18px;">${course.name}</span>
+            <button class="delete">삭제</button>
         </div>
-        <div id="course-card-body">
-            <span>${course.description}</span>
-        </div>
+       <div class="course-card-body">
+        <span>ID: ${course.id || '미정'} | 강의실: ${course.classroom || '미정'} | 교수명: ${course.professorName || '미정'} | 학점: ${course.credits || '미정'}학점 | 시간표: ${course.schedule || '미정'} | 강의시간: ${course.lectureTime || '미정'}시간 <br>
+        설명: ${course.description || ' '}</span>
+       </div>
     `;
     currentListContainer.appendChild(courseCard);
 
     // 삭제 버튼에 이벤트 리스너 추가
-    courseCard.querySelector('#delete').addEventListener('click', () => {
+    courseCard.querySelector('.delete').addEventListener('click', () => {
         courseCard.remove(); // 현재 목록에서 과목 제거
     });
 }
@@ -105,11 +108,20 @@ document.getElementById('submit').addEventListener('click', async function (even
     event.preventDefault();
 
     const userId = localStorage.getItem('userId'); // 사용자의 ID를 로컬 스토리지에서 가져옴
+    if (!userId) {
+        console.error('User ID is missing');
+        return;
+    }
     const currentListContainer = document.querySelector('.current-add');
     const courseCards = currentListContainer.querySelectorAll('.course-card');
 
     const userScheduleRequests = Array.from(courseCards).map(courseCard => {
         const courseId = courseCard.dataset.courseId;
+        if (!courseId) {
+            console.error('Course ID is missing or undefined');
+            return;
+        }
+        console.log(`Adding course with ID: ${courseId} for user ID: ${userId}`);
         return addCourseToUserSchedule(userId, courseId);
     });
 
@@ -127,17 +139,11 @@ document.getElementById('submit').addEventListener('click', async function (even
 // 과목을 사용자 시간표에 추가하는 함수
 async function addCourseToUserSchedule(userId, courseId) {
 
-    const userSchedule = {
-        user: { id: userId }, // User 객체를 포함
-        course: { id: courseId } // Course 객체를 포함
-    };
-
-    const response = await fetch(`/user-schedule`, {
+    const response = await fetch(`/user-schedule?userId=${userId}&courseId=${courseId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userSchedule)
+        }
     });
 
     if (!response.ok) {

@@ -119,7 +119,7 @@
 
     // 수업 스케줄 데이터를 기반으로 셀을 찾고 오버레이를 생성하는 함수
     function applyScheduleOverlay(course) {
-        const { schedule, course_name, classroom} = course;
+        const { schedule, name: course_name, classroom} = course;
         const color = getColorForCourse(course_name);
 
         // 스케줄을 요일과 시간으로 나누기
@@ -148,20 +148,20 @@
         });
     }
 
-    const courses = [
-        {
-            "course_id": "5640",
-            "course_name": "추리의기법과문제해결",
-            "credits": "3",
-            "lecture_time": "3",
-            "professor_name": "김준성",
-            "course_description": "",
-            "schedule": "화 15:00~16:15 목 15:00~16:15",
-            "classroom": [
-                "S1954"
-            ]
-        },
-    ];
+    // const courses = [
+    //     {
+    //         "course_id": "5640",
+    //         "course_name": "추리의기법과문제해결",
+    //         "credits": "3",
+    //         "lecture_time": "3",
+    //         "professor_name": "김준성",
+    //         "course_description": "",
+    //         "schedule": "화 15:00~16:15 목 15:00~16:15",
+    //         "classroom": [
+    //             "S1954"
+    //         ]
+    //     },
+    // ];
 
 
 
@@ -221,3 +221,33 @@
         setInterval(drawCurrentTimeLine, 30000);
     });
 })();
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const userId = localStorage.getItem('userId'); // 로컬 스토리지에서 사용자 ID를 가져옴
+
+    if (!userId) {
+        // 사용자 ID가 없으면 로그인 페이지로 리디렉션
+        window.location.href = '/login/index.html';
+        return;
+    }
+
+    try {
+        // 서버에서 유저의 시간표 데이터를 가져옴
+        const response = await fetch(`/user-schedule/${userId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user schedule');
+        }
+        const courses = await response.json();
+        
+        // 가져온 데이터로 시간표에 과목 추가
+        courses.forEach(course => {
+            applyScheduleOverlay(course);
+        });
+
+        drawCurrentTimeLine(); // 현재 시간 라인 그리기
+        setInterval(drawCurrentTimeLine, 30000); // 30초마다 현재 시간 라인 갱신
+
+    } catch (error) {
+        console.error('Error loading timetable:', error);
+    }
+});

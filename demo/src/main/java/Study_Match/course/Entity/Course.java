@@ -1,5 +1,6 @@
 package Study_Match.course.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class Course {
     private String description;
 
     @OneToMany(mappedBy = "course")
-    @JsonManagedReference("course-userSchedule")
+    @JsonBackReference("course-userSchedule")
     private List<UserSchedule> userSchedules;
 
 }
