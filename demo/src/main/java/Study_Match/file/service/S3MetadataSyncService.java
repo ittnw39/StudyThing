@@ -1,11 +1,11 @@
-package com.elice.spatz.domain.file.service;
+package Study_Match.file.service;
 
+import Study_Match.file.entity.File;
+import Study_Match.file.repository.FileRepository;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.elice.spatz.domain.file.entity.File;
-import com.elice.spatz.domain.file.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

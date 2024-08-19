@@ -28,17 +28,46 @@ function renderSearchResults(courses) {
 
     courses.forEach(course => {
         const courseCard = document.createElement('div');
-        courseCard.className = 'course-card';
-        courseCard.innerHTML = `
-            <div id="course-card-header">
-                <span id="course-name" style="font-size: 18px;">${course.name}</span>
-                <button id="add" data-course-id="${course.id}">추가</button>
-            </div>
-            <div id="course-card-body">
-                <span>${course.description}</span>
-            </div>
-        `;
-        resultsContainer.appendChild(courseCard);
+courseCard.className = 'course-card';
+
+// Create header div
+const courseCardHeader = document.createElement('div');
+courseCardHeader.id = 'course-card-header';
+
+// Create course name span
+const courseName = document.createElement('span');
+courseName.id = 'course-name';
+courseName.style.fontSize = '18px';
+courseName.textContent = course.name;
+
+// Create add button
+const addButton = document.createElement('button');
+addButton.id = 'add';
+addButton.dataset.courseId = course.id;
+addButton.textContent = '추가';
+
+// Append course name and button to header
+courseCardHeader.appendChild(courseName);
+courseCardHeader.appendChild(addButton);
+
+// Create body div
+const courseCardBody = document.createElement('div');
+courseCardBody.id = 'course-card-body';
+
+// Create description span
+const courseDescription = document.createElement('span');
+courseDescription.textContent = course.description;
+
+// Append description to body
+courseCardBody.appendChild(courseDescription);
+
+// Append header and body to course card
+courseCard.appendChild(courseCardHeader);
+courseCard.appendChild(courseCardBody);
+
+// Append course card to results container
+resultsContainer.appendChild(courseCard);
+
 
         // 과목 추가 버튼에 이벤트 리스너 추가
         courseCard.querySelector('#add').addEventListener('click', async () => {

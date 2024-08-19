@@ -1,8 +1,8 @@
-package com.elice.spatz.domain.file.repository;
+package Study_Match.file.repository;
 
-import com.elice.spatz.domain.chat.entity.ChatChannel;
-import com.elice.spatz.domain.file.entity.File;
-import com.elice.spatz.domain.user.entity.Users;
+import Study_Match.StudyGroup.Entity.StudyGroup;
+import Study_Match.file.entity.File;
+import Study_Match.user.Entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,10 +16,9 @@ public interface FileRepository extends JpaRepository<File, Long> {
     boolean existsByStorageUrl(String storageUrl);
 
     @Transactional
-    List<File> findByChannel(ChatChannel channel);
+    List<File> findByStudyGroup(StudyGroup studyGroup);
 
     @Transactional
-    List<File> findByUser(Users user);
+    List<File> findByUser(User user);
 
-    List<File> findByMessageId(String messageId);
 }

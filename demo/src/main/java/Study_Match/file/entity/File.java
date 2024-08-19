@@ -1,14 +1,13 @@
-package com.elice.spatz.domain.file.entity;
+package Study_Match.file.entity;
 
-import com.elice.spatz.domain.chat.entity.ChatChannel;
-import com.elice.spatz.domain.user.entity.Users;
+import Study_Match.StudyGroup.Entity.StudyGroup;
+import Study_Match.user.Entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -19,17 +18,15 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String messageId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "channel_id", nullable = true)
+    @JoinColumn(name = "study_group_id", nullable = true)
     @JsonIgnore // 직렬화에서 제외
-    private ChatChannel channel;
+    private StudyGroup studyGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)
     @JsonIgnore // 직렬화에서 제외
-    private Users user;  // 유저 필드 추가
+    private User user;  // 유저 필드 추가
 
     private String fileName;
     private String fileKey;

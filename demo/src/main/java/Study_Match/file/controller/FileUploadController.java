@@ -1,8 +1,8 @@
-package com.elice.spatz.domain.file.controller;
+package Study_Match.file.controller;
 
-import com.elice.spatz.domain.file.dto.FileRequestDto;
-import com.elice.spatz.domain.file.entity.File;
-import com.elice.spatz.domain.file.service.FileService;
+import Study_Match.file.dto.FileRequestDto;
+import Study_Match.file.entity.File;
+import Study_Match.file.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -36,16 +36,10 @@ public class FileUploadController {
     @GetMapping("/channel/{channelId}")
     public ResponseEntity<List<File>> ListFilesByChannelId(@PathVariable Long channelId) {
         // 채널 ID에 해당하는 파일 목록 가져오기
-        List<File> fileList = fileService.listFilesByChannelId(channelId);
+        List<File> fileList = fileService.listFilesByStudyGroupId(channelId);
         return ResponseEntity.ok(fileList);
     }
 
-    @GetMapping("/message/{messageId}")
-    public ResponseEntity<List<File>> ListFilesByMessageId(@PathVariable String messageId) {
-        // 채널 ID에 해당하는 파일 목록 가져오기
-        List<File> fileList = fileService.listFilesByMessageId(messageId);
-        return ResponseEntity.ok(fileList);
-    }
 
     @GetMapping("/users/{userId}")
     public ResponseEntity<List<File>> ListFilesByUserId(@PathVariable Long userId) {

@@ -1,11 +1,9 @@
-package com.elice.spatz.domain.file.dto;
+package Study_Match.file.dto;
 
 import lombok.Data;
-import java.util.UUID;
 
 @Data
 public class FileRequestDto {
-    private String messageId;
-    private Long channelId;
+    private Long studyGroupId;
     private Long userId;
 }

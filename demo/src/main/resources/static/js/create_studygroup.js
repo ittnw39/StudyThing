@@ -21,7 +21,7 @@ document.getElementById('submit').addEventListener('click', async function (even
         course: { id: courseId },
         leader: { id: leaderId },
         recruitmentNumber: recruitmentNumber,
-        currentNumber: 0, // �ʱ� ������ ����
+        currentNumber: 1, // �ʱ� ������ ����
         groupDescription: groupDescription,
         recruitmentStatus: "OPEN", // ���´� �ʿ信 ���� ����
         creationDate: new Date()

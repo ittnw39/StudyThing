@@ -1,6 +1,6 @@
-package com.elice.spatz.config;
+package Study_Match.config;
 
-import com.elice.spatz.domain.file.service.S3MetadataSyncService;
+import Study_Match.file.service.S3MetadataSyncService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

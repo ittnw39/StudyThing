@@ -1,10 +1,12 @@
-package com.elice.spatz.domain.file.service;
+package Study_Match.file.service;
 
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.HttpMethod;
-import com.amazonaws.SdkClientException;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import Study_Match.StudyGroup.Entity.StudyGroup;
+import Study_Match.StudyGroup.Repository.StudyGroupRepository;
+import Study_Match.user.Repository.UserRepository;
+import Study_Match.file.repository.FileRepository;
+import Study_Match.file.dto.FileRequestDto;
+import Study_Match.file.entity.File;
+import Study_Match.user.Entity.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,14 +18,12 @@ import java.io.OutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.HttpMethod;
+import com.amazonaws.SdkClientException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
-import com.elice.spatz.domain.chat.entity.ChatChannel;
-import com.elice.spatz.domain.chat.repository.ChatChannelRepository;
-import com.elice.spatz.domain.file.dto.FileRequestDto;
-import com.elice.spatz.domain.file.entity.File;
-import com.elice.spatz.domain.file.repository.FileRepository;
-import com.elice.spatz.domain.user.entity.Users;
-import com.elice.spatz.domain.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ public class FileService {
 
     private final AmazonS3 s3Client;
     private final FileRepository fileRepository;
-    private final ChatChannelRepository chatChannelRepository;
+    private final StudyGroupRepository studyGroupRepository;
     private final UserRepository userRepository;
 
     @Value("${file.upload.max-size}")
@@ -55,17 +55,17 @@ public class FileService {
     private String bucketName;
 
     @Transactional
-    public List<File> listFilesByChannelId(Long channelId) {
-        ChatChannel channel = chatChannelRepository.findById(channelId)
-                .orElseThrow(() -> new RuntimeException("채널을 찾을 수 없습니다."));
+    public List<File> listFilesByStudyGroupId(Long studyGroupId) {
+        StudyGroup studyGroup = studyGroupRepository.findById(studyGroupId)
+                .orElseThrow(() -> new RuntimeException("그룹을 찾을 수 없습니다."));
 
-        return fileRepository.findByChannel(channel);
+        return fileRepository.findByStudyGroup(studyGroup);
     }
 
     @Transactional
     public List<File> listFilesByUserId(Long userId) {
-        Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("채널을 찾을 수 없습니다."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
         return fileRepository.findByUser(user);
     }
@@ -73,9 +73,9 @@ public class FileService {
     public String uploadFile(MultipartFile file, FileRequestDto fileRequestDto) {
         String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
-        ChatChannel channel = chatChannelRepository.findById(fileRequestDto.getChannelId())
-                .orElseThrow(() -> new RuntimeException("채널을 찾을 수 없습니다."));
-        Users user = userRepository.findById(fileRequestDto.getUserId())
+        StudyGroup studyGroup = studyGroupRepository.findById(fileRequestDto.getStudyGroupId())
+                .orElseThrow(() -> new RuntimeException("그룹을 찾을 수 없습니다."));
+        User user = userRepository.findById(fileRequestDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
         try {
@@ -89,11 +89,10 @@ public class FileService {
 
             // S3에 업로드 후 메타데이터를 MySQL에 저장
             File fileEntity = new File();
-            fileEntity.setMessageId(fileRequestDto.getMessageId());
             fileEntity.setFileName(file.getOriginalFilename());
             fileEntity.setFileKey(key);
             fileEntity.setUser(user);
-            fileEntity.setChannel(channel);  // ChatChannel 엔티티를 설정
+            fileEntity.setStudyGroup(studyGroup);  // ChatChannel 엔티티를 설정
             fileEntity.setStorageUrl(s3Client.getUrl(bucketName, key).toString());
             fileRepository.save(fileEntity);
 
@@ -247,9 +246,4 @@ public class FileService {
         return s3Client.generatePresignedUrl(generatePresignedUrlRequest);
     }
 
-    @Transactional
-    public List<File> listFilesByMessageId(String messageId) {
-
-        return fileRepository.findByMessageId(messageId);
-    }
 }

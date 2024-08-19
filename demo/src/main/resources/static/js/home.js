@@ -20,26 +20,23 @@ document.addEventListener('DOMContentLoaded', function () {
             cloud_tab(selectedGroupId);
         }
     }
-
     // 유저의 그룹을 불러오는 함수
     async function fetchUserGroups(userId) {
-        // 유저의 그룹을 불러오는 함수
-           async function fetchUserGroups(userId) {
-               try {
-                   const response = await fetch(`/study/user/${userId}`, {
-                       headers: {
-                           'Content-Type': 'application/json'
-                       }
-                   });
-                   if (!response.ok) {
-                       throw new Error('Failed to fetch groups');
-                   }
-                   const groups = await response.json();
-                   renderUserGroups(groups);
-               } catch (error) {
-                   console.error('Error fetching groups:', error);
-               }
-           }
+        try {
+            const response = await fetch(`/study/user/${userId}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch groups');
+            }
+            const groups = await response.json();
+            renderUserGroups(groups);
+        } catch (error) {
+            console.error('Error fetching groups:', error);
+        }
+    }
 
     function renderUserGroups(groups) {
         const contentBody = document.querySelector('.content-body');
@@ -56,17 +53,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const groupCardHeader = document.createElement('div');
             groupCardHeader.className = 'group-card-header';
-            groupCardHeader.innerHTML = `<span class="group-title">${group.name}</span>`;
+
+            const groupTitle = document.createElement('span');
+            groupTitle.className = 'group-title';
+            groupTitle.textContent = group.name;
+
+            groupCardHeader.appendChild(groupTitle);
             groupCard.appendChild(groupCardHeader);
 
             const groupCardBody = document.createElement('div');
             groupCardBody.className = 'group-card-body';
-            groupCardBody.innerHTML = `
-                <span class="course-name">수업명 : ${group.courseName},</span>
-                <span class="current-member">현재 참여 인원 : ${group.currentMembers}</span> / 
-                <span class="limited-member">${group.limitedMembers},</span>
-                <span class="group-description">설명 : ${group.description}</span>
-            `;
+
+            const courseName = document.createElement('span');
+            courseName.className = 'course-name';
+            courseName.textContent = `수업명 : ${group.course.name},`;
+
+            const currentMember = document.createElement('span');
+            currentMember.className = 'current-member';
+            currentMember.textContent = `현재 참여 인원 : ${group.currentNumber}`;
+
+            const limitedMember = document.createElement('span');
+            limitedMember.className = 'limited-member';
+            limitedMember.textContent = ` / ${group.recruitmentNumber},`;
+
+            const groupDescription = document.createElement('span');
+            groupDescription.className = 'group-description';
+            groupDescription.textContent = `설명 : ${group.groupDescription}`;
+
+            groupCardBody.appendChild(courseName);
+            groupCardBody.appendChild(document.createTextNode(' '));
+            groupCardBody.appendChild(currentMember);
+            groupCardBody.appendChild(limitedMember);
+            groupCardBody.appendChild(document.createTextNode(' '));
+            groupCardBody.appendChild(groupDescription);
+
             groupCard.appendChild(groupCardBody);
 
             contentBody.appendChild(groupCard);
@@ -74,95 +94,106 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-//바텀시트 show event
-const bottomsheet = document.getElementById('gbt');
-//    const group_divs = document.querySelectorAll('.group-card');
+    //바텀시트 show event
+    const bottomsheet = document.getElementById('gbt');
+    const bottomsheet_header = document.querySelector('.groupsheet-header');
+    const bottomsheet_title = bottomsheet_header.querySelector('.group-title');
+    const bottomsheet_desc = bottomsheet_header.querySelector('.group-description');
+    const group_divs = document.querySelectorAll('.group-card');
 
-//    group_divs.forEach(group_div => {
-//        group_div.onclick = () => {
-//            bottomsheet.style.transform = `translateY(0)`;
-//            initializer();
-//        }
-//    })
+    group_divs.forEach(group_div => {
+        group_div.onclick = () => {
+            const title = group_div.querySelector("#group-title").textContent;
+            const description = group_div.querySelector("#group-description").textContent;
+            bottomsheet_title.textContent = title;
+            bottomsheet_desc.textContent = description;
+            bottomsheet.style.transform = `translateY(0)`;
+            initializer();
+        }
+    })
+
+    document.body.addEventListener('click', (event) => {
+        
+    })
 
 
-//바텀시트 hide event
-const body = document.querySelector('body');
-let startY;
-let startTranslateY;
-let currentTranslateY = 0;
+    //바텀시트 hide event
+    const body = document.querySelector('body');
+    let startY;
+    let startTranslateY;
+    let currentTranslateY = 0;
 
-bottomsheet.addEventListener('touchstart', (e) => {
-    startY = e.touches[0].clientY;
-    startTranslateY = currentTranslateY;
-    bottomsheet.style.transition = 'none';
-});
+    bottomsheet.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        startTranslateY = currentTranslateY;
+        bottomsheet.style.transition = 'none';
+    });
 
-bottomsheet.addEventListener('touchmove', (e) => {
-    const deltaY = e.touches[0].clientY - startY;
-    currentTranslateY = Math.max(startTranslateY + deltaY, 0);
-    bottomsheet.style.transform = `translateY(${currentTranslateY}px)`;
-    body.style.overflow = 'hidden'; //내릴때 body고정
-});
+    bottomsheet.addEventListener('touchmove', (e) => {
+        const deltaY = e.touches[0].clientY - startY;
+        currentTranslateY = Math.max(startTranslateY + deltaY, 0);
+        bottomsheet.style.transform = `translateY(${currentTranslateY}px)`;
+        body.style.overflow = 'hidden'; //내릴때 body고정
+    });
 
-bottomsheet.addEventListener('touchend', () => {
-    bottomsheet.style.transition = 'transform 0.3s ease-out';
-    if (currentTranslateY > window.innerHeight * 0.2) {
-        bottomsheet.style.transform = 'translateY(100%)';
-        body.style.overflow = 'auto';
-        startTranslateY = 0;
-        currentTranslateY = 0;
-    } else {
-        bottomsheet.style.transform = 'translateY(0)';
-        currentTranslateY = 0;
-    }
-});
-
-//그룹 바텀시트 네비바
-const nav = document.querySelector('.group-function-nav');
-const indicator = document.getElementById('gfn-indicator');
-const items = nav.querySelectorAll('li');
-const functionTabs = document.querySelectorAll('.function-tab > div');
-
-function setIndicator(element) {
-    indicator.style.left = `${element.offsetLeft}px`;
-    indicator.style.width = `${element.offsetWidth}px`;
-}
-
-function showTab(index) {
-    functionTabs.forEach((tab, i) => {
-        if (i === index) {
-            tab.style.display = 'block';
+    bottomsheet.addEventListener('touchend', () => {
+        bottomsheet.style.transition = 'transform 0.3s ease-out';
+        if (currentTranslateY > window.innerHeight * 0.2) {
+            bottomsheet.style.transform = 'translateY(100%)';
+            body.style.overflow = 'auto';
+            startTranslateY = 0;
+            currentTranslateY = 0;
         } else {
-            tab.style.display = 'none';
+            bottomsheet.style.transform = 'translateY(0)';
+            currentTranslateY = 0;
         }
     });
-}
 
-items.forEach((item, index) => {
-    item.addEventListener('click', (e) => {
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        setIndicator(item);
-        showTab(index);
+    //그룹 바텀시트 네비바
+    const nav = document.querySelector('.group-function-nav');
+    const indicator = document.getElementById('gfn-indicator');
+    const items = nav.querySelectorAll('li');
+    const functionTabs = document.querySelectorAll('.function-tab > div');
+
+    function setIndicator(element) {
+        indicator.style.left = `${element.offsetLeft}px`;
+        indicator.style.width = `${element.offsetWidth}px`;
+    }
+
+    function showTab(index) {
+        functionTabs.forEach((tab, i) => {
+            if (i === index) {
+                tab.style.display = 'block';
+            } else {
+                tab.style.display = 'none';
+            }
+        });
+    }
+
+    items.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+            items.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            setIndicator(item);
+            showTab(index);
+        });
+
+        if (index === 0) {
+            item.classList.add('active');
+            setIndicator(item);
+            showTab(index);
+        }
     });
 
-    if (index === 0) {
-        item.classList.add('active');
-        setIndicator(item);
-        showTab(index);
-    }
-});
+    //바텀시트 기능 script
+    /*그룹 나가기 evnet*/
+    const exit_button = document.getElementById('group_exit');
 
-//바텀시트 기능 script
-/*그룹 나가기 evnet*/
-const exit_button = document.getElementById('group_exit');
+    exit_button.addEventListener('click', (event) => {
+        event.preventDefault();
+    })
 
-exit_button.addEventListener('click', (event) => {
-    event.preventDefault();
-})
-
-// study_tab
+    // study_tab
     async function study_tab() {
 
         try {
@@ -314,110 +345,110 @@ exit_button.addEventListener('click', (event) => {
     });
 }
 
-//async function cloud_tab() {
-//    try {
-//        const response = await fetch(`/files/group/${groupId}`); // 그룹별 파일 가져오기
-//        if (!response.ok) {
-//            throw new Error('Failed to fetch files');
-//        }
-//        const files = await response.json();
-//        load_files(files);
-//    } catch (error) {
-//        console.error('Error fetching files:', error);
-//    }
-//
-//
-//    function load_files(files) {
-//        const fileList = document.getElementById('file_directory');
-//        fileList.innerHTML = '<span style="width: 100%; height: 20px; font-size: 20px;">저장소</span>';
-//
-//        files.forEach(file => {
-//            const fileCard = document.createElement('div');
-//            fileCard.className = 'file_card';
-//
-//            const fileInfo = document.createElement('div');
-//            fileInfo.className = 'file_info';
-//
-//            const fileLink = document.createElement('a');
-//            fileLink.className = 'file_name_link';
-//            fileLink.href = file.link;
-//            fileLink.download = file.name;
-//            fileLink.style.textDecoration = 'none';
-//            fileLink.style.color = 'black';
-//
-//            const fileName = document.createElement('span');
-//            fileName.className = 'file_name';
-//            fileName.textContent = file.name;
-//
-//            fileLink.appendChild(fileName);
-//
-//            fileInfo.appendChild(fileLink);
-//
-//            const fileSize = document.createElement('span');
-//            fileSize.className = 'file_size';
-//            fileSize.textContent = file.size + 'MB';
-//            fileInfo.appendChild(fileSize);
-//
-//            const deleteButton = document.createElement('button');
-//            deleteButton.className = 'file-delete-button';
-//            deleteButton.textContent = '삭제';
-//            deleteButton.addEventListener('click', async function () {
-//                try {
-//                    await fetch(`/files/${file.id}`, {
-//                        method: 'DELETE'
-//                    });
-//                    fileList.removeChild(fileCard);
-//                } catch (error) {
-//                    console.error('Error deleting file:', error);
-//                }
-//            });
-//            fileInfo.appendChild(deleteButton);
-//
-//            fileCard.appendChild(fileInfo);
-//            fileList.appendChild(fileCard);
-//        })
-//    }
-//
-//    //파일 업로드 버튼 이벤트 감지
-//    document.getElementById('file_upload').addEventListener('change', async function (event) {
-//        const fileInput = event.target;
-//        const file = fileInput.files[0];
-//        const errorMessage = document.getElementById('file-error-message');
-//
-//        if (file) {
-//            const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'bmp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'pdf', 'txt', 'csv', 'zip', 'rar'];
-//            const fileExtension = file.name.split('.').pop().toLowerCase();
-//
-//            if (allowedExtensions.indexOf(fileExtension) === -1) {
-//                errorMessage.textContent = '허용되지 않는 파일 형식입니다.';
-//                fileInput.value = ''; // 선택된 파일 초기화
-//                return;
-//            } else {
-//                const formData = new FormData();
-//                formData.append('file', file);
-//                formData.append('groupId', groupId);
-//
-//                try {
-//                    await fetch('/files/upload', {
-//                        method: 'POST',
-//                        body: formData
-//                    });
-//                    errorMessage.textContent = ''; // 오류 메시지 지우기
-//                    load_files(await fetchFiles(groupId)); // 파일 목록 새로 고침
-//                } catch (error) {
-//                    console.error('Error uploading file:', error);
-//                }
-//            }
-//        }
-//    });
-//
-//    async function fetchFiles(groupId) {
-//        const response = await fetch(`/files/group/${groupId}`);
-//        if (response.ok) {
-//            return await response.json();
-//        } else {
-//            console.error('Failed to fetch files');
-//            return [];
-//        }
-//    }
-});
+    //async function cloud_tab() {
+    //    try {
+    //        const response = await fetch(`/files/group/${groupId}`); // 그룹별 파일 가져오기
+    //        if (!response.ok) {
+    //            throw new Error('Failed to fetch files');
+    //        }
+    //        const files = await response.json();
+    //        load_files(files);
+    //    } catch (error) {
+    //        console.error('Error fetching files:', error);
+    //    }
+    //
+    //
+    //    function load_files(files) {
+    //        const fileList = document.getElementById('file_directory');
+    //        fileList.innerHTML = '<span style="width: 100%; height: 20px; font-size: 20px;">저장소</span>';
+    //
+    //        files.forEach(file => {
+    //            const fileCard = document.createElement('div');
+    //            fileCard.className = 'file_card';
+    //
+    //            const fileInfo = document.createElement('div');
+    //            fileInfo.className = 'file_info';
+    //
+    //            const fileLink = document.createElement('a');
+    //            fileLink.className = 'file_name_link';
+    //            fileLink.href = file.link;
+    //            fileLink.download = file.name;
+    //            fileLink.style.textDecoration = 'none';
+    //            fileLink.style.color = 'black';
+    //
+    //            const fileName = document.createElement('span');
+    //            fileName.className = 'file_name';
+    //            fileName.textContent = file.name;
+    //
+    //            fileLink.appendChild(fileName);
+    //
+    //            fileInfo.appendChild(fileLink);
+    //
+    //            const fileSize = document.createElement('span');
+    //            fileSize.className = 'file_size';
+    //            fileSize.textContent = file.size + 'MB';
+    //            fileInfo.appendChild(fileSize);
+    //
+    //            const deleteButton = document.createElement('button');
+    //            deleteButton.className = 'file-delete-button';
+    //            deleteButton.textContent = '삭제';
+    //            deleteButton.addEventListener('click', async function () {
+    //                try {
+    //                    await fetch(`/files/${file.id}`, {
+    //                        method: 'DELETE'
+    //                    });
+    //                    fileList.removeChild(fileCard);
+    //                } catch (error) {
+    //                    console.error('Error deleting file:', error);
+    //                }
+    //            });
+    //            fileInfo.appendChild(deleteButton);
+    //
+    //            fileCard.appendChild(fileInfo);
+    //            fileList.appendChild(fileCard);
+    //        })
+    //    }
+    //
+    //    //파일 업로드 버튼 이벤트 감지
+    //    document.getElementById('file_upload').addEventListener('change', async function (event) {
+    //        const fileInput = event.target;
+    //        const file = fileInput.files[0];
+    //        const errorMessage = document.getElementById('file-error-message');
+    //
+    //        if (file) {
+    //            const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'bmp', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'pdf', 'txt', 'csv', 'zip', 'rar'];
+    //            const fileExtension = file.name.split('.').pop().toLowerCase();
+    //
+    //            if (allowedExtensions.indexOf(fileExtension) === -1) {
+    //                errorMessage.textContent = '허용되지 않는 파일 형식입니다.';
+    //                fileInput.value = ''; // 선택된 파일 초기화
+    //                return;
+    //            } else {
+    //                const formData = new FormData();
+    //                formData.append('file', file);
+    //                formData.append('groupId', groupId);
+    //
+    //                try {
+    //                    await fetch('/files/upload', {
+    //                        method: 'POST',
+    //                        body: formData
+    //                    });
+    //                    errorMessage.textContent = ''; // 오류 메시지 지우기
+    //                    load_files(await fetchFiles(groupId)); // 파일 목록 새로 고침
+    //                } catch (error) {
+    //                    console.error('Error uploading file:', error);
+    //                }
+    //            }
+    //        }
+    //    });
+    //
+    //    async function fetchFiles(groupId) {
+    //        const response = await fetch(`/files/group/${groupId}`);
+    //        if (response.ok) {
+    //            return await response.json();
+    //        } else {
+    //            console.error('Failed to fetch files');
+    //            return [];
+    //        }
+    //    }
+);

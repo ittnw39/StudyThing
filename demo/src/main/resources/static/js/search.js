@@ -6,35 +6,62 @@ document.querySelector('#search-bar button').addEventListener('click', async () 
         if (response.ok) {
             const studyGroups = await response.json();
             const resultContainer = document.querySelector('.result');
-            resultContainer.innerHTML = ''; // ±âÁ¸ °á°ú »èÁ¦
+            resultContainer.innerHTML = ''; // ê¸°ì¡´ ê²°ê³¼ ì‚­ì œ
 
             studyGroups.forEach(group => {
                 const groupCard = document.createElement('div');
                 groupCard.className = 'group-card';
 
-                groupCard.innerHTML = `
-                    <div class="group-card-header">
-                        <span id="group-title">${group.name}</span>
-                    </div>
-                    <div class="group-card-body">
-                        <span id="course-name">¼ö¾÷¸í: ${group.course.name}</span>,
-                        <span id="current-member">ÇöÀç Âü¿© ÀÎ¿ø: ${group.currentNumber}</span> /
-                        <span id="limited-member">${group.recruitmentNumber}</span>,
-                        <span id="group-description">¼³¸í: ${group.groupDescription}</span>
-                    </div>
-                `;
+                const groupCardHeader = document.createElement('div');
+                groupCardHeader.className = 'group-card-header';
+
+                const groupTitle = document.createElement('span');
+                groupTitle.id = 'group-title';
+                groupTitle.textContent = group.name;
+
+                groupCardHeader.appendChild(groupTitle);
+                groupCard.appendChild(groupCardHeader);
+
+                const groupCardBody = document.createElement('div');
+                groupCardBody.className = 'group-card-body';
+
+                const courseName = document.createElement('span');
+                courseName.id = 'course-name';
+                courseName.textContent = `ìˆ˜ì—…ëª…: ${group.course.name}`;
+
+                const currentMember = document.createElement('span');
+                currentMember.id = 'current-member';
+                currentMember.textContent = `í˜„ì¬ ì°¸ì—¬ ì¸ì›: ${group.currentNumber}`;
+
+                const limitedMember = document.createElement('span');
+                limitedMember.id = 'limited-member';
+                limitedMember.textContent = ` / ${group.recruitmentNumber}`;
+
+                const groupDescription = document.createElement('span');
+                groupDescription.id = 'group-description';
+                groupDescription.textContent = `ì„¤ëª…: ${group.groupDescription}`;
+
+                groupCardBody.appendChild(courseName);
+                groupCardBody.appendChild(document.createTextNode(', '));
+                groupCardBody.appendChild(currentMember);
+                groupCardBody.appendChild(limitedMember);
+                groupCardBody.appendChild(document.createTextNode(', '));
+                groupCardBody.appendChild(groupDescription);
+
+                groupCard.appendChild(groupCardBody);
+
+                resultContainer.appendChild(groupCard);
 
                 groupCard.addEventListener('click', () => {
                     showJoinModal(group);
                 });
 
-                resultContainer.appendChild(groupCard);
             });
         } else {
-            console.error('°Ë»ö ½ÇÆĞ');
+            console.error('ê²€ìƒ‰ ì‹¤íŒ¨');
         }
     } catch (error) {
-        console.error('³×Æ®¿öÅ© ¿¡·¯:', error);
+        console.error('ë„¤íŠ¸ì›Œí¬ ì—ëŸ¬:', error);
     }
 });
 
@@ -44,37 +71,63 @@ async function loadAllStudyGroups() {
         if (response.ok) {
             const studyGroups = await response.json();
             const resultContainer = document.querySelector('.result');
-            resultContainer.innerHTML = ''; // ±âÁ¸ °á°ú »èÁ¦
+            resultContainer.innerHTML = ''; // ê¸°ì¡´ ê²°ê³¼ ì‚­ì œ
 
             studyGroups.forEach(group => {
                 const groupCard = document.createElement('div');
                 groupCard.className = 'group-card';
 
-                groupCard.innerHTML = `
-                    <div class="group-card-header">
-                        <span id="group-title">${group.name}</span>
-                    </div>
-                    <div class="group-card-body">
-                        <span id="course-name">¼ö¾÷¸í: ${group.course.name}</span>,
-                        <span id="current-member">ÇöÀç Âü¿© ÀÎ¿ø: ${group.currentNumber}</span> /
-                        <span id="limited-member">${group.recruitmentNumber}</span>,
-                        <span id="group-description">¼³¸í: ${group.groupDescription}</span>
-                    </div>
-                `;
+                const groupCardHeader = document.createElement('div');
+                groupCardHeader.className = 'group-card-header';
+
+                const groupTitle = document.createElement('span');
+                groupTitle.id = 'group-title';
+                groupTitle.textContent = group.name;
+
+                groupCardHeader.appendChild(groupTitle);
+                groupCard.appendChild(groupCardHeader);
+
+                const groupCardBody = document.createElement('div');
+                groupCardBody.className = 'group-card-body';
+
+                const courseName = document.createElement('span');
+                courseName.id = 'course-name';
+                courseName.textContent = `ìˆ˜ì—…ëª…: ${group.course.name}`;
+
+                const currentMember = document.createElement('span');
+                currentMember.id = 'current-member';
+                currentMember.textContent = `í˜„ì¬ ì°¸ì—¬ ì¸ì›: ${group.currentNumber}`;
+
+                const limitedMember = document.createElement('span');
+                limitedMember.id = 'limited-member';
+                limitedMember.textContent = ` / ${group.recruitmentNumber}`;
+
+                const groupDescription = document.createElement('span');
+                groupDescription.id = 'group-description';
+                groupDescription.textContent = `ì„¤ëª…: ${group.groupDescription}`;
+
+                groupCardBody.appendChild(courseName);
+                groupCardBody.appendChild(document.createTextNode(', '));
+                groupCardBody.appendChild(currentMember);
+                groupCardBody.appendChild(limitedMember);
+                groupCardBody.appendChild(document.createTextNode(', '));
+                groupCardBody.appendChild(groupDescription);
+
+                groupCard.appendChild(groupCardBody);
+
+                resultContainer.appendChild(groupCard);
 
                 groupCard.addEventListener('click', () => {
                     showJoinModal(group);
                 });
-
-                resultContainer.appendChild(groupCard);
             });
         } else {
-            console.error('±×·ì ¸ñ·Ï °¡Á®¿À±â ½ÇÆĞ');
+            console.error('ê·¸ë£¹ ëª©ë¡ ê°€ì ¸ì˜¤ê¸° ì‹¤íŒ¨');
         }
     } catch (error) {
-        console.error('³×Æ®¿öÅ© ¿¡·¯:', error);
+        console.error('ë„¤íŠ¸ì›Œí¬ ì—ëŸ¬:', error);
     }
 }
 
-// ÆäÀÌÁö ·Îµå ½Ã ¸ğµç ½ºÅÍµğ ±×·ìÀ» ·Îµå
+// í˜ì´ì§€ ë¡œë“œ ì‹œ ëª¨ë“  ìŠ¤í„°ë”” ê·¸ë£¹ì„ ë¡œë“œ
 window.addEventListener('DOMContentLoaded', loadAllStudyGroups);
