@@ -11,6 +11,7 @@ document.querySelector('#search-bar button').addEventListener('click', async () 
             studyGroups.forEach(group => {
                 const groupCard = document.createElement('div');
                 groupCard.className = 'group-card';
+                groupCard.dataset.groupId = group.id;
 
                 const groupCardHeader = document.createElement('div');
                 groupCardHeader.className = 'group-card-header';
@@ -51,10 +52,6 @@ document.querySelector('#search-bar button').addEventListener('click', async () 
                 groupCard.appendChild(groupCardBody);
 
                 resultContainer.appendChild(groupCard);
-
-                groupCard.addEventListener('click', () => {
-                    showJoinModal(group);
-                });
 
             });
         } else {
@@ -76,6 +73,7 @@ async function loadAllStudyGroups() {
             studyGroups.forEach(group => {
                 const groupCard = document.createElement('div');
                 groupCard.className = 'group-card';
+                groupCard.dataset.groupId = group.id;
 
                 const groupCardHeader = document.createElement('div');
                 groupCardHeader.className = 'group-card-header';
@@ -116,10 +114,6 @@ async function loadAllStudyGroups() {
                 groupCard.appendChild(groupCardBody);
 
                 resultContainer.appendChild(groupCard);
-
-                groupCard.addEventListener('click', () => {
-                    showJoinModal(group);
-                });
             });
         } else {
             console.error('그룹 목록 가져오기 실패');
