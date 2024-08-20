@@ -196,8 +196,6 @@ body {
     flex-direction: column;
     color: white;
     padding-top: 5px;
-    width: 100%;
-    height: 50px;
 }
 
 .message-bg {
@@ -207,7 +205,15 @@ body {
     width: 60% auto;
     max-width: 60%;
     height: 100% auto;
-    background-color: rgb(187, 77, 238);
+    background-color: #8d00b8;
+}
+
+.message-bg button{
+    border: none;
+    border: 1px solid #121212;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(31, 36, 36);
 }
 
 .send-box {
@@ -256,7 +262,7 @@ body {
     box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.253);
 }
 
-#progressbar-cotainer {
+.progressbar-cotainer {
     position: relative;
     margin: 10px;
     width: 80%;
@@ -265,14 +271,14 @@ body {
     overflow: hidden;
 }
 
-#progress-bar {
+.progress-bar {
     width: 0%;
     height: 15px;
     background-color: #a115ff;
     transition: width 0.4s ease;
 }
 
-#progress-text {
+.progress-text {
     color: white;
     position: absolute;
     top: 50%;
@@ -496,7 +502,7 @@ body {
     justify-content: center;
 }
 
-#member-president-card {
+.member-president-card {
     width: calc(100%);
     height: 60px;
     border-radius: 5px;
@@ -507,7 +513,7 @@ body {
     margin-bottom: 5px;
 }
 
-#member-card {
+.member-card {
     width: calc(100%);
     height: 60px;
     border-radius: 5px;
