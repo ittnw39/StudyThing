@@ -11,4 +11,6 @@ public interface StudyGroupRepository extends JpaRepository<StudyGroup, Long> {
     List<StudyGroup> findByNameContaining(String name);
     List<StudyGroup> findByCourseId(Long courseId);
     List<StudyGroup> findByLeaderId(Long leaderId);
+    // 과목명으로 스터디 그룹 검색
+    List<StudyGroup> findByCourseNameContaining(String courseName);
 }

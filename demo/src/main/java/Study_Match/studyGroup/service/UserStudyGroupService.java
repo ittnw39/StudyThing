@@ -28,4 +28,8 @@ public class UserStudyGroupService {
         userStudyGroup.setStudyGroup(studyGroup);
         userStudyGroupRepository.save(userStudyGroup);
     }
+
+    public boolean isUserInStudyGroup(User user, StudyGroup studyGroup) {
+        return userStudyGroupRepository.existsByUserAndStudyGroup(user, studyGroup);
+    }
 }

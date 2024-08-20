@@ -59,6 +59,11 @@ public class StudyGroupController {
         if (user == null || studyGroup == null) {
             return ResponseEntity.badRequest().body("Invalid user ID or study group ID.");
         }
+        // 사용자가 이미 해당 스터디 그룹에 가입되어 있는지 확인합니다.
+        boolean alreadyJoined = userStudyGroupService.isUserInStudyGroup(user, studyGroup);
+        if (alreadyJoined) {
+            return ResponseEntity.ok("already joined"); // 이미 가입된 경우 메시지 반환
+        }
 
         // 유저를 스터디 그룹에 가입시킵니다.
         userStudyGroupService.addUserToStudyGroup(user, studyGroup);
@@ -101,6 +106,12 @@ public class StudyGroupController {
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<StudyGroup>> getStudyGroupsByCourseId(@PathVariable Long courseId) {
         List<StudyGroup> studyGroups = studyGroupService.getStudyGroupsByCourseId(courseId);
+        return ResponseEntity.ok(studyGroups);
+    }
+
+    @GetMapping("/course/search")
+    public ResponseEntity<List<StudyGroup>> searchStudyGroupsByCourseName(@RequestParam String name) {
+        List<StudyGroup> studyGroups = studyGroupService.searchStudyGroupsByCourseName(name);
         return ResponseEntity.ok(studyGroups);
     }
 

@@ -36,14 +36,11 @@ const search_modal = document.getElementById("search-rule-modal");
 const search_modal_button = document.getElementById("search-rule-button");
 const search_close_button = document.getElementsByClassName("exit")[0];
 
-search_modal_button.onclick = () => {
-    search_modal.style.display = "block";
-}
-
+ //아하// 제꺼에서는 실행되는데
 search_close_button.onclick = () => {
     search_modal.style.display = "none";
-}
-
+} //아니면 굳이 모달말고 combobox로 바꿀까요? 모집상태 조건 하나면 모달할 필요는 없을거같아요
+//네 좋아요 지금 그 강의정보 추가하는거 css 수정하고있는데 이거랑 바로해서 푸시해드릴게요//넵
 // 모달 외부 클릭시 모달 닫기
 window.onclick = (event) => {
     if (event.target == search_modal) {
@@ -90,7 +87,12 @@ document.body.addEventListener('click', (event) => {
                 });
 
                 if (response.ok) {
-                    alert('그룹 가입 성공!');
+                    const resultText = await response.text();
+                    if (resultText.includes('already joined')) {
+                        alert('이미 가입된 그룹입니다.');
+                    } else {
+                        alert('그룹 가입 성공!');
+                    }
                     join_modal.style.display = 'none';
                 } else {
                     alert('그룹 가입 실패');

@@ -41,7 +41,7 @@ public class StudyGroup {
     private String groupDescription;
 
     @Column(nullable = false)
-    private String recruitmentStatus = "¸ðÁý Áß";
+    private String recruitmentStatus = "RECRUITING";
 
     private Date creationDate;
 

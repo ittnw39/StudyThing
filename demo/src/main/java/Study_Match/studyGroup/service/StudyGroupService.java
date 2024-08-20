@@ -122,9 +122,9 @@ public class StudyGroupService {
         studyGroup.setCurrentNumber((int) memberCount);
 
         if (memberCount >= studyGroup.getRecruitmentNumber()) {
-            studyGroup.setRecruitmentStatus("모집 마감");
+            studyGroup.setRecruitmentStatus("CLOSED");
         } else {
-            studyGroup.setRecruitmentStatus("모집 중");
+            studyGroup.setRecruitmentStatus("RECRUITING");
         }
 
         studyGroupRepository.save(studyGroup);
@@ -140,5 +140,12 @@ public class StudyGroupService {
         StudyGroup studyGroup = studyGroupRepository.findById(groupId)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
         return userStudyGroupRepository.findUsersByStudyGroup(studyGroup);
+    }
+
+    // 과목명으로 스터디 그룹 검색
+    public List<StudyGroup> searchStudyGroupsByCourseName(String courseName) {
+        List<StudyGroup> studyGroups = studyGroupRepository.findByCourseNameContaining(courseName);
+        updateGroupMemberCounts(studyGroups);
+        return studyGroups;
     }
 }
