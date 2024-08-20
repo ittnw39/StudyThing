@@ -16,12 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchUserGroups(userId);
 
     function initializer() {
-        if (!isInitialized && selectedGroupId) {
+        if (selectedGroupId) {
             study_tab(selectedGroupId);
             cloud_tab(selectedGroupId);
             member_tab(selectedGroupId);
             loadMessages(selectedGroupId);
-            isInitialized = true; // 한 번만 초기화되도록 설정
         }
     }
     // 유저의 그룹을 불러오는 함수
@@ -704,11 +703,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const messageBg = document.createElement('div');
                 messageBg.className = 'message-bg';
-                messageBg.style.backgroundColor = '#f1f0f0';  // 기본 배경색
-                messageBg.style.borderRadius = '10px';
-                messageBg.style.padding = '10px';
-                messageBg.style.maxWidth = '60%';
-                messageBg.style.wordWrap = 'break-word';
 
                 const userIdSpan = document.createElement('span');
                 userIdSpan.className = 'user-id';
@@ -718,15 +712,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 messageSpan.className = 'msg';
                 messageSpan.textContent = message.content;
 
-                if (message.userId === userId) {
-                    // 내 메시지 (오른쪽 정렬)
-                    messageWrapper.style.display = 'flex';
-                    messageWrapper.style.justifyContent = 'flex-end';
-                    messageBg.style.backgroundColor = '#dcf8c6';  // 내 메시지 배경색
-
-                    const editButton = document.createElement('button');
+                const editButton = document.createElement('button');
                     editButton.textContent = '수정';
                     editButton.style.marginLeft = '5px';
+                    editButton.style.float = 'right';
                     editButton.onclick = () => {
                         const newContent = prompt('메시지를 수정하세요', message.content);
                         if (newContent) {
@@ -734,17 +723,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     };
 
-                    const deleteButton = document.createElement('button');
+                const deleteButton = document.createElement('button');
                     deleteButton.textContent = '삭제';
                     deleteButton.style.marginLeft = '5px';
+                    deleteButton.style.float = 'right';
                     deleteButton.onclick = () => {
                         if (confirm('정말로 삭제하시겠습니까?')) {
                             deleteMemo(message.id);
                         }
                     };
 
-                    messageBg.appendChild(editButton);
-                    messageBg.appendChild(deleteButton);
+                if (message.userId === userId) {
+                    // 내 메시지 (오른쪽 정렬)
+                    messageWrapper.style.display = 'flex';
+                    messageWrapper.style.justifyContent = 'flex-end';
+
                 } else {
                     // 상대방 메시지 (왼쪽 정렬)
                     messageWrapper.style.display = 'flex';
@@ -752,6 +745,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 messageBg.appendChild(userIdSpan);
+                messageBg.appendChild(deleteButton);
+                messageBg.appendChild(editButton);
                 messageBg.appendChild(document.createElement('br'));
                 messageBg.appendChild(messageSpan);
                 messageWrapper.appendChild(messageBg);
