@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="/css/search.css" media="(max-width: 768px)">
+    <link rel="stylesheet" href="../css/search.css" media="(max-width: 768px)">
     <link rel="stylesheet" href="/css/search_pc.css" media="(min-width: 769px)">
     <link rel="stylesheet" href="/css/globals.css">
     <title>스터띵 - 검색</title>
-    <script defer src="/js/globals.js"></script>
-    <script defer src="/js/search.js"></script>
-    <script defer src="/js/studygroup.js"></script>
+    <script defer src="../js/globals.js"></script>
+    <script defer src="../js/search.js"></script>
+    <script defer src="../js/studygroup.js"></script>
     <!--fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -33,21 +33,13 @@
                     </select>
                     <input type="search" placeholder="Search" />
                     <button style="background: none; border: none; padding: 0">
-                        <i class="fa-solid fa-magnifying-glass fa-beat"></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
-            </div>
-            <div class="search-detail">
-                <label>
-                    <input type="checkbox" id="recruiting-only-checkbox">
-                    <span>모집 중인 그룹만 보기</span>
-                </label>
-                <!-- <button id="search-rule-button">
-                    <i class="fa-solid fa-sliders"></i> 검색 규칙 설정
-                </button> -->
-            </div>
-            <!--현재 추가된 검색 요소들 표시-->
-            <div class="search-detail-bar">
+                <select id="recurit-detail" style="margin: 10px; float: right; font-size: 15px;">
+                    <option value="">모집중</option>
+                    <option value="">모집마감</option>
+                </select>
             </div>
             <div class="result"> <!--검색 바 아래 전체-->
             </div>
