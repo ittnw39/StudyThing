@@ -30,7 +30,7 @@
         }
 
         .creator {
-            width: 100%;
+            width: 90%;
             background-color: #ffffff;
             padding: 15px;
             border-radius: 5px;
@@ -48,7 +48,7 @@
             justify-content: center;
             align-items: center;
             background-color: white;
-            width: calc(100% - 5%);
+            width: calc(100%);
             height: 30px;
             border: 1px solid #C1C1C1;
             border-radius: 30px;
@@ -58,7 +58,7 @@
             box-shadow: 0 0 0 3px rgba(14, 197, 221, 0.438);
         }
         #search-bar input {
-            width: calc(100% - 25%);
+            width: calc(100% - 30%);
             border: none;
             font-size: 20px;
         }
@@ -66,12 +66,17 @@
             outline: none;
         }
         #search-bar button {
-            --fa-animation-duration: 2s;
-            margin-left: 20px;
+            margin-left: 5px;
+            margin-right: 10px;
             font-size: 20px;
         }
         #search-bar:focus-within button {
             cursor: pointer;
+        }
+
+        #search-bar select{
+            margin: 10px;
+            border: none;
         }
 
         .result{
@@ -132,7 +137,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.278);
         }
 
-        #course-card{
+        .course-card{
             margin: 5px;
             padding: 10px;
             border: 1px solid #ddd;
@@ -140,12 +145,12 @@
             background-color: #f9f9f9;
         }
 
-        #course-card-header{
+        .course-card-header{
             display: flex;
             justify-content: space-between;
         } 
 
-        #course-card-header #add{
+        .course-card-header .add{
             border: none;
             color: white;
             border-radius: 4px;
@@ -154,7 +159,7 @@
             background-color: #1ba4ff;
         }
 
-        #course-card-header #delete{
+        .course-card-header .delete{
             border: none;
             color: white;
             border-radius: 4px;
@@ -190,40 +195,33 @@
                 <div id="search-bar"> <!--검색 input-->
                     <!-- 검색 기준 선택 -->
                     <select id="search-type">
-                        <option value="id">강좌코드</option>
                         <option value="name">강좌명</option>
+                        <option value="id">강좌코드</option>
                         <option value="professor">교수명</option>
                     </select>
-                    <input type="search" placeholder="강좌명/강좌코드/교수명으로 검색" />
+                    <input type="search" placeholder="" />
                     <button style="background: none; border: none; padding: 0">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
             </div>
             <span style="font-size: 22px;">검색 결과</span>
-            <select style="float: right; margin-right: 5px; border: none; ">
-                <option>강좌 코드순(추천)</option>
-                <option>수업 이름순</option>
-                <option>교수 이름순</option>
-            </select>
             <div class="result">
-                <div class="course-card"> <!-- id 대신 class 사용 -->
+            <!-- 아래 코드는 js에서 동적으로 로드 됨.
+                <div class="course-card">
                     <div class="course-card-header">
-                        <span class="course-name" style="font-size: 18px;">수업명</span> <!-- id 대신 class 사용 -->
-                        <button class="add">추가</button> <!-- id 대신 class 사용 -->
+                        <span class="course-name" style="font-size: 18px;">수업명</span>
+                        <button class="add">추가</button>
                     </div>
                     <div class="course-card-body">
-                        <span>description</span> <!-- id 제거 -->
+                        <span>description</span>
                     </div>
                 </div>
+            -->
             </div>
             <hr>
             <span style="font-size: 20px;">현재 목록</span>
             <div class="current-add">
-                <div class="course-card"> <!-- id 대신 class 사용 -->
-                    <div class="course-card-header">
-                    </div>
-                </div>
             </div>
             <div class="button">
                 <button id="return">취소하기</button>
