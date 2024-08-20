@@ -31,24 +31,6 @@ window.addEventListener('scroll', function () {
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 }, false);
 
-// 페이지 로드 시 모든 그룹 로드
-window.addEventListener('DOMContentLoaded', loadAllStudyGroups);
-
-// 전체 그룹을 로드하는 함수
-async function loadAllStudyGroups() {
-    try {
-        const response = await fetch('/study');
-        if (response.ok) {
-            const studyGroups = await response.json();
-            displayStudyGroups(studyGroups);
-        } else {
-            console.error('Failed to load study groups');
-        }
-    } catch (error) {
-        console.error('Network error:', error);
-    }
-}
-
 //검색 모달 관련 요소
 const search_modal = document.getElementById("search-rule-modal");
 const search_modal_button = document.getElementById("search-rule-button");
@@ -58,7 +40,7 @@ const search_close_button = document.getElementsByClassName("exit")[0];
 search_close_button.onclick = () => {
     search_modal.style.display = "none";
 } //아니면 굳이 모달말고 combobox로 바꿀까요? 모집상태 조건 하나면 모달할 필요는 없을거같아요
-//네 좋아요 지금 그 강의정보 추가하는거 css 수정하고있는데 이거랑 바로해서 푸시해드릴게요//넵
+//네 좋아요 지금 그 강의정보 추가하는거 css 수정하고있는데 이거랑 바로해서 푸시해드릴
 // 모달 외부 클릭시 모달 닫기
 window.onclick = (event) => {
     if (event.target == search_modal) {

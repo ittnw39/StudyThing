@@ -24,20 +24,24 @@ document.querySelector('#search-bar button').addEventListener('click', async () 
     }
 });
 
-// 체크박스 상태 변경 시 검색 결과를 다시 필터링
-document.querySelector('#recruiting-only-checkbox').addEventListener('change', () => {
-    const recruitingOnly = document.querySelector('#recruiting-only-checkbox').checked;
-    const currentResults = document.querySelectorAll('.group-card');
+// // 체크박스 상태 변경 시 검색 결과를 다시 필터링
+// document.querySelector('#recruiting-only-checkbox').addEventListener('change', () => {
+//     const recruitingOnly = document.querySelector('#recruiting-only-checkbox').checked;
+//     const currentResults = document.querySelectorAll('.group-card');
 
-    // 현재 표시된 그룹들을 필터링
-    currentResults.forEach(groupCard => {
-        const recruitmentStatus = groupCard.dataset.recruitmentStatus;
-        if (recruitingOnly && recruitmentStatus !== 'RECRUITING') {
-            groupCard.style.display = 'none';
-        } else {
-            groupCard.style.display = 'block';
-        }
-    });
+//     // 현재 표시된 그룹들을 필터링
+//     currentResults.forEach(groupCard => {
+//         const recruitmentStatus = groupCard.dataset.recruitmentStatus;
+//         if (recruitingOnly && recruitmentStatus !== 'RECRUITING') {
+//             groupCard.style.display = 'none';
+//         } else {
+//             groupCard.style.display = 'block';
+//         } 
+//     });
+// });
+// 모집 상태 필터링
+document.getElementById('recurit-detail').addEventListener('change', () => {
+    filterAndDisplayGroups(); //loadAllStudyGroups은 처음에 로드하실때 쓰는거죠?
 });
 
 // 그룹 결과를 필터링하여 표시하는 함수
