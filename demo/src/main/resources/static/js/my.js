@@ -4,7 +4,7 @@ function link(url) {
     window.location.href = url;
 }
 
-function content() {
+function contact() {
     window.location.href = "http://49.247.44.33/contact/?userId="+userId;
 }
 
