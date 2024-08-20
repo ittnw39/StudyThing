@@ -14,20 +14,22 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 throw new Error('시간표 데이터를 불러오지 못했습니다.');
             }
-            const courses = await response.json();
-            populateCourseOptions(courses);
+            const userSchedules = await response.json();
+            populateCourseOptions(userSchedules);
         } catch (error) {
             console.error('Error fetching schedule:', error);
         }
     }
 
     // 시간표 데이터로 select 요소를 채우는 함수
-    function populateCourseOptions(courses) {
-        courses.forEach(course => {
-            const option = document.createElement('option');
-            option.value = course.courseId; // courseId는 UserScheduleDTO에 포함된 과목의 ID여야 함
-            option.textContent = `${course.courseName} (${course.courseCode})`; // UserScheduleDTO에 포함된 과목명과 코드
-            selectElement.appendChild(option);
+    function populateCourseOptions(userSchedules) {
+        userSchedules.forEach(userSchedule => {
+            userSchedule.courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.id; // CourseDTO에 포함된 과목의 ID
+                option.textContent = `${course.name}`; // CourseDTO에 포함된 과목명 사용
+                selectElement.appendChild(option);
+            });
         });
     }
 
@@ -45,18 +47,17 @@ document.getElementById('submit').addEventListener('click', async function (even
     const studyGroupName = document.querySelector('input[type="text"]').value;
     const recruitmentNumber = document.querySelector('input[type="number"]').value;
     const groupDescription = document.querySelector('textarea').value;
-    const courseId = document.getElementById('major-combobox').value;
+    const selectedCourseId  = document.getElementById('major-combobox').value;
     const userId = localStorage.getItem('userId');
 
-    if (!selectedCourseId || !groupName || !recruitmentNumber) {
+    if (!selectedCourseId || !studyGroupName  || !recruitmentNumber) {
         alert('모든 필드를 채워주세요.');
         return;
     }
 
     const studyGroupData = {
         name: studyGroupName,
-        course: { id: courseId },
-        leader: { id: userId },
+        course: { id: selectedCourseId }, // 변수 이름 수정
         recruitmentNumber: recruitmentNumber,
         currentNumber: 1,
         groupDescription: groupDescription,
@@ -65,7 +66,7 @@ document.getElementById('submit').addEventListener('click', async function (even
     };
 
     try {
-        const response = await fetch('/study/create', {
+        const response = await fetch(`/study/create?leaderId=${userId}&courseId=${selectedCourseId}`, { // leaderId와 courseId를 URL 파라미터로 전송
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

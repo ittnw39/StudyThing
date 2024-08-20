@@ -31,6 +31,24 @@ window.addEventListener('scroll', function () {
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 }, false);
 
+// 페이지 로드 시 모든 그룹 로드
+window.addEventListener('DOMContentLoaded', loadAllStudyGroups);
+
+// 전체 그룹을 로드하는 함수
+async function loadAllStudyGroups() {
+    try {
+        const response = await fetch('/study');
+        if (response.ok) {
+            const studyGroups = await response.json();
+            displayStudyGroups(studyGroups);
+        } else {
+            console.error('Failed to load study groups');
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
+}
+
 //검색 모달 관련 요소
 const search_modal = document.getElementById("search-rule-modal");
 const search_modal_button = document.getElementById("search-rule-button");
