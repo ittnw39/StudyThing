@@ -23,7 +23,32 @@
         </div>
         <div class="info">
             <div id="info-box">
+                <h2 style="margin: 10px; ">24학년도 2학기 시험 일정</h2>
+                <span>중간고사 : .10 .21 ~ .10 .25</span>
+                <span>기말고사 : .12 .09 ~ .12 .13</span>
+                <div id="countdown">
+                    <p>중간고사까지 : <span id="days-remaining"></span>일 남음</p>
+                    <div class="progress-container">
+                        <div id="progress-bar"></div>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const targetDate = new Date('2024-10-21'); // 목표 날짜
+                        const today = new Date();
 
+                        const timeDiff = targetDate - today;
+                        const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+                        const startDate = new Date('2024-01-01'); // 시작일 설정
+                        const totalDays = Math.ceil((targetDate - startDate) / (1000 * 60 * 60 * 24));
+                        const elapsedDays = Math.ceil((today - startDate) / (1000 * 60 * 60 * 24));
+                        const progressPercentage = Math.min((elapsedDays / totalDays) * 100, 100);
+
+                        document.getElementById('days-remaining').textContent = daysRemaining;
+                        document.getElementById('progress-bar').style.width = progressPercentage + '%';
+                    });
+                </script>
             </div>
         </div>
         <div class="content">
@@ -100,7 +125,7 @@
                         </div>
                     </div>
                     <div class="send-box msg-send">
-                        <input type="text" id="msg-input"/>
+                        <input type="text" id="msg-input" />
                         <button type="submit" id="send-btn">전송</button>
                     </div>
                 </div>
@@ -170,9 +195,9 @@
         const MOBILE_WIDTH = 768;
         function checkScreenWidth() {
             if (window.innerWidth > MOBILE_WIDTH) {
-                
+
             } else {
-                
+
             }
         }
         checkScreenWidth();
