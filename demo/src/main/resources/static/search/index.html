@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/css/search_pc.css" media="(min-width: 769px)">
     <link rel="stylesheet" href="/css/globals.css">
     <title>스터띵 - 검색</title>
-    <script defer src="../js/globals.js"></script>
     <script defer src="../js/search.js"></script>
     <script defer src="../js/studygroup.js"></script>
     <!--fontawesome-->
@@ -29,18 +28,21 @@
                     <!-- 드롭다운 메뉴 추가 -->
                     <select id="search-option">
                         <option value="groupName">그룹명</option>
-                        <option value="courseName">강좌명</option>
+                        <option value="courseName">수업명</option>
                     </select>
                     <input type="search" placeholder="Search" />
                     <button style="background: none; border: none; padding: 0">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
-                <select id="recurit-detail" style="margin: 10px; float: right; font-size: 15px;">
+                <!-- <select id="recurit-detail" style="margin: 10px; float: right; font-size: 15px;">
                     <option value="default">모집기준 정렬</option>
                     <option value="">모집중</option>
                     <option value="">모집마감</option>
-                </select>
+                </select> -->
+                <label style="margin: 10px; float: right; font-size: 15px;">
+                    <input type="checkbox" id="recruiting-checkbox"> 모집중인 그룹만 보기
+                </label>
             </div>
             <div class="result"> <!--검색 바 아래 전체-->
             </div>
