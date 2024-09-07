@@ -8,6 +8,7 @@ import Study_Match.user.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,9 +58,9 @@ public class UserService {
         user.setPassword(userDTO.getPassword());
         user.setStudentNumber(userDTO.getStudentNumber());
         user.setDepartment(userDTO.getDepartment());
-        user.setMajor(userDTO.getMajor());
         user.setGrade(userDTO.getGrade());
-        user.setRegistrationDate(userDTO.getRegistrationDate());
+        // 현재 날짜를 설정
+        user.setRegistrationDate(new Date());
         return userRepository.save(user);
     }
 
@@ -79,20 +80,20 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User updateUser(Long id, User userDetails) {
+    public User updateUser(Long id, UserDTO userDetails) {
         User existingUser = userRepository.findById(id).orElse(null);
 
         if (existingUser != null) {
             existingUser.setName(userDetails.getName());
             existingUser.setEmail(userDetails.getEmail());
             existingUser.setPassword(userDetails.getPassword());
-            existingUser.setMajor(userDetails.getMajor());
+            existingUser.setStudentNumber(userDetails.getStudentNumber());
+            existingUser.setDepartment(userDetails.getDepartment());
             existingUser.setGrade(userDetails.getGrade());
-            existingUser.setRegistrationDate(userDetails.getRegistrationDate());
-            return userRepository.save(existingUser);
-        } else {
+
+            userRepository.save(existingUser);
+            return existingUser;
+        }
             return null; // 또는 예외를 던질 수 있습니다.
         }
     }
-
-}

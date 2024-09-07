@@ -125,7 +125,7 @@ public class StudyGroupController {
     public ResponseEntity<List<MemberDTO>> getGroupMembers(@PathVariable Long groupId) {
         List<UserStudyGroup> members = userStudyGroupRepository.findByStudyGroupId(groupId);
         List<MemberDTO> memberDTOs = members.stream()
-                .map(usg -> new MemberDTO(usg.getUser().getName(), usg.getUser().getMajor(), usg.isLeader()))
+                .map(usg -> new MemberDTO(usg.getUser().getName(), usg.getUser().getDepartment(), usg.isLeader()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(memberDTOs);
     }

@@ -2,6 +2,7 @@
 import { pw_eyes_toggle } from "./modules/pw_eyes_toggle.js";
 import { loadmajor } from "./modules/loadmajor.js";
 
+
 loadmajor()
     .then(message => {
         console.log(message);
@@ -148,6 +149,40 @@ document.addEventListener('DOMContentLoaded', function () {
         } else{
 
             //업데이트 패치
+            const userId = localStorage.getItem('userId');
+
+                    const updatedUser = {
+                        name: document.getElementById('textbox-name').value,
+                        email: document.getElementById('textbox-email').value,
+                        password: document.getElementById('textbox-pw-raw').value,
+                        studentNumber: document.getElementById('textbox-st-num').value,
+                        department: document.getElementById('major-combobox').value,
+                        // 필요시 다른 필드 추가
+                    };
+
+                    fetch(`/users/${userId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(updatedUser),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // 성공적으로 업데이트 되면 마이페이지로 리다이렉트
+                            window.location.href = "../my/index.html";
+                        } else {
+                            return response.json().then(errorData => {
+                                // 서버로부터 받은 에러 메시지 처리
+                                console.error('서버 에러:', errorData);
+                                alert("회원 정보 업데이트에 실패했습니다.");
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('업데이트 요청 중 오류 발생:', error);
+                        alert("업데이트 중 문제가 발생했습니다.");
+                    });
         }
     });
 
