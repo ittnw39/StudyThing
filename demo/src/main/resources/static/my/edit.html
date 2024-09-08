@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="/css/globals.css">
-        <link rel="stylesheet" href="/css/register_style.css">
+        <link rel="stylesheet" href="/css/edit.css">
         <title>스터띵 - 정보수정</title>
         <script defer src="/js/authFunctions_update.js" type="module"></script>
         <!--fontawesome-->
@@ -12,8 +12,8 @@
     </head>
     <body>
         <div id="main">
-            <h2>회원 정보 수정</h2>
             <div id="register-form">
+                <h2>회원 정보 수정</h2>
                 <form id="register" action="" method="post">
                     <div id="acc-info">
                     <label>
@@ -23,22 +23,8 @@
                     <span id="email-validation-error" class="validation-error"></span> 
                     <input type="text" id="textbox-name" placeholder="이름" />  <!--이름-->
                     <span id="name-validation-error" class="validation-error"></span>
-                    <div id="password-box"> <!--PassWord-->
-                        <!--class값 사용금지-->
-                        <input type="password" id="textbox-pw-raw" placeholder="비밀번호" maxlength="20" /> 
-                        <span id="pw-validation-pattern">8자 이상, 영문, 숫자, 특수문자 포함</span>
-                        <i class="fa-regular fa-eye"></i>
-                        <span id="pw-validation-error" class="validation-error"></span>
-                    </div>
-                    <div id="re-password-box">
-                        <!--class값 사용금지-->
-                        <input type="password" id="textbox-pw-re" placeholder="비밀번호 확인" maxlength="20" />
-                        <i class="fa-regular fa-eye"></i>
-                        <span id="ns-pw-match-error" class="validation-error">비밀번호가 일치하지 않습니다.</span>
-                    </div>
                     <span id="pw-validation-checked-error" class="validation-error"></span>
                     </div>
-                    <hr>
                     <div id="std-info">
                     <label>
                         학생정보
@@ -50,10 +36,10 @@
                     </select>
                     <span id="major-validation-error" class="validation-error"></span>
                     </div>
-                    <button type="submit" id="register_button">정보 UPDATE</button>
+                    <button type="submit" id="register_button">정보 수정</button>
                 </form>
             </div>
-            <a href="../my/index.html" class="linktologin" style="margin-top: 10px;">이전 페이지로 돌아가기</a><p>
+            <a href="../my/index.html" class="linkback" style="margin-top: 10px;">이전 페이지로 돌아가기</a><p>
         </div>
         <footer>
             <p>Copyright &copy; 2024 TEAM_JOY. All rights reserved.</p>

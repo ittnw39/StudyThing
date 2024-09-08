@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
         }
@@ -17,7 +16,6 @@
             background: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .contact-body span {
             display: block;
@@ -34,6 +32,9 @@
             box-sizing: border-box;
             font-size: 16px;
             margin-bottom: 16px;
+        }
+        .contact-body textarea{
+            min-height: 40vh;
         }
         .contact-body input[type="text"]:focus, 
         .contact-body textarea:focus {
@@ -55,16 +56,21 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+        .linkback{
+            color: black;
+        }
     </style>
 </head>
 <body>
     <div class="contact-body">
         <h2>스터띵 문의하기</h2>
+        <span>작성자 : {username}</span>
         <span>제목</span>
         <input type="text" placeholder="제목을 입력하세요">
         <span>문의사항</span>
         <textarea placeholder="문의사항을 입력하세요"></textarea>
         <button type="submit">제출하기</button>
     </div>
+    <a href="../my/index.html" class="linkback" style="margin: 20px;">이전 페이지로 돌아가기</a><p>
 </body>
 </html>

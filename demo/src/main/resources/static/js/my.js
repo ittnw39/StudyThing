@@ -4,10 +4,6 @@ function link(url) {
     window.location.href = url;
 }
 
-function contact() {
-    window.location.href = "http://49.247.44.33/contact/?userId="+userId;
-}
-
 // 로그아웃 함수
 function logout(){
     localStorage.clear();

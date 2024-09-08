@@ -73,3 +73,6 @@ body {
 .mypage-list li:hover {
     background-color: #f0f0f0;
 }
+footer{
+    height: 200px;
+}
