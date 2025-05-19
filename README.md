@@ -1,13 +1,21 @@
-# 스터띵 (StudyThing)
+# 🚀 스터띵 (StudyThing) 🚀
 
-## 1. 프로젝트 소개
+**✨ Team: joy 😊**
+*   👨‍💻 **Backend:** 우연정
+*   🎨 **Frontend:** 전우현
 
 스터띵(StudyThing)은 명지대학교 학생들의 스터디 그룹 매칭 및 활동 지원을 위한 웹 애플리케이션으로, 교내 SW 경진대회에 SW개발 부문에 참가한 프로젝트입니다. 사용자는 스터디 그룹을 생성하거나 참여할 수 있으며, 스터디 관련 메모, 파일 공유, 강의 정보 등을 관리할 수 있습니다.
 
-## 2. 주요 기능
+---
 
-### 2.1. 사용자 관리 (User Domain)
+## 🌟 1. 프로젝트 소개
+스터띵(StudyThing)은 명지대학교 학생들의 스터디 그룹 매칭 및 활동 지원을 위한 웹 애플리케이션으로, 교내 SW 경진대회에 SW개발 부문에 참가한 프로젝트입니다. 사용자는 스터디 그룹을 생성하거나 참여할 수 있으며, 스터디 관련 메모, 파일 공유, 강의 정보 등을 관리할 수 있습니다.
 
+---
+
+## ✨ 2. 주요 기능
+
+### 🔑 2.1. 사용자 관리 (User Domain)
 *   **회원 가입:** 신규 사용자 등록 (이메일, 비밀번호, 닉네임 등)
     *   API Endpoint: `POST /users/register`
 *   **로그인:**
@@ -20,8 +28,7 @@
 *   **회원 탈퇴:** 사용자 계정 삭제
     *   API Endpoint: `DELETE /users/{id}`
 
-### 2.2. 스터디 그룹 관리 (StudyGroup Domain)
-
+### 👥 2.2. 스터디 그룹 관리 (StudyGroup Domain)
 *   **스터디 그룹 생성:**
     *   API Endpoint: `POST /study/create`
     *   요청 파라미터: `leaderId` (Long), `courseId` (Long), 요청 바디: `StudyGroup` 정보
@@ -48,8 +55,7 @@
     *   목표 완료 상태 수정: `PUT /study-goals/{goalId}/completion` (요청 바디: `{"completed": true/false}`)
     *   목표 삭제: `DELETE /study-goals/{goalId}`
 
-### 2.3. 메모 관리 (Memo Domain)
-
+### 📝 2.3. 메모 관리 (Memo Domain)
 *   **메모 생성:**
     *   API Endpoint: `POST /memos/create`
     *   요청 파라미터: `userId` (Long), `studyGroupId` (Long), `content` (String)
@@ -62,8 +68,7 @@
     *   API Endpoint: `DELETE /memos/delete/{memoId}`
     *   요청 파라미터: `userId` (Long)
 
-### 2.4. 파일 관리 (File Domain) (AWS S3 연동)
-
+### 📁 2.4. 파일 관리 (File Domain) (AWS S3 연동)
 *   **파일 업로드:**
     *   API Endpoint: `POST /files/upload`
     *   요청 파트: `file` (MultipartFile), `FileRequestDto` (userId, groupId 등)
@@ -80,8 +85,7 @@
     *   API Endpoint: `GET /files/presigned-url/{fileName}`
 *   **(참고) 테스트 엔드포인트:** `GET /files/test`
 
-### 2.5. 강의 정보 및 시간표 관리 (Course Domain)
-
+### 📅 2.5. 강의 정보 및 시간표 관리 (Course Domain)
 *   **강의 정보 관리 (`/courses`):**
     *   강의 검색: `GET /courses/search?query={keyword}&type={id|professor|name}`
     *   강의 생성: `POST /courses` (요청 바디: `Course` 정보)
@@ -94,42 +98,36 @@
     *   시간표에 강의 추가: `POST /user-schedule` (요청 바디: `{"userId": Long, "courseIds": [Long, ...]}`)
     *   사용자별 시간표 조회: `GET /user-schedule/{userId}`
 
-## 3. 기술 스택
+---
 
-### 3.1. 백엔드 (Backend)
+## 🛠️ 3. 기술 스택
 
-*   **언어 (Language):** Java 22
-*   **프레임워크 (Framework):** Spring Boot 3.3.1
-    *   **Spring Web:** RESTful API 및 웹 요청 처리
-    *   **Spring Data JPA:** 데이터 영속성 및 ORM (Object-Relational Mapping)
-*   **데이터베이스 (Database):** MySQL
-*   **데이터베이스 연동:** `mysql-connector-j` (JDBC 드라이버)
-*   **파일 스토리지 (File Storage):** AWS S3 (Amazon Simple Storage Service)
-    *   AWS SDK: `aws-java-sdk-s3`
-    *   Spring Cloud AWS: `spring-cloud-starter-aws` (S3 연동 간소화)
-*   **빌드 도구 (Build Tool):** Gradle
-*   **유틸리티 (Utility):** Lombok (코드 간소화)
+### 💻 3.1. 백엔드 (Backend)
+*   **Language:** ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white)
+*   **Framework:** ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+    *   Spring Web: RESTful API 및 웹 요청 처리
+    *   Spring Data JPA: 데이터 영속성 및 ORM
+*   **Database:** ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+    *   Driver: `mysql-connector-j`
+*   **File Storage:** ![AWS S3](https://img.shields.io/badge/AWS_S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
+    *   SDK: `aws-java-sdk-s3`, `spring-cloud-starter-aws`
+*   **Build Tool:** ![Gradle](https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
+*   **Utility:** ![Lombok](https://img.shields.io/badge/Lombok-FB5430?style=for-the-badge&logo=lombok&logoColor=white)
 
-### 3.2. 프론트엔드 (Frontend)
+### 🎨 3.2. 프론트엔드 (Frontend)
+*   **Template Engine:** ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white)
+*   **Styling:** ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+    *   자체 CSS (`globals.css` 및 기능별 CSS), 반응형 웹
+*   **Client Script:** ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) (ES6+)
+*   **Icons:** ![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=for-the-badge&logo=font-awesome&logoColor=white) (CDN)
 
-*   **템플릿 엔진 (Template Engine):** Thymeleaf
-    *   서버 사이드에서 동적 HTML 생성을 담당하며, Spring Boot와 통합되어 사용됩니다.
-*   **스타일링 (Styling):**
-    *   **CSS3:** 직접 작성된 CSS 파일들을 통해 UI 스타일링 (`globals.css` 및 각 페이지/기능별 CSS 파일).
-    *   반응형 웹 디자인을 위한 별도 CSS 파일 존재 (예: `*_pc.css`).
-*   **클라이언트 스크립트 (Client-side Scripting):**
-    *   **JavaScript (ES6+):** Vanilla JS 기반으로 각 페이지/기능별 동적 로직 구현.
-    *   인증, 스터디 그룹 관리, 시간표 생성 등 다양한 기능별 스크립트 파일 존재.
-    *   모듈화된 스크립트 사용 가능성 ( `js/modules/`, `js/component/` 폴더 확인).
-*   **UI 라이브러리/프레임워크:**
-    *   아이콘 표시에 Font Awesome (CDN 방식) 사용. 그 외 주요 UI 구성은 프로젝트 자체 CSS와 JavaScript로 구현.
+### ☁️ 3.3. 서버 환경
+*   **Target OS:** Windows Server 2019 Standard
+*   **Considered:** Jetson Nano (ROS2), Raspberry Pi
 
-### 3.3. 서버 환경
+---
 
-*   **운영체제 (Target OS):** Windows Server 2019 Standard
-*   **기타 배포 환경 (Considered):** Jetson Nano (ROS2), Raspberry Pi
-
-## 4. 설치 및 실행 방법
+## ⚙️ 4. 설치 및 실행 방법
 
 ### 4.1. 사전 요구 사항
 
@@ -144,7 +142,7 @@
 1.  **프로젝트 클론:**
     ```bash
     git clone https://gitlab.com/joy8232028/study_match.git
-    cd study_match/demo
+    cd study_match/demo 
     ```
 
 2.  **애플리케이션 설정:**
@@ -164,7 +162,9 @@
 
 5.  웹 브라우저에서 `http://localhost:8080` (기본 포트)으로 접속합니다.
 
-## 5. 프로젝트 구조 (demo 폴더 기준)
+---
+
+## 📂 5. 프로젝트 구조 (demo 폴더 기준)
 
 ```
 demo/
@@ -196,14 +196,18 @@ demo/
 └── settings.gradle    # Gradle 프로젝트 설정
 ```
 
-## 6. 기여 방법
+---
+
+## 👋 6. 기여 방법
 
 본 프로젝트는 교내 SW 경진대회 출품을 목표로 개발되었으며, 지속적인 개선과 함께 향후 기능 확장도 고려하고 있습니다. 프로젝트의 코드 구조, 사용된 기술, 구현된 기능에 대한 다양한 의견이나 개선을 위한 제안은 언제나 환영합니다.
 
 *   **버그 리포트 및 기능 제안:** GitHub 이슈 트래커를 통해 상세 내용을 공유해주시면 감사하겠습니다.
 *   **코드 스타일 및 개선 아이디어:** 프로젝트의 가독성 및 유지보수성 향상을 위한 아이디어가 있다면 자유롭게 제안해주세요.
 
-## 7. 라이선스
+---
+
+## 📜 7. 라이선스
 
 본 프로젝트는 명지대학교 SW 경진대회 개발 부문 출품작으로, 학습 및 포트폴리오 목적으로 개발되었습니다. 모든 코드 및 산출물의 권리는 원작자에게 있습니다.
 
